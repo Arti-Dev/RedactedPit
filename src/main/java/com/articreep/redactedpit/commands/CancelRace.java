@@ -1,6 +1,6 @@
 package com.articreep.redactedpit.commands;
 
-import com.articreep.redactedpit.RaceListeners;
+import com.articreep.redactedpit.listeners.RaceListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,8 +1,10 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.listeners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.articreep.redactedpit.Main;
+import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

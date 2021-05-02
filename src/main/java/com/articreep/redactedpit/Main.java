@@ -2,6 +2,9 @@ package com.articreep.redactedpit;
 
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.*;
+import com.articreep.redactedpit.listeners.Listeners;
+import com.articreep.redactedpit.listeners.RaceListeners;
+import com.articreep.redactedpit.listeners.TradingListeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {

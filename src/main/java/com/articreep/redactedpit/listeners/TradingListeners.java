@@ -1,5 +1,6 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.listeners;
 
+import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.commands.RedactedGive;
 import org.bukkit.Material;
 import org.bukkit.Sound;
