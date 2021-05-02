@@ -1,0 +1,30 @@
+name: RedactedPit
+main: com.articreep.redactedpit.Main
+version: 1.2.1
+author: Arti_Creep
+api-version: 1.13
+commands:
+  togglejumppads:
+    description: Toggles jumppads
+    usage: /togglejumppads
+  cancelrace:
+    description: Cancels the race if you're doing it.
+    usage: /cancelrace
+  tradedivineglass:
+    description: Used for trading ancient artifacts for Divine Glass. Only if I could get Citizens' API to work.. ;-;
+    usage: /tradedivineglass
+  tradingmaster:
+    description: Used for using the trading master
+    usage: /tradingmaster
+  tradesunstone:
+    description: Used for trading ancient artifacts for Sun Stones.
+    usage: /tradesunstone
+  redactedgive:
+    description: Give command for a variety of items coded in by Arti
+    usage: /redactedgive <item> <quantity>
+  coloinfo:
+    description: See your or someone else's Colosseum Stats!
+    usage: /coloinfo <player>
+  redacteddebug:
+    description: Debug, shhh.
+    usage: /redacteddebug

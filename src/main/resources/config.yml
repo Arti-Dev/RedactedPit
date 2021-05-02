@@ -1,0 +1,7 @@
+debug: true
+spawn:
+  x: 1
+  y: 71
+  z: 9
+  yaw: 180
+  pitch: 0
