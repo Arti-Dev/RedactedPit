@@ -1,5 +1,6 @@
 package com.articreep.redactedpit;
 
+import com.articreep.redactedpit.listeners.ContentListeners;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -71,7 +72,7 @@ public class ContentExpansion extends PlaceholderExpansion {
         if(identifier.equals("percent_content")){
             //return plugin.getConfig().getString("placeholder1", "value doesnt exist");
             //TODO PLACEHOLDER FOR PLACEHOLDER LMAO
-            return "gaming";
+            return ContentListeners.string;
         }
 
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)

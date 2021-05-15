@@ -2,6 +2,7 @@ package com.articreep.redactedpit;
 
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.*;
+import com.articreep.redactedpit.listeners.ContentListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
@@ -15,6 +16,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
+		getServer().getPluginManager().registerEvents(new ContentListeners(this), this);
 		ColosseumRunnable colorunnable = new ColosseumRunnable(this);
 		colorunnable.runTaskTimer(this, 20, 20);
 		// Small check to make sure that PlaceholderAPI is installed
