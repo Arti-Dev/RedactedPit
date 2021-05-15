@@ -5,6 +5,7 @@ import com.articreep.redactedpit.commands.*;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -16,6 +17,10 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
 		ColosseumRunnable colorunnable = new ColosseumRunnable(this);
 		colorunnable.runTaskTimer(this, 20, 20);
+		// Small check to make sure that PlaceholderAPI is installed
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+			new ContentExpansion(this).register();
+		}
 		getServer().getPluginManager().registerEvents(colorunnable, this);
 		this.getCommand("redacteddebug").setExecutor(new Debug(this));
 		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
