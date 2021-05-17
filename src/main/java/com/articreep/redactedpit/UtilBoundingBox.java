@@ -1,17 +1,14 @@
 package com.articreep.redactedpit;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class UtilBoundingBox {
-    private Location loc1;
-    private Location loc2;
-    private double lowerX;
-    private double higherX;
-    private double lowerY;
-    private double higherY;
-    private double lowerZ;
-    private double higherZ;
+    private final double lowerX;
+    private final double higherX;
+    private final double lowerY;
+    private final double higherY;
+    private final double lowerZ;
+    private final double higherZ;
 
     /**
      * Creates a bounding box.
@@ -21,8 +18,6 @@ public class UtilBoundingBox {
      * @param loc2 Location 2
      */
     public UtilBoundingBox(Location loc1, Location loc2) {
-        this.loc1 = loc1;
-        this.loc2 = loc2;
         if (loc1.getX() > loc2.getX()) {
             higherX = loc1.getX();
             lowerX = loc2.getX();
@@ -30,7 +25,7 @@ public class UtilBoundingBox {
             higherX = loc2.getX();
             lowerX = loc1.getX();
         }
-        if (loc1.getY() > loc2.getX()) {
+        if (loc1.getY() > loc2.getY()) {
             higherY = loc1.getY();
             lowerY = loc2.getY();
         } else {
@@ -44,7 +39,30 @@ public class UtilBoundingBox {
             higherZ = loc2.getZ();
             lowerZ = loc1.getZ();
         }
-        //Bukkit.broadcastMessage(lowerX + " " + higherX + " " + lowerY + " " + higherY + " " + lowerZ + " " + higherZ);
+    }
+
+    public UtilBoundingBox(double x1, double y1, double z1, double x2, double y2, double z2) {
+        if (x1 > x2) {
+            higherX = x1;
+            lowerX = x2;
+        } else {
+            higherX = x2;
+            lowerX = x1;
+        }
+        if (y1 > y2) {
+            higherY = y1;
+            lowerY = y2;
+        } else {
+            higherY = y2;
+            lowerY = y1;
+        }
+        if (z1 > z2) {
+            higherZ = z1;
+            lowerZ = z2;
+        } else {
+            higherZ = z2;
+            lowerZ = z1;
+        }
     }
 
     public boolean isInBox(Location loc) {

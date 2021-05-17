@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
+import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -114,6 +115,8 @@ public class RaceListeners implements Listener {
 			if (loc.getX() >= 63 && loc.getX() <= 65 && loc.getY() >= 47 && loc.getY() <= 49 && loc.getZ() >= 66 && loc.getZ() <= 68) {
 				if (RaceData.get(player) == 3) { //Has the player reached Checkpoint 3?
 					long millis = System.currentTimeMillis() - RaceTimes.get(player);
+					// Send event data to ContentListeners
+					ContentListeners.onFutureRaceComplete(event);
 					player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "RACE CLEAR! " + ChatColor.WHITE + "You finished in " + ChatColor.YELLOW + Utils.formattime(millis));
 					if (RaceFlying.get(player) == false && millis < 25000) {
 						player.sendMessage(ChatColor.GREEN + "You were awarded with an " + ChatColor.YELLOW + "Ancient Artifact " + ChatColor.GREEN + "for completing the race under 25 seconds without flying!");

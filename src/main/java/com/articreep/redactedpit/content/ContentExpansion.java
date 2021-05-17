@@ -1,6 +1,7 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.content;
 
-import com.articreep.redactedpit.listeners.ContentListeners;
+import com.articreep.redactedpit.Main;
+import com.articreep.redactedpit.content.ContentListeners;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -72,7 +73,10 @@ public class ContentExpansion extends PlaceholderExpansion {
         if(identifier.equals("percent_content")){
             //return plugin.getConfig().getString("placeholder1", "value doesnt exist");
             //TODO PLACEHOLDER FOR PLACEHOLDER LMAO
-            return ContentListeners.string;
+            if (ContentListeners.getRedactedPlayerMap().get(player) == null) {
+                return "0.00%";
+            }
+            return ContentListeners.getRedactedPlayerMap().get(player).getPercentContent() + "%";
         }
 
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)

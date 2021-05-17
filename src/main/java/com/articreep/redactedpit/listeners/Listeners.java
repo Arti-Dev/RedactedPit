@@ -10,6 +10,7 @@ import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
+import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -479,6 +480,8 @@ public class Listeners implements Listener {
 		if (itemmeta.getDisplayName().equals(RedactedGive.SunStone(1).getItemMeta().getDisplayName())) {
 			if (loc.equals(stoneLocation)) {
 				player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SUN STONE! " + ChatColor.DARK_AQUA + "Your Sun Stone will last 4 minutes!");
+				// Pass event data to ContentListeners
+				ContentListeners.onSunStonePlace(event);
 				Utils.sendbeegExplosion(15.5F, 60F, -68.5F);
 				Utils.sendExplosion(15.5F, 50.5F, -57.5F);
 				for (Player online: Bukkit.getOnlinePlayers()) {

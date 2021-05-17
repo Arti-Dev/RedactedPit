@@ -2,7 +2,8 @@ package com.articreep.redactedpit;
 
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.*;
-import com.articreep.redactedpit.listeners.ContentListeners;
+import com.articreep.redactedpit.content.ContentExpansion;
+import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
