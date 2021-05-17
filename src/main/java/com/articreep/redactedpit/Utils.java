@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.articreep.redactedpit.colosseum.AudienceOpinion;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -11,9 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 
 public class Utils {
@@ -52,6 +50,39 @@ public class Utils {
 		PacketPlayOutChat packet = new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + string + "\"}"), (byte) 2);
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 	}
+
+	/**
+	 * Sends a title to the player with designated title and subtitle
+	 * @param player Player
+	 * @param title Title
+	 * @param subtitle Subtitle
+	 * @param fadeIn Time it takes to fade in in ticks
+	 * @param stay Time it stays on the screen in ticks
+	 * @param fadeOut Time it takes to fade out in ticks
+	 */
+	public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+		PacketPlayOutTitle titlepacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, ChatSerializer.a("{\"text\": \"" + title + "\"}"));
+		PacketPlayOutTitle subtitlepacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, ChatSerializer.a("{\"text\": \"" + subtitle + "\"}"));
+		PacketPlayOutTitle length = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(titlepacket);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(subtitlepacket);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+	}
+	/**
+	 * Sends a title to the player with designated title and subtitle
+	 * @param player Player
+	 * @param title Title
+	 * @param fadeIn Time it takes to fade in in ticks
+	 * @param stay Time it stays on the screen in ticks
+	 * @param fadeOut Time it takes to fade out in ticks
+	 */
+	public static void sendTitle(Player player, String title, int fadeIn, int stay, int fadeOut) {
+		PacketPlayOutTitle titlepacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, ChatSerializer.a("{\"text\": \"" + title + "\"}"));
+		PacketPlayOutTitle length = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(titlepacket);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+	}
 	
 	/**
      * Sends a particle packet at specified location (3 particles per packet)
@@ -77,7 +108,6 @@ public class Utils {
 				}
 			}
 		}.runTaskTimer(plugin, 0, 5);
-		return;
 	}
 	
 	public static void sendGenericParticle(Main plugin, Location loc, EnumParticle particle) {
@@ -95,7 +125,6 @@ public class Utils {
 				}
 			}
 		}.runTaskTimer(plugin, 0, 5);
-		return;
 	}
 	
 	public static void sendGenericParticleOnHead(Main plugin, Player player, EnumParticle particle) {
@@ -114,7 +143,6 @@ public class Utils {
 				}
 			}
 		}.runTaskTimer(plugin, 0, 5);
-		return;
 	}
 	
 	/**
@@ -140,7 +168,6 @@ public class Utils {
 				}
 			}
 		}.runTaskTimer(plugin, 0, 5);
-		return;
 	}
 	
 	/**
@@ -175,7 +202,6 @@ public class Utils {
 		for(Player online : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
 		}
-		return;
 	}
 	
 	public static void sendAudienceEffectParticles(Location loc, AudienceOpinion opinion) {
@@ -189,7 +215,6 @@ public class Utils {
 		for(Player online : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
 		}
-		return;
 	}
 	
 	/**
@@ -204,7 +229,6 @@ public class Utils {
 		for(Player online : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
 		}
-		return;
 	}
 	
 	/**
@@ -219,7 +243,6 @@ public class Utils {
 		for(Player online : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
 		}
-		return;
 	}
 	
 	public static void sendbeegExplosion(Location loc) {
@@ -227,7 +250,6 @@ public class Utils {
 		for(Player online : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
 		}
-		return;
 	}
 	/**
 	 * Formats a long in milliseconds to a human-readable time value
@@ -236,15 +258,14 @@ public class Utils {
 	 * @return Human-readable string
 	 */
 	public static String formattime(long millis) {
-		String formattedtime = String.format("%02d:%02d:%02d:%03d", //This formats the time correctly
+		return String.format("%02d:%02d:%02d:%03d", //This formats the time correctly
 				TimeUnit.MILLISECONDS.toHours(millis),
-			    TimeUnit.MILLISECONDS.toMinutes(millis) - 
+			    TimeUnit.MILLISECONDS.toMinutes(millis) -
 			    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-			    TimeUnit.MILLISECONDS.toSeconds(millis) - 
+			    TimeUnit.MILLISECONDS.toSeconds(millis) -
 			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),
-			    millis - 
+			    millis -
 			    TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millis)));
-		return formattedtime;
 		
 	}
 	
@@ -268,4 +289,6 @@ public class Utils {
     	}
     	return list;
     }
+
+
 }

@@ -8,16 +8,30 @@ import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Main extends JavaPlugin {
+	private File playerDataFile;
+	private FileConfiguration playerConfig;
+
 	@Override
 	public void onEnable() {
 		saveDefaultConfig(); //Saves default config that is found in src/main/resources
+		createPlayerData();
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
-		getServer().getPluginManager().registerEvents(new ContentListeners(this), this);
+		try {
+			getServer().getPluginManager().registerEvents(new ContentListeners(this), this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		ColosseumRunnable colorunnable = new ColosseumRunnable(this);
 		colorunnable.runTaskTimer(this, 20, 20);
 		// Small check to make sure that PlaceholderAPI is installed
@@ -40,6 +54,30 @@ public class Main extends JavaPlugin {
     public void onDisable() {
     	getLogger().info("Disabling RedactedPit!");
     }
-    
-    
+
+	public FileConfiguration getPlayerConfig() {
+		return this.playerConfig;
+	}
+
+	public File getDataFile() {
+		return playerDataFile;
+	}
+
+    private void createPlayerData() {
+		playerDataFile = new File(getDataFolder(), "playerdata.yml");
+		if (!playerDataFile.exists()) {
+			playerDataFile.getParentFile().mkdirs();
+			saveResource("playerdata.yml", false);
+		}
+
+		playerConfig = new YamlConfiguration();
+		try {
+			playerConfig.load(playerDataFile);
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
 }
