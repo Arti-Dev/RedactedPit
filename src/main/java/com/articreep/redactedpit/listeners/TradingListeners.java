@@ -2,6 +2,8 @@ package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.commands.RedactedGive;
+import com.articreep.redactedpit.content.Content;
+import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -48,6 +50,7 @@ public class TradingListeners implements Listener {
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(new ItemStack(Material.GOLD_INGOT, 5000));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Trading Master: " + ChatColor.WHITE + "Here you go! Five thousand gold ingots.");
+					ContentListeners.onTradingMasterTrade(p);
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY..? " + ChatColor.GRAY + "You obtained " + ChatColor.GOLD + "Gold Ingot" + ChatColor.GRAY + " x5000!");
 					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
 					return;

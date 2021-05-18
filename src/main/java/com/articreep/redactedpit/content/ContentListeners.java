@@ -78,7 +78,7 @@ public class ContentListeners implements Listener {
         }
         if (!redactedPlayer.hasContent(Content.SHITASS_CHEST)) {
             if (Content.SHITASS_CHEST.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.SHITASS_CHEST);
+                discoverContent(redactedPlayer, Content.SHITASS_CHEST, ChatColor.RED + "Random Crap Discovered");
             }
         }
         if (!redactedPlayer.hasContent(Content.EGYPT)) {
@@ -96,6 +96,31 @@ public class ContentListeners implements Listener {
                 discoverContent(redactedPlayer, Content.ANCIENT_TOWN);
             }
         }
+        if (!redactedPlayer.hasContent(Content.HIDDEN_ARCHAEOLOGIST)) {
+            if (Content.HIDDEN_ARCHAEOLOGIST.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.HIDDEN_ARCHAEOLOGIST);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.LAVA_PIT)) {
+            if (Content.LAVA_PIT.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.LAVA_PIT, ChatColor.RED + "Random Crap Discovered");
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.FIRE_TRIAL)) {
+            if (Content.FIRE_TRIAL.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.FIRE_TRIAL, ChatColor.AQUA + "Bad Content Discovered");
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.BOB_DESERT)) {
+            if (Content.BOB_DESERT.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.BOB_DESERT, ChatColor.AQUA + "Bob");
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.NINJAFREEZE)) {
+            if (Content.NINJAFREEZE.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.NINJAFREEZE, ChatColor.RED + "Random Crap Discovered");
+            }
+        }
     }
 
     // Specifically for placement of the Sun Stone
@@ -104,6 +129,22 @@ public class ContentListeners implements Listener {
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
         if (!redactedPlayer.hasContent(Content.SUN_STONE_PLACE)) {
             discoverContent(redactedPlayer, Content.SUN_STONE_PLACE);
+        }
+    }
+
+    // Specifically when player trades Ancient Artifact to Trading Master
+    public static void onTradingMasterTrade(Player player) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        if (!redactedPlayer.hasContent(Content.TRADE_ANCIENT_ARTIFACT_TO_TRADEMASTER)) {
+            discoverContent(redactedPlayer, Content.TRADE_ANCIENT_ARTIFACT_TO_TRADEMASTER, ChatColor.DARK_PURPLE + "Quest Complete");
+        }
+    }
+
+    // Specifically when player places Divine Glass
+    public static void onDivineGlassPlace(BlockPlaceEvent event) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
+        if (!redactedPlayer.hasContent(Content.DIVINE_GLASS)) {
+            discoverContent(redactedPlayer, Content.DIVINE_GLASS);
         }
     }
 

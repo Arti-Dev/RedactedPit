@@ -1,6 +1,8 @@
 package com.articreep.redactedpit.content;
 
 import com.articreep.redactedpit.UtilBoundingBox;
+import org.bukkit.ChatColor;
+import org.graalvm.compiler.core.common.util.Util;
 
 public enum Content {
     // Some of these enums have boundingboxes that must be entered to discover
@@ -17,6 +19,23 @@ public enum Content {
                     "Here are some things you can do:\n" +
                     "Sell your artifacts to the villagers for gold\n" +
                     "Sell your artifacts for special items"),
+    //TODO add shovel item
+    LAVA_PIT(new UtilBoundingBox(-5, 43, -68, -20, 51, -87), "Pit of Things that are dead to me",
+            ChatColor.RED + "" + ChatColor.BOLD + "jump in, you're dead to us."),
+    HIDDEN_ARCHAEOLOGIST(new UtilBoundingBox(6, 38, -27, 0, 41, -34), "Hidden Archaeologist",
+            "This NPC has been living under de watah for ages. \nThis content was never properly coded."),
+    FIRE_TRIAL(new UtilBoundingBox(69, 93, -95, 81, 105, -73), "Fire Trials",
+            "Another rip-off from SkyBlock.."),
+    BOB_DESERT(new UtilBoundingBox(49, 72, -99, 55, 84, -92), "Bob, fixing the ladder.",
+            "Whose idea was this?"),
+    TRADE_ANCIENT_ARTIFACT_TO_TRADEMASTER(null, "Too Much Gold", "Why would you do that?\n" +
+            "Joke: The gold system didn't exist when I made this, so I instead gave the player a lot of gold ingots."),
+    NINJAFREEZE(new UtilBoundingBox(108, 45, -12, 116, 48, -17), "Ninjafreeze's Cell",
+            "Note from Arti: I didn't make this, and I don't know why someone did.."),
+    DIVINE_GLASS(null, "Divine Glass",
+            "Divine Glass is essentially your everyday Pit obsidian - \nexcept it breaks much more quickly, and it's glass!\n" +
+                    "Our intentions were to create a block that would be used temporarily to block players off, not long-term.\n" +
+                    "Plus, it's kept on death!"),
     FUTURE_RACE_DISCOVERY(new UtilBoundingBox(58, 47, 65, 68, 61, 75), "Future Race",
             "A race that's based around launchpads!"),
     FUTURE_RACE_COMPLETE(null, "Future Race Complete", "There's a secret reward that probably isn't obtainable with commands."),

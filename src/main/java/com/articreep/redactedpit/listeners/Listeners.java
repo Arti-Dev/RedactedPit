@@ -435,6 +435,7 @@ public class Listeners implements Listener {
 		if (itemmeta.hasDisplayName() == false) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.DivineGlass(1).getItemMeta().getDisplayName())) { 
 			glassLocations.put(location, time);
+			ContentListeners.onDivineGlassPlace(event);
 			new BukkitRunnable() {
 				//After around 10 seconds check if the ORIGINAL block is still there.
 				//If the block was broken and replaced, it will not remove the block in this Runnable instance.
