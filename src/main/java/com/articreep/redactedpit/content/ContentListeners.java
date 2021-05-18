@@ -66,6 +66,36 @@ public class ContentListeners implements Listener {
                 discoverContent(redactedPlayer, Content.DAX_DUNGEON);
             }
         }
+        if (!redactedPlayer.hasContent(Content.DAX_DUNGEON_END)) {
+            if (Content.DAX_DUNGEON_END.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.DAX_DUNGEON_END);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.JUMP_IN_PIT)) {
+            if (Content.JUMP_IN_PIT.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.JUMP_IN_PIT);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.SHITASS_CHEST)) {
+            if (Content.SHITASS_CHEST.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.SHITASS_CHEST);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.EGYPT)) {
+            if (Content.EGYPT.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.EGYPT);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.SUN_PYRAMID)) {
+            if (Content.SUN_PYRAMID.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.SUN_PYRAMID);
+            }
+        }
+        if (!redactedPlayer.hasContent(Content.ANCIENT_TOWN)) {
+            if (Content.ANCIENT_TOWN.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.ANCIENT_TOWN);
+            }
+        }
     }
 
     // Specifically for placement of the Sun Stone
@@ -117,6 +147,8 @@ public class ContentListeners implements Listener {
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, ChatColor.BLUE + "Content Discovered", content.getId(), 5, 60, 5);
+        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
+        player.sendMessage(content.getDescription());
     }
 
     /**
@@ -130,5 +162,7 @@ public class ContentListeners implements Listener {
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, title, content.getId(), 5, 60, 5);
+        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
+        player.sendMessage(content.getDescription());
     }
 }

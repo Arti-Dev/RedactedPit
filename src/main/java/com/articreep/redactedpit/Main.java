@@ -39,6 +39,7 @@ public class Main extends JavaPlugin {
 			new ContentExpansion(this).register();
 		}
 		getServer().getPluginManager().registerEvents(colorunnable, this);
+		this.getCommand("resetcontent").setExecutor(new ResetContent());
 		this.getCommand("redacteddebug").setExecutor(new Debug(this));
 		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
 		this.getCommand("redactedgive").setExecutor(new RedactedGive(this));

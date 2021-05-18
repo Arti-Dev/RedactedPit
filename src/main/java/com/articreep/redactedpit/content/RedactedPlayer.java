@@ -43,6 +43,8 @@ public class RedactedPlayer {
             for (String string : tempList) {
                 contentDiscovered.add(Content.valueOf(string));
             }
+            // Update percentContent just in case something new was added
+            calculatePercentContent();
         } else {
             saveData();
         }
@@ -61,7 +63,11 @@ public class RedactedPlayer {
         plugin.getPlayerConfig().save(plugin.getDataFile());
     }
 
-    //TODO Add method that resets player
+    public void resetData() throws IOException {
+        percentContent = 0.00;
+        contentDiscovered = new HashSet<Content>();
+        saveData();
+    }
 
     public void calculatePercentContent() {
         // Length of contentDiscovered divide by total amount of content in the Content enum

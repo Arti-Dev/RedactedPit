@@ -28,3 +28,6 @@ commands:
   redacteddebug:
     description: Debug, shhh.
     usage: /redacteddebug
+  resetcontent:
+    description: Resets content for people
+    usage: /resetcontent <optional player>
