@@ -1,14 +1,13 @@
 package com.articreep.redactedpit.content;
 
 import com.articreep.redactedpit.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import com.articreep.redactedpit.colosseum.AudienceEffect;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -16,6 +15,7 @@ import org.bukkit.event.world.WorldSaveEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Set;
 
 public class ContentListeners implements Listener {
     private Main plugin;
@@ -52,74 +52,97 @@ public class ContentListeners implements Listener {
     // Specifically for content that only requires user to step inside a box
     @EventHandler
     public void onContentDiscover(PlayerMoveEvent event) {
+        //TODO Condense into a loop
         Location loc = event.getTo();
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
         // Is the user discovering the Future Race?
-        if (!redactedPlayer.hasContent(Content.FUTURE_RACE_DISCOVERY)) {
-            if (Content.FUTURE_RACE_DISCOVERY.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.FUTURE_RACE_DISCOVERY);
-            }
+        if (Content.FUTURE_RACE_DISCOVERY.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.FUTURE_RACE_DISCOVERY);
         }
         // Is the user discovering Dax's Dungeon?
-        if (!redactedPlayer.hasContent(Content.DAX_DUNGEON)) {
-            if (Content.DAX_DUNGEON.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.DAX_DUNGEON);
-            }
+        if (Content.DAX_DUNGEON.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.DAX_DUNGEON);
         }
-        if (!redactedPlayer.hasContent(Content.DAX_DUNGEON_END)) {
-            if (Content.DAX_DUNGEON_END.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.DAX_DUNGEON_END);
-            }
+        if (Content.DAX_DUNGEON_END.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.DAX_DUNGEON_END);
         }
-        if (!redactedPlayer.hasContent(Content.JUMP_IN_PIT)) {
-            if (Content.JUMP_IN_PIT.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.JUMP_IN_PIT);
-            }
+        if (Content.JUMP_IN_PIT.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.JUMP_IN_PIT);
         }
-        if (!redactedPlayer.hasContent(Content.SHITASS_CHEST)) {
-            if (Content.SHITASS_CHEST.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.SHITASS_CHEST, ChatColor.RED + "Random Crap Discovered");
-            }
+        if (Content.SHITASS_CHEST.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.SHITASS_CHEST, ChatColor.RED + "Random Crap Discovered");
         }
-        if (!redactedPlayer.hasContent(Content.EGYPT)) {
-            if (Content.EGYPT.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.EGYPT);
-            }
+        if (Content.EGYPT.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.EGYPT);
         }
-        if (!redactedPlayer.hasContent(Content.SUN_PYRAMID)) {
-            if (Content.SUN_PYRAMID.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.SUN_PYRAMID);
-            }
+        if (Content.SUN_PYRAMID.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.SUN_PYRAMID);
         }
-        if (!redactedPlayer.hasContent(Content.ANCIENT_TOWN)) {
-            if (Content.ANCIENT_TOWN.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.ANCIENT_TOWN);
-            }
+        if (Content.ANCIENT_TOWN.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.ANCIENT_TOWN);
         }
-        if (!redactedPlayer.hasContent(Content.HIDDEN_ARCHAEOLOGIST)) {
-            if (Content.HIDDEN_ARCHAEOLOGIST.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.HIDDEN_ARCHAEOLOGIST);
-            }
+        if (Content.HIDDEN_ARCHAEOLOGIST.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.HIDDEN_ARCHAEOLOGIST);
         }
-        if (!redactedPlayer.hasContent(Content.LAVA_PIT)) {
-            if (Content.LAVA_PIT.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.LAVA_PIT, ChatColor.RED + "Random Crap Discovered");
-            }
+        if (Content.LAVA_PIT.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.LAVA_PIT, ChatColor.RED + "Random Crap Discovered");
         }
-        if (!redactedPlayer.hasContent(Content.FIRE_TRIAL)) {
-            if (Content.FIRE_TRIAL.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.FIRE_TRIAL, ChatColor.AQUA + "Bad Content Discovered");
-            }
+        if (Content.FIRE_TRIAL.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.FIRE_TRIAL, ChatColor.AQUA + "Bad Content Discovered");
         }
-        if (!redactedPlayer.hasContent(Content.BOB_DESERT)) {
-            if (Content.BOB_DESERT.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.BOB_DESERT, ChatColor.AQUA + "Bob");
-            }
+        if (Content.BOB_DESERT.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.BOB_DESERT, ChatColor.AQUA + "Bob");
         }
-        if (!redactedPlayer.hasContent(Content.NINJAFREEZE)) {
-            if (Content.NINJAFREEZE.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.NINJAFREEZE, ChatColor.RED + "Random Crap Discovered");
-            }
+        if (Content.NINJAFREEZE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.NINJAFREEZE, ChatColor.RED + "Random Crap Discovered");
+        }
+        if (Content.FUTURE.getBox().isInBoxExclude(loc)) {
+            discoverContent(redactedPlayer, Content.FUTURE);
+        }
+        if (Content.STIM_GUN_RHYLIE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.STIM_GUN_RHYLIE);
+        }
+        if (Content.TIME_MACHINE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.TIME_MACHINE);
+        }
+        if (Content.STRANDED_TRAVELER.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.STRANDED_TRAVELER);
+        }
+        if (Content.JURASSIC_CAVE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.JURASSIC_CAVE);
+        }
+        if (Content.BOBCATG.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.BOBCATG, ChatColor.RED + "Random Crap Discovered");
+        }
+        if (Content.SCRAPPED_ALTAR.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.SCRAPPED_ALTAR);
+        }
+        if (Content.JURASSIC.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.JURASSIC);
+        }
+        if (Content.COLOSSEUM.getBox().isInBoxExclude(loc)) {
+            discoverContent(redactedPlayer, Content.COLOSSEUM);
+        }
+        if (Content.ARTI_CAKE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.ARTI_CAKE, ChatColor.RED + "Random Crap Discovered");
+        }
+        if (Content.UNDERGROUND_SHORTCUTS.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.UNDERGROUND_SHORTCUTS);
+        }
+        if (Content.SKYBLOCK_ROOM.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.SKYBLOCK_ROOM);
+        }
+        if (Content.PUNCHING_BAG.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.PUNCHING_BAG);
+        }
+        if (Content.TAYLOR_HATS.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.TAYLOR_HATS);
+        }
+        if (Content.AUCTION_HOUSE.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.AUCTION_HOUSE);
+        }
+        if (Content.RHYLIE_COMMAND_BUNKER.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.RHYLIE_COMMAND_BUNKER, ChatColor.DARK_GRAY + "Secret Discovered");
         }
     }
 
@@ -128,7 +151,7 @@ public class ContentListeners implements Listener {
         // This method is only called from the Sun Stone event, therefore no need to verify
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
         if (!redactedPlayer.hasContent(Content.SUN_STONE_PLACE)) {
-            discoverContent(redactedPlayer, Content.SUN_STONE_PLACE);
+            discoverContent(redactedPlayer, Content.SUN_STONE_PLACE, ChatColor.DARK_PURPLE + "Quest Complete");
         }
     }
 
@@ -157,9 +180,52 @@ public class ContentListeners implements Listener {
         }
     }
 
+    // Specifically for jumppads
+    public static void onJumppad(PlayerInteractEvent event) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
+        if (!redactedPlayer.hasContent(Content.JUMPPADS)) {
+            discoverContent(redactedPlayer, Content.JUMPPADS);
+        }
+    }
+
+    // Specifically for activating Void Charms
+    public static void onVoidCharm(PlayerTouchVoidEvent event) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
+        if (!redactedPlayer.hasContent(Content.VOID_CHARM)) {
+            discoverContent(redactedPlayer, Content.VOID_CHARM);
+        }
+    }
+
+    // POG TOWER!!
+    @EventHandler
+    public void onPogTowerClick(PlayerInteractEvent event) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
+        if (!redactedPlayer.hasContent(Content.POG_TOWER)) {
+            Location loc = event.getPlayer().getTargetBlock((Set<Material>) null, 200).getLocation();
+            if (Content.POG_TOWER.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.POG_TOWER, ChatColor.RED + "Random Crap Discovered");
+            }
+        }
+    }
+
+    // Specifically when the user gets hit by an audience effect
+    public static void onAudienceEffect(Player player, AudienceEffect effect) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        // First, check if they even have the content for discovering the audience
+        discoverContent(redactedPlayer, Content.AUDIENCE);
+        // Next, check what effect it was
+        if (effect == AudienceEffect.HOT_POTATO) {
+            discoverContent(redactedPlayer, Content.HOT_POTATO);
+        } else if (effect == AudienceEffect.LARGEKB) {
+            discoverContent(redactedPlayer, Content.LARGEKB);
+        } else if (effect == AudienceEffect.BLASTED_AWAY) {
+            discoverContent(redactedPlayer, Content.BLASTED_AWAY);
+        }
+    }
+
     /**
      * Gets a RedactedPlayer instance of the player. If one does not exist this will return null.
-     * @param player
+     * @param player Bukkit Player
      * @return RedactedPlayer
      */
     public static RedactedPlayer getRedactedPlayer(Player player) {
@@ -184,6 +250,7 @@ public class ContentListeners implements Listener {
      * @param content The content being given
      */
     public static void discoverContent(RedactedPlayer redplayer, Content content) {
+        if (redplayer.hasContent(content)) return;
         Player player = redplayer.getPlayer();
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
@@ -199,6 +266,7 @@ public class ContentListeners implements Listener {
      * @param title Title to show player
      */
     public static void discoverContent(RedactedPlayer redplayer, Content content, String title) {
+        if (redplayer.hasContent(content)) return;
         Player player = redplayer.getPlayer();
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);

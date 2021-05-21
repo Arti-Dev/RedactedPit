@@ -71,12 +71,17 @@ public class ContentExpansion extends PlaceholderExpansion {
 
         // %someplugin_placeholder1%
         if(identifier.equals("percent_content")){
-            //return plugin.getConfig().getString("placeholder1", "value doesnt exist");
             //TODO PLACEHOLDER FOR PLACEHOLDER LMAO
             if (ContentListeners.getRedactedPlayer(player) == null) {
                 return "0.00%";
             }
             return ContentListeners.getRedactedPlayer(player).getPercentContent() + "%";
+        }
+        if (identifier.equals("frac_content")) {
+            if (ContentListeners.getRedactedPlayer(player) == null) {
+                return "0/0";
+            }
+            return ContentListeners.getRedactedPlayer(player).getFracContent();
         }
 
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)

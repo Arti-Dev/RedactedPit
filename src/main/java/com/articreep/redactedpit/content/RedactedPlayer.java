@@ -16,6 +16,7 @@ public class RedactedPlayer {
     private Player player;
     private Main plugin;
     private UUID uuid;
+    private String fracContent;
     private double percentContent;
     private HashSet<Content> contentDiscovered;
 
@@ -23,6 +24,7 @@ public class RedactedPlayer {
         this.player = player;
         this.plugin = plugin;
         this.uuid = player.getUniqueId();
+        this.fracContent = "0/" + Content.values().length;
         this.percentContent = 0.00;
         this.contentDiscovered = new HashSet<Content>();
     }
@@ -77,10 +79,16 @@ public class RedactedPlayer {
         BigDecimal bd = BigDecimal.valueOf(number);
         bd = bd.setScale(1, RoundingMode.DOWN);
         percentContent = bd.doubleValue();
+        fracContent = contentDiscovered.size() + "/" + Content.values().length;
     }
+
 
     public double getPercentContent() {
         return percentContent;
+    }
+
+    public String getFracContent() {
+        return fracContent;
     }
 
     public void addContent(Content content) {

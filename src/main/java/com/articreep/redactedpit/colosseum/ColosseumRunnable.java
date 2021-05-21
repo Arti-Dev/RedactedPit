@@ -9,6 +9,7 @@ import com.articreep.redactedpit.commands.Debug;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -327,6 +328,8 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 				currentLoc.getWorld().playSound(currentLoc, Sound.CLICK, 1, 0.25F);
 				// There may be a less costly way to do this
 				if (currentLoc.distance(player.getPlayer().getLocation().add(0, 1, 0)) <= 1) {
+					// Grant content
+					ContentListeners.onAudienceEffect(player, effect);
 					// Give the player their effect
 					
 					if (effect == AudienceEffect.ABSORPTION) {
@@ -396,6 +399,8 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 							}
 						}.runTaskLater(plugin, 200);
 					} else if (effect == AudienceEffect.BLASTED_AWAY) {
+						player.sendMessage(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_BLUE +
+								"The audience blasted anyone in a 4 block radius away from you!");
 						List<Entity> list = Utils.filterPlayersFromList(player.getNearbyEntities(4, 4, 4));
 						for (int i = 0; i < list.size(); i++) {
 				    		Player victim = (Player) list.get(i);

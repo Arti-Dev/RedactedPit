@@ -10,6 +10,7 @@ import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
+import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -66,11 +67,13 @@ public class Listeners implements Listener {
 			}
 			if (block.getType() == Material.GOLD_PLATE) { //If big jumppad
 				player.setVelocity(new Vector(0, 1.5, 0));
-				player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 0.5F, 1); 
+				player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 0.5F, 1);
+				ContentListeners.onJumppad(event);
 			}
 			if (block.getType() == Material.IRON_PLATE) { //If small jumppad
 				player.setVelocity(new Vector(0, 1.1, 0));
 				player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 0.5F, 1);
+				ContentListeners.onJumppad(event);
 			}
 		}
 	}
@@ -393,6 +396,7 @@ public class Listeners implements Listener {
 		}
 		if (inventory.containsAtLeast(RedactedGive.VoidCharm(1),1)) {
 			event.setCancelled(true);
+			ContentListeners.onVoidCharm(event);
 			world.strikeLightningEffect(player.getLocation());
 			player.damage(6);
 			if (player.getHealth() == 0) {

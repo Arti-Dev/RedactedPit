@@ -9,6 +9,12 @@ public class UtilBoundingBox {
     private final double higherY;
     private final double lowerZ;
     private final double higherZ;
+    private final double highereX;
+    private final double highereY;
+    private final double highereZ;
+    private final double lowereX;
+    private final double lowereY;
+    private final double lowereZ;
 
     /**
      * Creates a bounding box.
@@ -39,6 +45,12 @@ public class UtilBoundingBox {
             higherZ = loc2.getZ();
             lowerZ = loc1.getZ();
         }
+        highereX = 0;
+        highereY = 0;
+        highereZ = 0;
+        lowereX = 0;
+        lowereY = 0;
+        lowereZ = 0;
     }
 
     public UtilBoundingBox(double x1, double y1, double z1, double x2, double y2, double z2) {
@@ -63,9 +75,78 @@ public class UtilBoundingBox {
             higherZ = z2;
             lowerZ = z1;
         }
+        highereX = 0;
+        highereY = 0;
+        highereZ = 0;
+        lowereX = 0;
+        lowereY = 0;
+        lowereZ = 0;
+    }
+
+
+    public UtilBoundingBox(double x1, double y1, double z1, double x2, double y2, double z2, double ex1, double ey1, double ez1, double ex2, double ey2, double ez2) {
+        if (x1 > x2) {
+            higherX = x1;
+            lowerX = x2;
+        } else {
+            higherX = x2;
+            lowerX = x1;
+        }
+        if (y1 > y2) {
+            higherY = y1;
+            lowerY = y2;
+        } else {
+            higherY = y2;
+            lowerY = y1;
+        }
+        if (z1 > z2) {
+            higherZ = z1;
+            lowerZ = z2;
+        } else {
+            higherZ = z2;
+            lowerZ = z1;
+        }
+        // Start exclusion hitbox
+        if (ex1 > ex2) {
+            highereX = ex1;
+            lowereX = ex2;
+        } else {
+            highereX = ex2;
+            lowereX = ex1;
+        }
+        if (ey1 > ey2) {
+            highereY = ey1;
+            lowereY = ey2;
+        } else {
+            highereY = ey2;
+            lowereY = ey1;
+        }
+        if (ez1 > ez2) {
+            highereZ = ez1;
+            lowereZ = ez2;
+        } else {
+            highereZ = ez2;
+            lowereZ = ez1;
+        }
+
     }
 
     public boolean isInBox(Location loc) {
+        if ((lowerX <= loc.getX() && loc.getX() <= higherX
+                && lowerY <= loc.getY() && loc.getY() <= higherY
+                && lowerZ <= loc.getZ() && loc.getZ() <= higherZ )) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isInBoxExclude(Location loc) {
+        // If in exclusion area return false
+        if ((lowereX <= loc.getX() && loc.getX() <= highereX
+                && lowereY <= loc.getY() && loc.getY() <= highereY
+                && lowereZ <= loc.getZ() && loc.getZ() <= highereZ )) {
+            return false;
+        }
         if ((lowerX <= loc.getX() && loc.getX() <= higherX
                 && lowerY <= loc.getY() && loc.getY() <= higherY
                 && lowerZ <= loc.getZ() && loc.getZ() <= higherZ )) {
