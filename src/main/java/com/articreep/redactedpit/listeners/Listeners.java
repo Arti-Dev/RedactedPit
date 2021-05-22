@@ -33,6 +33,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
@@ -606,6 +609,46 @@ public class Listeners implements Listener {
 				i++;
 			}
 		}.runTaskTimer(plugin, 0, 5);
+	}
+
+	// HashSet to store people who've opened chests
+	HashSet<Player> chestSet = new HashSet<>();
+	// If a player opens a chest, they cannot interact with the contents
+	@EventHandler
+	public void onOpenChest(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		// Is it a chest?
+		if (event.getClickedBlock() == null) return;
+		if (event.getClickedBlock().getType() == Material.CHEST) {
+			if (!player.hasPermission("redactedpit.modifychests")) {
+				chestSet.add(player);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent event) {
+		Player player = (Player) event.getWhoClicked();
+		if (chestSet.contains(player)) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "You may not alter the contents of this chest!");
+		}
+	}
+
+	@EventHandler
+	public void onInventoryClick(InventoryDragEvent event) {
+		Player player = (Player) event.getWhoClicked();
+		if (chestSet.contains(player)) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "You may not alter the contents of this chest!");
+		}
+	}
+
+	// If a player closes a chest
+	@EventHandler
+	public void onCloseChest(InventoryCloseEvent event) {
+		Player player = (Player) event.getPlayer();
+		chestSet.remove(player);
 	}
 	
 	
