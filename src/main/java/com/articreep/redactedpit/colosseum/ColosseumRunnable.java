@@ -309,9 +309,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 			@Override
 			public void run() {
 				EnumParticle particle = null;
-				if (player == null) {
-					this.cancel();
-				}
+				if (!player.isOnline()) this.cancel();
 				if (effect.getOpinion() == AudienceOpinion.POSITIVE) {
 					particle = EnumParticle.VILLAGER_HAPPY;
 				} else if (effect.getOpinion() == AudienceOpinion.NEGATIVE) {
