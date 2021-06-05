@@ -32,26 +32,26 @@ public class RaceListeners implements Listener {
 	public RaceListeners(Main plugin) {
 		this.plugin = plugin;
 	}
-	public static HashMap<Player, Boolean> RaceFlying = new HashMap<Player, Boolean>();
-	public static HashMap<Player, Integer> RaceData = new HashMap<Player, Integer>();
-	public static HashMap<Player, Long> RaceTimes = new HashMap<Player, Long>();
-	public static HashMap<Player, BukkitTask> ActionBarMap = new HashMap<Player, BukkitTask>();
-	public static HashMap<Player, ArrayList<BukkitTask>> ParticleMap = new HashMap<Player, ArrayList<BukkitTask>>();
-	public static HashMap<Player, Boolean> RaceCooldown = new HashMap<Player, Boolean>();
+	public static HashMap<Player, Boolean> RaceFlying = new HashMap<>();
+	public static HashMap<Player, Integer> RaceData = new HashMap<>();
+	public static HashMap<Player, Long> RaceTimes = new HashMap<>();
+	public static HashMap<Player, BukkitTask> ActionBarMap = new HashMap<>();
+	public static HashMap<Player, ArrayList<BukkitTask>> ParticleMap = new HashMap<>();
+	public static HashMap<Player, Boolean> RaceCooldown = new HashMap<>();
 	@EventHandler
 	public void onRaceStart(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		Location loc = player.getLocation();
 		if (event.getAction() == Action.PHYSICAL) { //You have to trigger the pressure plate to start it
 			if (loc.getX() < 60 && 56 < loc.getX() && loc.getY() == 47 && 70 < loc.getBlockZ() && loc.getBlockZ() < 77 
-					&& player.getWorld().getName().equals("redacted2") && RaceCooldown.containsKey(player) == false) {
+					&& player.getWorld().getName().equals("redacted2") && !RaceCooldown.containsKey(player)) {
 				if (player.isFlying()) return;
 				//Resets everything if you've already started
-				if (RaceData.containsKey(player) == true) {
+				if (RaceData.containsKey(player)) {
 					resetData(player);
 				}
 				// Runs regardless whether you started already or not
-				if (RaceData.containsKey(player) == false) {
+				if (!RaceData.containsKey(player)) {
 					player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "FUTURE RACE " + ChatColor.WHITE + "You started the race! Use /cancelrace to quit.");
 					player.playSound(player.getLocation(), Sound.NOTE_PLING, 20, 1.414F);
 					RaceData.put(player, 0);
@@ -118,7 +118,7 @@ public class RaceListeners implements Listener {
 					// Send event data to ContentListeners
 					ContentListeners.onFutureRaceComplete(event);
 					player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "RACE CLEAR! " + ChatColor.WHITE + "You finished in " + ChatColor.YELLOW + Utils.formattime(millis));
-					if (RaceFlying.get(player) == false && millis < 25000) {
+					if (!RaceFlying.get(player) && millis < 25000) {
 						player.sendMessage(ChatColor.GREEN + "You were awarded with an " + ChatColor.YELLOW + "Ancient Artifact " + ChatColor.GREEN + "for completing the race under 25 seconds without flying!");
 						player.getInventory().addItem(RedactedGive.AncientArtifact(1));
 					}
@@ -142,7 +142,7 @@ public class RaceListeners implements Listener {
 	
 	@EventHandler
 	public void onToggleFly(PlayerToggleFlightEvent event) {
-		if (event.isFlying() && RaceData.containsKey(event.getPlayer()) && RaceFlying.get(event.getPlayer()) == false) {
+		if (event.isFlying() && RaceData.containsKey(event.getPlayer()) && !RaceFlying.get(event.getPlayer())) {
 			RaceFlying.put(event.getPlayer(), true);
 			Bukkit.getLogger().info(event.getPlayer().getName() + " started flying during the Future Race!");
 		}
@@ -170,18 +170,17 @@ public class RaceListeners implements Listener {
 	
 	public BukkitTask sendParticle(Player player, Double x, Double y, Double z) {
 		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, true, x.floatValue(), y.floatValue(), z.floatValue(), 0.1F, 0.1F, 0.1F, 1, 25);
-		BukkitTask task = new BukkitRunnable() {
+
+		return new BukkitRunnable() {
 			@Override
 			public void run() {
 				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 			}
 		}.runTaskTimer(plugin, 5, 5);
-		
-		return task;
 	}
 	
 	public ArrayList<BukkitTask> particletrails(Player player) {
-		ArrayList<BukkitTask> taskarray = new ArrayList<BukkitTask>();
+		ArrayList<BukkitTask> taskarray = new ArrayList<>();
 		BukkitTask task1 = sendParticle(player, 37.978, 49.501, 69.945);
 		taskarray.add(task1);
 		BukkitTask task2 = sendParticle(player, 25.838, 59.139, 65.782);
@@ -214,8 +213,8 @@ public class RaceListeners implements Listener {
 		Utils.sendActionBar(player, "");
 		RaceTimes.remove(player);
 		ArrayList<BukkitTask> particlelist = ParticleMap.get(player);
-		for (int i = 0; i < particlelist.size(); i++) {
-			particlelist.get(i).cancel();
+		for (BukkitTask bukkitTask : particlelist) {
+			bukkitTask.cancel();
 		}
 		RaceFlying.remove(player);
 	}

@@ -2,8 +2,8 @@ package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.commands.RedactedGive;
-import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,8 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.md_5.bungee.api.ChatColor;
-
 public class TradingListeners implements Listener {
 	Main plugin;
 	public TradingListeners(Main plugin) {
@@ -27,7 +25,7 @@ public class TradingListeners implements Listener {
     	Player p = (Player) e.getWhoClicked();
     	Inventory inventory = p.getInventory();
         final ItemStack clickedItem = e.getCurrentItem();
-    	if (e.getView().getTitle() == "Trading Mastah") {
+    	if (e.getView().getTitle().equals("Trading Mastah")) {
 	        e.setCancelled(true);
 	        // verify current item is not null
 	        if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
@@ -53,8 +51,7 @@ public class TradingListeners implements Listener {
 					ContentListeners.onTradingMasterTrade(p);
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY..? " + ChatColor.GRAY + "You obtained " + ChatColor.GOLD + "Gold Ingot" + ChatColor.GRAY + " x5000!");
 					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
-					return;
-	        	} else {
+				} else {
 	        		p.closeInventory();
 	        		p.sendMessage(ChatColor.RED + "You don't have any Ancient Artifacts in your inventory!");
 	        	}
