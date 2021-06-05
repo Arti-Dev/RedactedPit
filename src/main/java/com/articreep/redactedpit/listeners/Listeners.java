@@ -1,8 +1,5 @@
 package com.articreep.redactedpit.listeners;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.PlayerTouchVoidEvent;
 import com.articreep.redactedpit.Utils;
@@ -10,14 +7,11 @@ import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
-import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -47,9 +41,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Listeners implements Listener {
 	Main plugin;
@@ -82,11 +75,17 @@ public class Listeners implements Listener {
 	}
 	
 	//When players die in the redacted world they are immediately respawned and teleported
-	//TODO Maybe not hardcode the respawn location?
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		Player player = (Player) event.getEntity();
-		Location location = new Location(Bukkit.getWorld("redacted2"), -1, 71, 9, 180f, 0.784f);
+		Player player = event.getEntity();
+		// Load from config
+		double x = plugin.getConfig().getDouble("spawn.x");
+		double y = plugin.getConfig().getDouble("spawn.y");
+		double z = plugin.getConfig().getDouble("spawn.z");
+		float yaw = (float) plugin.getConfig().getDouble("spawn.yaw");
+		float pitch = (float) plugin.getConfig().getDouble("spawn.pitch");
+		Location location = new Location(Bukkit.getWorld("redacted2"), x, y, z, yaw, pitch);
+
 		if (player.getWorld().getName().equals("redacted2")) {
 			new BukkitRunnable() {
 				@Override
@@ -99,9 +98,7 @@ public class Listeners implements Listener {
 			}.runTaskLater(plugin, 1);
 		}
 	}
-	
-	public static HashMap<Player, Player> CombatTags = new HashMap<Player, Player>();
-	public static HashMap<Player, Player> KnockbackTags = new HashMap<Player, Player>();
+
 	@EventHandler //TODO Clean up
 	public void onPlayerKillPlayer(EntityDamageByEntityEvent event) { //Grants players golden apples on killing other players
 		if (event.isCancelled()) return;
@@ -109,12 +106,12 @@ public class Listeners implements Listener {
 		// Since the victim is a player, we can cast it to a Player object
 		Player victim = (Player) event.getEntity();
 		// Initialize damager object
-		Player damager = null;
-		Location loc = null;
+		Player damager;
+		Location loc;
 		boolean onKOTH = false;
 		boolean inColo = false;
-		ColosseumPlayer victimcolo = null;
-		ColosseumPlayer damagercolo = null;
+		ColosseumPlayer victimcolo;
+		ColosseumPlayer damagercolo;
 		int quantity = 1;
 		// Find out who the damager is
 		
@@ -130,7 +127,7 @@ public class Listeners implements Listener {
 		}
 		loc = damager.getLocation();
 		// Is the KOTH on/Is the player on the KOTH?
-		if (stoneplaced == true) {
+		if (stoneplaced) {
 			if ((9 <= loc.getX() && loc.getX() <= 21 
 					&& 51 <= loc.getY() && loc.getY() <= 58 
 					&& -75 <= loc.getZ() && loc.getZ() <= -63 )) {
@@ -154,7 +151,7 @@ public class Listeners implements Listener {
 			}
 		}
 		// Did the player smack them with a hot potato?
-		if (damager.getItemInHand().hasItemMeta() == true && damager.getItemInHand().getItemMeta().hasDisplayName()) {
+		if (damager.getItemInHand().hasItemMeta() && damager.getItemInHand().getItemMeta().hasDisplayName()) {
 			if (damager.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.HotPotato(1).getItemMeta().getDisplayName())) {
 				// Only real players can pass the potato
 				if (!(victimcolo == null || damagercolo == null)) {
@@ -202,7 +199,7 @@ public class Listeners implements Listener {
 		}
 		
 		// Does the victim currently have a 25% blocking buff?
-		if (victimcolo != null && victimcolo.getBlockBuff() == true) {
+		if (victimcolo != null && victimcolo.getBlockBuff()) {
 			if (victim.isBlocking()) {
 				// Uhh.. is this a good way of doing this?
 				event.setDamage(event.getDamage() * 0.75);
@@ -211,7 +208,7 @@ public class Listeners implements Listener {
 		// Was it actually a kill?
 		if (victim.getHealth() <= event.getFinalDamage()) {
 			damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, quantity));
-			if (quantity == 2 && onKOTH == true) {
+			if (quantity == 2 && onKOTH) {
 				damager.sendMessage(ChatColor.GREEN + "You gained two golden apples because of the Sun KOTH!");
 			} else if (inColo) {
 				// Increase kill and death counts
@@ -227,8 +224,7 @@ public class Listeners implements Listener {
 	
 	
 	// Time Warp Pearls
-	public static HashMap<Player, Boolean> hasPearlOut = new HashMap<Player, Boolean>();
-	public static HashMap<Player, Location> pearllocations = new HashMap<Player, Location>();
+	public static HashMap<Player, Location> pearllocations = new HashMap<>();
 	@EventHandler
 	public void onPearlThrow(ProjectileLaunchEvent event) {
 		if (event.getEntity().getShooter() instanceof Player && event.getEntity().getType() == EntityType.ENDER_PEARL) {
@@ -236,29 +232,27 @@ public class Listeners implements Listener {
 			ItemStack item = new ItemStack(player.getItemInHand());
 			item.setAmount(1);
 			ItemMeta itemmeta = item.getItemMeta(); //get item meta of the pearl they shot
-			if (hasPearlOut.containsKey(player)) { //check if player already exists in hashmap
+			if (pearllocations.containsKey(player)) { //check if player already exists in hashmap
 				event.setCancelled(true); //setcancelled actually consumes the item but doesn't shoot it
 				player.sendMessage(ChatColor.RED + "You already have a pearl out!");
 				player.getInventory().addItem(item); //reimburse
 				return;
 			}
 			// Player doesn't already exist in hashmap?
-			if (itemmeta.hasDisplayName() == false) { //if it's a regular pearl, don't continue
+			if (!itemmeta.hasDisplayName()) { //if it's a regular pearl, don't continue
 				return;
 			}
 			if (itemmeta.getDisplayName().equals(RedactedGive.TimeWarpPearl(1).getItemMeta().getDisplayName())) { //If it's a time warp pearl
 					pearllocations.put(player, player.getLocation());
-					hasPearlOut.put(player, true);
 					new BukkitRunnable() {
 						@Override
 						public void run() {
 							if (event.getEntity().getLocation().getY() < 0) {
 								pearllocations.remove(player); //if the pearl fell in the void
-								hasPearlOut.remove(player);
 								this.cancel();
 								return;
 							}
-							if (event.getEntity().isValid() == false) { //if the pearl no longer exists
+							if (!event.getEntity().isValid()) { //if the pearl no longer exists
 								this.cancel();
 								return;
 							}
@@ -275,23 +269,22 @@ public class Listeners implements Listener {
 	public void onPearlLand(ProjectileHitEvent event) { 
 		if (event.getEntity().getShooter() instanceof Player && event.getEntity().getType() == EntityType.ENDER_PEARL) {
 			Player player = (Player) event.getEntity().getShooter(); //get player
-			if (hasPearlOut.containsKey(player) == false) return; //if player is not in the hashmap do not continue
+			if (!pearllocations.containsKey(player)) return; //if player is not in the hashmap do not continue
 			Location loc = pearllocations.get(player);
-			pearllocations.remove(player);
 			player.sendMessage(ChatColor.RED + "You'll be teleported back in 3 seconds!");
 			new BukkitRunnable() {
 				@Override
 				public void run() {
 					player.teleport(loc);
 					player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 0.5F, 1);
-					hasPearlOut.remove(player);
+					pearllocations.remove(player);
 				}
 			}.runTaskLater(plugin, 60);
 		}
 	}
 	// Steve's Forward Air replica
 	// This map stores individual player cooldowns
-	public static HashMap<Player, Boolean> spikecooldown = new HashMap<Player, Boolean>();
+	public static HashMap<Player, Boolean> spikecooldown = new HashMap<>();
 	@EventHandler
 	public void onPickaxeHit(EntityDamageByEntityEvent event) {
 		if (event.getDamager() instanceof Player) {
@@ -303,6 +296,7 @@ public class Listeners implements Listener {
 					return;
 				}
 				spikecooldown.put(player, true);
+
 				// Freezes the player in place for two ticks
 				new BukkitRunnable() {
 					int i = 0;
@@ -316,6 +310,7 @@ public class Listeners implements Listener {
 						}
 					}
 				}.runTaskTimer(plugin, 0, 1);
+
 				// Sends the player downwards
 				new BukkitRunnable() {
 					@Override
@@ -323,23 +318,27 @@ public class Listeners implements Listener {
 						victim.setVelocity(new Vector(0, -1.3, 0));
 					}
 				}.runTaskLater(plugin, 3);
+
 				// Check if player hits the ground
 				new BukkitRunnable() { 
 					int i = 0;
 					int multiple = 0;
+					// Has the woodbreak sound been played yet?
 					boolean played = false;
 					@Override
 					public void run() {
 						i++;
+						// Cancel after 20 ticks no matter what
 						if (i == 20) {
 							this.cancel();
 						}
+
 						// If so, bounce them up based on how long they were spiked for
 						if (victim.getLocation().add(0,-1,0).getBlock().getType() != Material.AIR) {
 							multiple++;
 							double velocity = 0.8 - i*0.03;
 							victim.setVelocity(new Vector(0, velocity, 0));
-							if (played == false) {
+							if (!played) {
 								victim.getWorld().playSound(victim.getLocation(), Sound.ZOMBIE_WOODBREAK, 0.7F, 1);
 								played = true;
 							}
@@ -354,7 +353,8 @@ public class Listeners implements Listener {
 						}
 					}
 				}.runTaskTimer(plugin, 5, 1);
-				//Remove player from the cooldown HashMap afterwards
+
+				// Remove player from the cooldown HashMap afterwards
 				new BukkitRunnable() {
 					@Override
 					public void run() {
@@ -366,11 +366,12 @@ public class Listeners implements Listener {
 	}
 	// When players touch y = -10 players instantly die
 	// This also has handling for Void Charms
-	public static HashSet<Player> VoidCharmCooldown = new HashSet<Player>();
+	// Custom event is only for testing/learning purposes
+	public static HashSet<Player> VoidCharmCooldown = new HashSet<>();
 	@EventHandler
 	public void onPlayerTouchVoid(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		PlayerTouchVoidEvent playertouchvoidevent = null;
+		PlayerTouchVoidEvent playertouchvoidevent;
 		// If the player is on cooldown return
 		if (VoidCharmCooldown.contains(player)) return;
 		if (player.getLocation().getY() <= -10 && player.getWorld().getName().equals("redacted2")) {
@@ -424,7 +425,7 @@ public class Listeners implements Listener {
 	public void onPlaceVoidCharm(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
 		ItemMeta itemmeta = player.getItemInHand().getItemMeta();
-		if (itemmeta.hasDisplayName() == false) return; //if it's a regular item, don't continue
+		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.VoidCharm(1).getItemMeta().getDisplayName())) {
 			event.setCancelled(true);
 			player.sendMessage(ChatColor.DARK_PURPLE + "You may not place the Void Charm!");
@@ -433,16 +434,18 @@ public class Listeners implements Listener {
 	
 	// Divine Glass
 	// This map holds the locations of glass and what time they were placed
-	public static HashMap<Location, Long> glassLocations = new HashMap<Location, Long>();
+	public static HashMap<Location, Long> glassLocations = new HashMap<>();
 	@EventHandler
 	public void onPlaceDivineGlass(BlockPlaceEvent event) {
 		ItemMeta itemmeta = event.getPlayer().getItemInHand().getItemMeta(); //get item meta in hand
 		Location location = event.getBlockPlaced().getLocation();
 		long time = System.currentTimeMillis();
-		if (itemmeta.hasDisplayName() == false) return; //if it's a regular item, don't continue
+
+		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.DivineGlass(1).getItemMeta().getDisplayName())) { 
 			glassLocations.put(location, time);
 			ContentListeners.onDivineGlassPlace(event);
+
 			new BukkitRunnable() {
 				//After around 10 seconds check if the ORIGINAL block is still there.
 				//If the block was broken and replaced, it will not remove the block in this Runnable instance.
@@ -457,14 +460,15 @@ public class Listeners implements Listener {
 					}
 				}
 			}.runTaskLater(plugin, 200);
+
 		}
 	}
 	
 	@EventHandler
 	public void onBreakDivineGlass(BlockBreakEvent event) {
 		Location location = event.getBlock().getLocation();
-		//If it was a Divine Glass prevent them from being auto-removed
-		if (glassLocations.containsKey(location)) glassLocations.remove(location);
+		// If it was a Divine Glass prevent them from being auto-removed
+		glassLocations.remove(location);
 	}
 	
 	// Sun Stones!
@@ -484,38 +488,32 @@ public class Listeners implements Listener {
 		if (stoneLocation.getWorld() == null) {
 			stoneLocation.setWorld(Bukkit.getServer().getWorld("redacted2"));
 		}
-		if (itemmeta.hasDisplayName() == false) return; //if it's a regular item, don't continue
+
+		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.SunStone(1).getItemMeta().getDisplayName())) {
 			if (loc.equals(stoneLocation)) {
 				player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SUN STONE! " + ChatColor.DARK_AQUA + "Your Sun Stone will last 4 minutes!");
+				stoneplaced = true;
+
 				// Pass event data to ContentListeners
 				ContentListeners.onSunStonePlace(event);
+
 				Utils.sendbeegExplosion(15.5F, 60F, -68.5F);
 				Utils.sendExplosion(15.5F, 50.5F, -57.5F);
+				world.playSound(stoneLocation, Sound.EXPLODE, 1, 1);
+
 				for (Player online: Bukkit.getOnlinePlayers()) {
 					online.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SUN STONE! " + ChatColor.AQUA + "" + ChatColor.BOLD + 
 							"KOTH " + ChatColor.GRAY + "for 4 minutes at " + ChatColor.YELLOW + "Sun Pyramid");
-					new BukkitRunnable() {
-						int i = 0;
-						@Override
-						public void run() {
-							if (i == 0) {
-								online.playSound(online.getLocation(), Sound.NOTE_PLING, 1, 1.189f);
-							} else if (i == 1) {
-								online.playSound(online.getLocation(), Sound.NOTE_PLING, 1, 1.334f);
-							} else if (i == 2) {
-								online.playSound(online.getLocation(), Sound.NOTE_PLING, 1, 1.498f);
-								this.cancel();
-							}
-							i++;
-						}
-					}.runTaskTimer(plugin, 0, 5);
+
+					// Play a little jingle!
+					playKOTHAlert(online);
 				}
-				world.playSound(stoneLocation, Sound.EXPLODE, 1, 1);
-				stoneplaced = true;
+
 				Utils.connectPoints(plugin, stoneLocation.clone().add(0.5, 0.5, 0.5), target, EnumParticle.REDSTONE);
 				// particle
 				BukkitTask kothparticles = sendKOTHParticles(15, 54, -69);
+
 				// Phase 1
 				new BukkitRunnable() {
 					@SuppressWarnings("deprecation")
@@ -553,13 +551,11 @@ public class Listeners implements Listener {
 						kothparticles.cancel();
 					}
 				}.runTaskLater(plugin, 4800);
-				return;
 				//End of runnables
 				
 			} else if (!(event.getBlock().getLocation().equals(stoneLocation))) {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "Place the Sun Stone on top of the redstone block at the " + ChatColor.YELLOW + "Sun Pyramid!");
-				return;
 			}
 		}
 	}
@@ -572,7 +568,7 @@ public class Listeners implements Listener {
 			if (stoneplaced) {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.YELLOW + "You may not break the Sun Stone!");
-			} else if (!stoneplaced) {
+			} else {
 				player.sendMessage(ChatColor.YELLOW + "Hmm, I don't know how this got here. Guess you can break it?");
 			}
 		}
@@ -581,7 +577,7 @@ public class Listeners implements Listener {
 	// Sends packets giving the KOTH its signature particles
 	public BukkitTask sendKOTHParticles(int x, int y, int z) {
 		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) x, (float) y, (float) z, 4, 4, 4, 0, 25);
-		BukkitTask task = new BukkitRunnable() {
+		return new BukkitRunnable() {
 			@Override
 			public void run() {
 				for(Player online : Bukkit.getOnlinePlayers()) {
@@ -589,7 +585,6 @@ public class Listeners implements Listener {
                 }
 			}
 		}.runTaskTimer(plugin, 5, 5);
-		return task;
 	}
 	
 	// plays a little sound :)
