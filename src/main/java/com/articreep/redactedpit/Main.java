@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("redacteddebug").setExecutor(new Debug(this));
 		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
 		this.getCommand("importgold").setExecutor(new ImportGold(this));
+		this.getCommand("tradetimewarp").setExecutor(new TradeTimeWarp(this));
 		this.getCommand("redactedgive").setExecutor(new RedactedGive(this));
 		this.getCommand("cancelrace").setExecutor(new CancelRace());
 		this.getCommand("tradedivineglass").setExecutor(new TradeDivineGlass(this));

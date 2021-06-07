@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.articreep.redactedpit.Main;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -92,7 +94,7 @@ public class RedactedGive implements CommandExecutor {
 	public static void sendErrorMessage(Player player, String message) {
 		player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + message);
 		player.sendMessage(ChatColor.RED + "Usage: /redactedgive <item> <quantity>");
-		player.sendMessage(ChatColor.RED + "Acceptable items include: AncientArtifact, DivineGlass, TimeWarpPearl, SunStone, VoidCharm");
+		player.sendMessage(ChatColor.RED + "Acceptable items include: AncientArtifact, DivineGlass, TimeWarpPearl, SunStone, TRexTooth, VoidCharm");
 	}
 	
 	// Makes the list that we check against. Kind of like "registering" the methods.
@@ -105,6 +107,7 @@ public class RedactedGive implements CommandExecutor {
 		list.add("SunStone");
 		list.add("VoidCharm");
 		list.add("HotPotato");
+		list.add("TRexTooth");
 		return list;	
 	}
 	
@@ -212,5 +215,42 @@ public class RedactedGive implements CommandExecutor {
         item.setItemMeta(meta);
 
         return item;
+	}
+
+	public static ItemStack TRexTooth(int quantity) {
+		ItemStack item = new ItemStack(Material.GHAST_TEAR, quantity);
+		final ItemMeta meta = item.getItemMeta();
+
+		meta.setDisplayName(ChatColor.WHITE + "T-Rex Tooth");
+		meta.setLore(Arrays.asList(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "8" + ChatColor.GRAY + "/8",
+				"", ChatColor.GRAY + "Grants " + ChatColor.YELLOW + "+10% " + ChatColor.GRAY + "walk speed.",
+				ChatColor.GRAY + "(Up to +20%)"));
+		item.setItemMeta(meta);
+		net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+		NBTTagList modifiers = new NBTTagList();
+		NBTTagCompound damage = new NBTTagCompound();
+		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
+		damage.set("Name", new NBTTagString("generic.attackDamage"));
+		damage.set("Amount", new NBTTagDouble(6.75));
+		damage.set("Operation", new NBTTagInt(0));
+		damage.set("UUIDLeast", new NBTTagInt(894654));
+		damage.set("UUIDMost", new NBTTagInt(2872));
+		modifiers.add(damage);
+
+		NBTTagCompound speed = new NBTTagCompound();
+		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
+		speed.set("Name", new NBTTagString("generic.movementSpeed"));
+		speed.set("Amount", new NBTTagFloat(0.1F));
+		speed.set("Operation", new NBTTagInt(1));
+		speed.set("UUIDLeast", new NBTTagInt(38061));
+		speed.set("UUIDMost", new NBTTagInt(170237));
+		modifiers.add(speed);
+
+		compound.set("AttributeModifiers", modifiers);
+		nmsStack.setTag(compound);
+		item = CraftItemStack.asBukkitCopy(nmsStack);
+		return item;
+
 	}
 }

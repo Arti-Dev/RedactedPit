@@ -223,6 +223,14 @@ public class ContentListeners implements Listener {
         }
     }
 
+    // Specifically for Pearl
+    public static void onPearlQuest(Player player) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        if (!redactedPlayer.hasContent(Content.WARPING_TO_THE_PAST)) {
+            discoverContent(redactedPlayer, Content.WARPING_TO_THE_PAST, ChatColor.DARK_PURPLE + "Quest Complete");
+        }
+    }
+
     /**
      * Gets a RedactedPlayer instance of the player. If one does not exist this will return null.
      * @param player Bukkit Player

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.articreep.redactedpit.Main;
+import com.articreep.redactedpit.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -30,7 +31,7 @@ public class TradingGUIs implements CommandExecutor {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			UUID uuid = player.getUniqueId();
-			if (masterinteract.containsKey(uuid) == false) {
+			if (!masterinteract.containsKey(uuid)) {
 				masterinteract.put(uuid, 1);
 				player.sendMessage(ChatColor.YELLOW + "[NPC] Trading Master: " + ChatColor.WHITE + 
 						"Hey there, I specialize in the art of " + ChatColor.YELLOW + "trade." + ChatColor.WHITE + " *cough*");
@@ -51,30 +52,13 @@ public class TradingGUIs implements CommandExecutor {
 		}
 		return false;
 	}
-
-	// Nice little method to create a gui item with a custom name, and description
-    public static ItemStack createGuiItem(final Material material, final String name, final String... lore) {
-        final ItemStack item = new ItemStack(material, 1);
-        final ItemMeta meta = item.getItemMeta();
-
-        // Set the name of the item
-        meta.setDisplayName(name);
-
-        // Set the lore of the item
-        meta.setLore(Arrays.asList(lore));
-        
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
     
     
     // Method to create the first inventory
     public static Inventory createInventoryTradingGUI() {
     	Inventory inv;
-    	ItemStack arrow = new ItemStack(createGuiItem(Material.ARROW, " "));
-    	ItemStack gold = createGuiItem(Material.GOLD_INGOT, ChatColor.GOLD + "Trade..?", ChatColor.WHITE + "Trade 1 " + ChatColor.YELLOW + "Ancient Artifact ", 
+    	ItemStack arrow = new ItemStack(Utils.createGuiItem(Material.ARROW, " "));
+    	ItemStack gold = Utils.createGuiItem(Material.GOLD_INGOT, ChatColor.GOLD + "Trade..?", ChatColor.WHITE + "Trade 1 " + ChatColor.YELLOW + "Ancient Artifact ",
     			ChatColor.WHITE + "for " + ChatColor.GOLD + "" + ChatColor.BOLD + "5000g");
 		inv = Bukkit.createInventory(null, 27, "Trading Mastah");
 		inv.setItem(12, RedactedGive.AncientArtifact(1));

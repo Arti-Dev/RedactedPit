@@ -64,7 +64,7 @@ public enum Content {
             "He was a god of the bow."),
     SCRAPPED_ALTAR(new UtilBoundingBox(-47, 21, 1, -63, 29, 11), "Scrapped Jurassic Altar",
             "This altar was built to be a global quest per lobby. It was eventually scrapped. \nAny more details????"),
-    JURASSIC(new UtilBoundingBox(-32, 63, -115, -135, 95, 2), "Jurassic Area",
+    JURASSIC(new UtilBoundingBox(-32, 43, -2, -119, 95, -116), "Jurassic Area",
             "This area is home to a lush jungle, in addition to many Dinos.\nThis area was the third area the [redacted] team worked on."),
     COLOSSEUM(new UtilBoundingBox(-4, 98, 10, -100, 30, 98, -4, 98, 10, -23, 30, 23), "Roman Colosseum",
             "The Colosseum is a nice and flat area for (hopefully) fair fights!\nThis is the last section the [redacted] team worked on.\n" +
@@ -97,8 +97,10 @@ public enum Content {
                     "might be a better way to achieve 'progression' in this."),
     //TODO Make this accessible
     RHYLIE_COMMAND_BUNKER(new UtilBoundingBox(-24, 34, 88, -18, 38, 102), "Rhylie's Command Block Bunker",
-            "Various command blocks for Rhylie's Stim Gun idea");
+            "Various command blocks for Rhylie's Stim Gun idea"),
     // TODO Add spikeaxe
+    WARPING_TO_THE_PAST(null, "Warping to the Past",
+            "You can now buy Time Warp Pearls!");
 
     private final UtilBoundingBox box;
     private final String id;

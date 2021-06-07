@@ -1,6 +1,7 @@
 package com.articreep.redactedpit.commands;
 
 import com.articreep.redactedpit.Main;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -12,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.md_5.bungee.api.ChatColor;
 
 public class TradeSunStone implements CommandExecutor {
 	Main plugin;
@@ -26,7 +26,7 @@ public class TradeSunStone implements CommandExecutor {
 			ItemStack item = new ItemStack(player.getItemInHand());
 			ItemMeta itemmeta = item.getItemMeta();
 			Inventory inventory = player.getInventory();
-			if (item == null || item.getType() != Material.DOUBLE_PLANT || itemmeta.hasDisplayName() == false ) { //if it's just some dumb flower
+			if (item == null || item.getType() != Material.DOUBLE_PLANT || !itemmeta.hasDisplayName()) { //if it's just some dumb flower
 	 			player.sendMessage(ChatColor.YELLOW + "[NPC] heartyou: " + ChatColor.WHITE + "Hello!");
 	 			player.playSound(player.getLocation(), Sound.VILLAGER_IDLE, 1, 2);
 				new BukkitRunnable() {

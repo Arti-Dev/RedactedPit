@@ -20,6 +20,7 @@ public class RedactedGiveTabComplete implements TabCompleter {
 			commands.add("TimeWarpPearl");
 			commands.add("SunStone");
 			commands.add("VoidCharm");
+			commands.add("TRexTooth");
 		}
 		final List<String> completions = new ArrayList<>();
 		StringUtil.copyPartialMatches(args[0], commands, completions);

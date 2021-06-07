@@ -7,6 +7,7 @@ import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
+import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -110,6 +111,7 @@ public class Listeners implements Listener {
 		Location loc;
 		boolean onKOTH = false;
 		boolean inColo = false;
+		boolean inJurassic = false;
 		ColosseumPlayer victimcolo;
 		ColosseumPlayer damagercolo;
 		int quantity = 1;
@@ -134,6 +136,10 @@ public class Listeners implements Listener {
 				onKOTH = true;
 				quantity = 2;
 			}
+		}
+		// Is the player in the Jurrassic Era?
+		if (Content.JURASSIC.getBox().isInBox(loc)) {
+			inJurassic = true;
 		}
 		// Is the player in the Colosseum?
 		victimcolo = ColosseumRunnable.getColosseumPlayer(victim, false);
@@ -217,6 +223,8 @@ public class Listeners implements Listener {
 					damagercolo.increaseKillCount(1);
 					damagercolo.increaseKillStreakCount(1);
 				}
+			} else if (inJurassic) {
+				damager.getInventory().addItem(RedactedGive.TRexTooth(1));
 			}
 		}
 	}

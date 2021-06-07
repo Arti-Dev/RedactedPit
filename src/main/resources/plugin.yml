@@ -34,3 +34,6 @@ commands:
   importgold:
     description: Import your gold from actual Pit!
     usage: /importgold
+  tradetimewarp:
+    description: Trade Time Warp Pearls
+    usage: /tradetimewarp

@@ -124,6 +124,18 @@ public class RedactedPlayer {
         this.gold = amount;
     }
 
+    public boolean subtractGold(double amount) {
+        if (this.gold - amount < 0) {
+            return false;
+        }
+        this.gold -= amount;
+        return true;
+    }
+
+    public void addGold(double amount) {
+        this.gold += amount;
+    }
+
     public void importedSuccessfully() {
         this.importedGold = true;
     }
