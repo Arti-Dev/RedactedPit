@@ -26,5 +26,10 @@
       <option name="name" value="placeholderapi" />
       <option name="url" value="http://repo.extendedclip.com/content/repositories/placeholderapi/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Hypixel" />
+      <option name="name" value="Hypixel" />
+      <option name="url" value="https://repo.hypixel.net/repository/Hypixel/" />
+    </remote-repository>
   </component>
 </project>

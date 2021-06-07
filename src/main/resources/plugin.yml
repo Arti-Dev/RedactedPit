@@ -31,3 +31,6 @@ commands:
   resetcontent:
     description: Resets content for people
     usage: /resetcontent <optional player>
+  importgold:
+    description: Import your gold from actual Pit!
+    usage: /importgold

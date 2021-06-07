@@ -1,4 +1,5 @@
 debug: true
+apikey: qwertyuiopadfghjklzxcvbnm
 spawn:
   x: 1
   y: 71

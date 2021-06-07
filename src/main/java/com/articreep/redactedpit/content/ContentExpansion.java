@@ -83,6 +83,12 @@ public class ContentExpansion extends PlaceholderExpansion {
             }
             return ContentListeners.getRedactedPlayer(player).getFracContent();
         }
+        if (identifier.equals("gold")) {
+            if (ContentListeners.getRedactedPlayer(player) == null) {
+                return "0.0";
+            }
+            return ContentListeners.getRedactedPlayer(player).getGold() + "g";
+        }
 
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)
         // was provided

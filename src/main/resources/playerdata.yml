@@ -1,5 +1,6 @@
 players:
   exampleuuid:
     gold: 0.0
+    importedgold: false
     percentcontent: 0.0
     content: []

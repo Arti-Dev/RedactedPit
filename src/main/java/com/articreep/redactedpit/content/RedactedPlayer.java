@@ -13,9 +13,11 @@ import java.util.*;
 
 public class RedactedPlayer {
     // Houses player object
-    private Player player;
-    private Main plugin;
-    private UUID uuid;
+    private final Player player;
+    private final Main plugin;
+    private final UUID uuid;
+    private boolean importedGold;
+    private double gold;
     private String fracContent;
     private double percentContent;
     private HashSet<Content> contentDiscovered;
@@ -24,6 +26,8 @@ public class RedactedPlayer {
         this.player = player;
         this.plugin = plugin;
         this.uuid = player.getUniqueId();
+        this.gold = 0.0;
+        this.importedGold = false;
         this.fracContent = "0/" + Content.values().length;
         this.percentContent = 0.00;
         this.contentDiscovered = new HashSet<Content>();
@@ -36,7 +40,8 @@ public class RedactedPlayer {
         FileConfiguration config = plugin.getPlayerConfig();
         String uuidstring = uuid.toString();
         if (config.contains("players." + uuidstring)) {
-            //TODO add gold
+            gold = config.getDouble("players." + uuidstring + ".gold");
+            importedGold = config.getBoolean("players." + uuidstring + ".importedgold");
             percentContent = config.getDouble("players." + uuidstring + ".percentcontent");
             // Get list of strings
             List<String> tempList = (List<String>) config.getList("players." + uuidstring + ".content");
@@ -49,11 +54,14 @@ public class RedactedPlayer {
             calculatePercentContent();
         } else {
             saveData();
+
         }
     }
 
     public void saveData() throws IOException {
         String uuidstring = uuid.toString();
+        plugin.getPlayerConfig().set("players." + uuidstring + ".gold", gold);
+        plugin.getPlayerConfig().set("players." + uuidstring + ".importedgold", importedGold);
         plugin.getPlayerConfig().set("players." + uuidstring + ".percentcontent", percentContent);
         // Convert HashSet to List<String>
         HashSet<Content> tempSet = (HashSet<Content>) contentDiscovered.clone();
@@ -68,6 +76,8 @@ public class RedactedPlayer {
     public void resetData() throws IOException {
         percentContent = 0.00;
         contentDiscovered = new HashSet<Content>();
+        gold = 0.0;
+        importedGold = false;
         saveData();
     }
 
@@ -82,6 +92,9 @@ public class RedactedPlayer {
         fracContent = contentDiscovered.size() + "/" + Content.values().length;
     }
 
+    public double getGold() {
+        return gold;
+    }
 
     public double getPercentContent() {
         return percentContent;
@@ -105,5 +118,17 @@ public class RedactedPlayer {
 
     public boolean hasContent(Content content) {
         return this.contentDiscovered.contains(content);
+    }
+
+    public void setGold(double amount) {
+        this.gold = amount;
+    }
+
+    public void importedSuccessfully() {
+        this.importedGold = true;
+    }
+
+    public boolean hasImportedBefore() {
+        return importedGold;
     }
 }
