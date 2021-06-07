@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("tradedivineglass").setExecutor(new TradeDivineGlass(this));
 		this.getCommand("tradingmaster").setExecutor(new TradingGUIs(this));
 		this.getCommand("tradeSunStone").setExecutor(new TradeSunStone(this));
+		this.getCommand("tradevoidcharm").setExecutor(new TradeVoidCharm(this));
 		this.getCommand("redactedgive").setTabCompleter(new RedactedGiveTabComplete());
 		this.getCommand("coloinfo").setExecutor(new ColoInfo());
 		getLogger().info("RedactedPit has been loaded!");

@@ -114,6 +114,35 @@ public class TradingListeners implements Listener {
 				}
 			}
 		}
+    	if (e.getView().getTitle().equals("Void Charm")) {
+    		e.setCancelled(true);
+			if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
+			if (e.getSlot() == 12) {
+				if (!ContentListeners.getRedactedPlayer(p).subtractGold(500)) {
+					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
+					p.closeInventory();
+				} else {
+					inventory.addItem(RedactedGive.VoidCharm(1));
+					p.sendMessage(ChatColor.YELLOW + "[NPC] ???" + ChatColor.WHITE + ": Enjoy!");
+					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SPOOKY.. " + ChatColor.GRAY + "You obtained " + ChatColor.DARK_PURPLE + "Void Charm" + ChatColor.GRAY + " x1!");
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+				}
+				return;
+			}
+			if (e.getSlot() == 14) {
+				if (inventory.containsAtLeast(RedactedGive.AncientArtifact(1), 1)) {
+					inventory.removeItem(RedactedGive.AncientArtifact(1));
+					inventory.addItem(RedactedGive.VoidCharm(4));
+					p.sendMessage(ChatColor.YELLOW + "[NPC] ???" + ChatColor.WHITE + ": Enjoy!");
+					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SPOOKY.. " + ChatColor.GRAY + "You obtained " + ChatColor.DARK_PURPLE + "Void Charm" + ChatColor.GRAY + " x4!");
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+				} else {
+					p.closeInventory();
+					p.sendMessage(ChatColor.RED + "You don't have any Ancient Artifacts in your inventory!");
+				}
+			}
+
+		}
 	}
 	//TODO sus
 	// Cancel dragging in our inventory

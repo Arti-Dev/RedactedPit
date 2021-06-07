@@ -37,3 +37,6 @@ commands:
   tradetimewarp:
     description: Trade Time Warp Pearls
     usage: /tradetimewarp
+  tradevoidcharm:
+    description: Trade Void Charms
+    usage: /tradevoidcharm
