@@ -29,7 +29,7 @@ public class TradeDivineGlass implements CommandExecutor {
 	private static Inventory createGUI() {
 		Inventory inv;
 		ItemStack gold = Utils.createGuiItem(Material.GOLD_INGOT, org.bukkit.ChatColor.GOLD + "Trade with Gold",
-				org.bukkit.ChatColor.DARK_GRAY + "Costs 1000g per 16");
+				org.bukkit.ChatColor.DARK_GRAY + "Costs 1000g per 32");
 		ItemStack artifact = Utils.createGuiItem(Material.DOUBLE_PLANT, org.bukkit.ChatColor.YELLOW + "Trade with Ancient Artifacts",
 				org.bukkit.ChatColor.DARK_GRAY + "Costs 1 artifact per 64");
 		inv = Bukkit.createInventory(null, 27, "Divine Glass");

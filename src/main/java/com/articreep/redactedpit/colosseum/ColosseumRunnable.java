@@ -168,12 +168,14 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		// Hot Potato Countdown
 		if (hotPotatoMode) {
 			if (hotPotatoCountdown <= 0) {
-				hotPotatoVictim.damage(3);
-				hotPotatoVictim.setFireTicks(200);
-				Bukkit.broadcastMessage(ChatColor.RED + hotPotatoVictim.getName() + " was set on fire by a Hot Potato!");
-				hotPotatoVictim.getInventory().remove(RedactedGive.HotPotato(1));
-				hotPotatoMode = false;
-				hotPotatoVictim = null;
+				if (hotPotatoVictim != null) {
+					hotPotatoVictim.damage(3);
+					hotPotatoVictim.setFireTicks(200);
+					Bukkit.broadcastMessage(ChatColor.RED + hotPotatoVictim.getName() + " was set on fire by a Hot Potato!");
+					hotPotatoVictim.getInventory().remove(RedactedGive.HotPotato(1));
+					hotPotatoMode = false;
+					hotPotatoVictim = null;
+				}
 			} else if (hotPotatoCountdown > 0) {
 				Bukkit.broadcastMessage(ChatColor.RED + "The Hot Potato will burn in " + Integer.toString(hotPotatoCountdown) + " seconds");
 				hotPotatoCountdown -= 1;
