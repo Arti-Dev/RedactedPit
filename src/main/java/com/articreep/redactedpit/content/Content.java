@@ -51,6 +51,7 @@ public enum Content {
     SUN_STONE_PLACE(null, "Sun Stone Placed", "The Sun Stone powers the age-old Pyramid, \ngranting it its ancient reward buffs."),
     DAX_DUNGEON(new UtilBoundingBox(7, 53, -105, 15, 63, -100), "Dax's Strange Dungeon",
             "What do you want me to put here, Dax?"),
+    //TODO UPDATE IN FUTURE
     DAX_DUNGEON_END(new UtilBoundingBox(16, 53, -134, 8, 56, -137), "Dax's locked chest",
             "Pretend that there were Bank I books in here.."),
     TIME_MACHINE(new UtilBoundingBox(98, 43, 46, 101, 40, 42), "Time Machine",
