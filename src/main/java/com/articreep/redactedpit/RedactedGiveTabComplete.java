@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.articreep.redactedpit.commands.RedactedGive;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -15,12 +16,7 @@ public class RedactedGiveTabComplete implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		List<String> commands = new ArrayList<>();
 		if (args.length == 1) {
-			commands.add("AncientArtifact");
-			commands.add("DivineGlass");
-			commands.add("TimeWarpPearl");
-			commands.add("SunStone");
-			commands.add("VoidCharm");
-			commands.add("TRexTooth");
+			commands.addAll(RedactedGive.generateList());
 		}
 		final List<String> completions = new ArrayList<>();
 		StringUtil.copyPartialMatches(args[0], commands, completions);

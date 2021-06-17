@@ -1,8 +1,13 @@
 package com.articreep.redactedpit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class UtilBoundingBox {
+    private final World world;
     private final double lowerX;
     private final double higherX;
     private final double lowerY;
@@ -51,6 +56,7 @@ public class UtilBoundingBox {
         lowereX = 0;
         lowereY = 0;
         lowereZ = 0;
+        world = Bukkit.getWorld("redacted2");
     }
 
     public UtilBoundingBox(double x1, double y1, double z1, double x2, double y2, double z2) {
@@ -81,6 +87,7 @@ public class UtilBoundingBox {
         lowereX = 0;
         lowereY = 0;
         lowereZ = 0;
+        world = Bukkit.getWorld("redacted2");
     }
 
 
@@ -128,10 +135,12 @@ public class UtilBoundingBox {
             highereZ = ez2;
             lowereZ = ez1;
         }
+        world = Bukkit.getWorld("redacted2");
 
     }
 
     public boolean isInBox(Location loc) {
+        if (!loc.getWorld().equals(world)) return false;
         if ((lowerX <= loc.getX() && loc.getX() <= higherX
                 && lowerY <= loc.getY() && loc.getY() <= higherY
                 && lowerZ <= loc.getZ() && loc.getZ() <= higherZ )) {
@@ -142,6 +151,7 @@ public class UtilBoundingBox {
 
     public boolean isInBoxExclude(Location loc) {
         // If in exclusion area return false
+        if (!loc.getWorld().equals(world)) return false;
         if ((lowereX <= loc.getX() && loc.getX() <= highereX
                 && lowereY <= loc.getY() && loc.getY() <= highereY
                 && lowereZ <= loc.getZ() && loc.getZ() <= highereZ )) {
@@ -153,5 +163,12 @@ public class UtilBoundingBox {
             return true;
         }
         return false;
+    }
+
+    public Location randomLocation() {
+        int randomX = ThreadLocalRandom.current().nextInt((int) lowerX, (int) higherX + 1);
+        int randomY = ThreadLocalRandom.current().nextInt((int) lowerY, (int) higherY + 1);
+        int randomZ = ThreadLocalRandom.current().nextInt((int) lowerZ, (int) higherZ + 1);
+        return new Location(Bukkit.getWorld("redacted2"), randomX, randomY, randomZ);
     }
 }

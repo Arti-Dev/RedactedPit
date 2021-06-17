@@ -108,6 +108,7 @@ public class RedactedGive implements CommandExecutor {
 		list.add("VoidCharm");
 		list.add("HotPotato");
 		list.add("TRexTooth");
+		list.add("ArcheologistShovel");
 		return list;	
 	}
 	
@@ -129,6 +130,22 @@ public class RedactedGive implements CommandExecutor {
         item.setItemMeta(meta);
 
         return item;
+	}
+
+	public static ItemStack ArcheologistShovel(int quantity) {
+		final ItemStack item = new ItemStack(Material.GOLD_SPADE);
+		final ItemMeta meta = item.getItemMeta();
+
+		meta.setDisplayName(ChatColor.YELLOW + "Archeologist Shovel");
+		meta.setLore(Arrays.asList("",
+				ChatColor.GRAY + "Find " + ChatColor.YELLOW + "treasures " + ChatColor.GRAY + "with this shovel.",
+				ChatColor.GRAY + "Right click to point towards",
+				ChatColor.GRAY + "the nearest " + ChatColor.YELLOW + "treasure" + ChatColor.GRAY + "."));
+		meta.spigot().setUnbreakable(true);
+
+		item.setItemMeta(meta);
+
+		return item;
 	}
 
 	public static ItemStack DivineGlass(int quantity) {

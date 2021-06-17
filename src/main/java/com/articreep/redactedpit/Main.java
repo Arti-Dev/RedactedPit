@@ -7,6 +7,7 @@ import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
+import com.articreep.redactedpit.listeners.TreasureListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
+		getServer().getPluginManager().registerEvents(new TreasureListeners(), this);
 		try {
 			getServer().getPluginManager().registerEvents(new ContentListeners(this), this);
 		} catch (IOException e) {
