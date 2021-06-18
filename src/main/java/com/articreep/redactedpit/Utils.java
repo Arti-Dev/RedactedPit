@@ -1,14 +1,19 @@
 package com.articreep.redactedpit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.articreep.redactedpit.colosseum.AudienceOpinion;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -295,7 +300,7 @@ public class Utils {
     }
 
 	// Nice little method to create a gui item with a custom name, and description
-	public static org.bukkit.inventory.ItemStack createGuiItem(final Material material, final String name, final String... lore) {
+	public static ItemStack createGuiItem(final Material material, final String name, final String... lore) {
 		final org.bukkit.inventory.ItemStack item = new ItemStack(material, 1);
 		final ItemMeta meta = item.getItemMeta();
 
@@ -309,6 +314,26 @@ public class Utils {
 		item.setItemMeta(meta);
 
 		return item;
+	}
+
+	/**
+	 * Gets blocks around a block by radius. Does not include the center block, nor any air blocks.
+	 * @param center The location of the center block
+	 * @param radius The radius
+	 * @return List containing all of the blocks around the center
+	 */
+	public static ArrayList<Block> getBlocksAround(Location center, int radius) {
+    	ArrayList<Block> list = new ArrayList<Block>();
+		for (double x = center.getX() - radius; x <= center.getX() + radius; x++) {
+			for (double z = center.getZ() - radius; z <= center.getZ() + radius; z++) {
+				Location loc = new Location(center.getWorld(), x, center.getY(), z);
+				if (loc.getBlock().getType().isSolid()) {
+					list.add(loc.getBlock());
+				}
+			}
+		}
+		list.remove(center.getBlock());
+		return list;
 	}
 
 
