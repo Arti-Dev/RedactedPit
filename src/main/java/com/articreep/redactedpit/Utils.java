@@ -336,5 +336,13 @@ public class Utils {
 		return list;
 	}
 
+	public static void sendSandParticle(double x, double y, double z) {
+		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.BLOCK_CRACK, true, (float) x, (float) y, (float) z, 0, 0, 0, 0, 20, 12, 1);
+		for(Player online : Bukkit.getOnlinePlayers()) {
+			((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
+		}
+	}
+
+
 
 }

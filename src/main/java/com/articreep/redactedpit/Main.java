@@ -7,7 +7,7 @@ import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
-import com.articreep.redactedpit.listeners.TreasureListeners;
+import com.articreep.redactedpit.treasure.TreasureListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,19 +28,21 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
-		getServer().getPluginManager().registerEvents(new TreasureListeners(), this);
+		TreasureListeners treasureListeners = new TreasureListeners();
+		treasureListeners.runTaskTimer(this, 0, 20);
+		getServer().getPluginManager().registerEvents(treasureListeners, this);
 		try {
 			getServer().getPluginManager().registerEvents(new ContentListeners(this), this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ColosseumRunnable colorunnable = new ColosseumRunnable(this);
-		colorunnable.runTaskTimer(this, 20, 20);
+		ColosseumRunnable coloRunnable = new ColosseumRunnable(this);
+		coloRunnable.runTaskTimer(this, 20, 20);
 		// Small check to make sure that PlaceholderAPI is installed
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
 			new ContentExpansion(this).register();
 		}
-		getServer().getPluginManager().registerEvents(colorunnable, this);
+		getServer().getPluginManager().registerEvents(coloRunnable, this);
 		this.getCommand("resetcontent").setExecutor(new ResetContent());
 		this.getCommand("redacteddebug").setExecutor(new Debug(this));
 		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
