@@ -1,5 +1,6 @@
 package com.articreep.redactedpit.listeners;
 
+import com.articreep.redactedpit.BlockNotFoundException;
 import com.articreep.redactedpit.UtilBoundingBox;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
@@ -22,17 +23,22 @@ public class TreasureListeners implements Listener {
         Player player = event.getPlayer();
         if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                newChestLocation(event.getPlayer());
+                try {
+                    newChestLocation(event.getPlayer());
+                } catch (BlockNotFoundException e) {
+                    player.sendMessage("Couldn't find a block.. try again?");
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public Location newChestLocation(Player player) {
+    public Location newChestLocation(Player player) throws BlockNotFoundException {
         Location loc;
         Location airLoc;
-        Location finalLoc;
+        Location finalLoc = null;
         int i = 0;
-        while (true) {
+        while (i < 250) {
             loc = treasureBox.randomLocation();
             airLoc = loc.clone();
             if (loc.getBlock().getType() == Material.SAND) {
@@ -48,6 +54,7 @@ public class TreasureListeners implements Listener {
                         }
                         // Check again if list is size 8
                         if (list.size() == 8) {
+                            finalLoc = loc;
                             player.sendMessage("Found a block!");
                             player.sendMessage("Block is at " + loc.getX() + " " + loc.getY() + " " + loc.getZ());
                             player.teleport(airLoc.add(0.5, 0.5, 0.5));
@@ -58,13 +65,11 @@ public class TreasureListeners implements Listener {
                 }
             }
             i++;
-            // Fail-safe
-            if (i > 250) {
-                player.sendMessage("Couldn't find a block.. try again?");
-                break;
-            }
         }
-        return loc;
+        if (finalLoc == null) {
+            throw new BlockNotFoundException("A block was not found after randomly generating blocks " + i + " times.");
+        }
+        return finalLoc;
     }
 
 
