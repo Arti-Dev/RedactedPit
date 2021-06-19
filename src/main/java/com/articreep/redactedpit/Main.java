@@ -28,7 +28,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
-		TreasureListeners treasureListeners = new TreasureListeners();
+		TreasureListeners treasureListeners = new TreasureListeners(this);
 		treasureListeners.runTaskTimer(this, 0, 20);
 		getServer().getPluginManager().registerEvents(treasureListeners, this);
 		try {

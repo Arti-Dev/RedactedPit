@@ -343,6 +343,13 @@ public class Utils {
 		}
 	}
 
+	public static void sendPumpkinParticle(double x, double y, double z) {
+		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.BLOCK_CRACK, true, (float) x, (float) y, (float) z, 0, 0, 0, 0, 20, 91, 1);
+		for(Player online : Bukkit.getOnlinePlayers()) {
+			((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
+		}
+	}
+
 
 
 }
