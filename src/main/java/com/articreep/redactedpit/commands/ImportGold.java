@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,22 +35,28 @@ public class ImportGold implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "You have already imported your gold before!");
                 return true;
             }
-            CompletableFuture<Double> goldfuture = getGoldAPI(api, player.getUniqueId().toString());
-            while (!goldfuture.isDone()) {
-                // do nothing
-            }
-            try {
-                ContentListeners.getRedactedPlayer(player).setGold(goldfuture.get());
-                ContentListeners.getRedactedPlayer(player).importedSuccessfully();
-                player.sendMessage(ChatColor.GOLD + "Gold imported successfully!");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                player.sendMessage(ChatColor.RED + "There was an issue getting your gold!");
-            } catch (ExecutionException e) {
-                Bukkit.getLogger().severe("The API Key specified in config.yml is not valid!");
-                player.sendMessage(ChatColor.RED + "There was an issue getting your gold! API key not valid.");
-                e.printStackTrace();
-            }
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    CompletableFuture<Double> goldfuture = getGoldAPI(api, player.getUniqueId().toString());
+                    while (!goldfuture.isDone()) {
+                        // do nothing
+                    }
+                    try {
+                        ContentListeners.getRedactedPlayer(player).setGold(goldfuture.get());
+                        ContentListeners.getRedactedPlayer(player).importedSuccessfully();
+                        player.sendMessage(ChatColor.GOLD + "Gold imported successfully!");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        player.sendMessage(ChatColor.RED + "There was an issue getting your gold!");
+                    } catch (ExecutionException e) {
+                        Bukkit.getLogger().severe("The API Key specified in config.yml is not valid!");
+                        player.sendMessage(ChatColor.RED + "There was an issue getting your gold! API key not valid.");
+                        e.printStackTrace();
+                    }
+                }
+            }.runTaskAsynchronously(plugin);
             return true;
         }
         return false;
