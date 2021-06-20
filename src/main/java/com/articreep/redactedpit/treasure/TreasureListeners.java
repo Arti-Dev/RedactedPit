@@ -4,24 +4,27 @@ import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.UtilBoundingBox;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import com.articreep.redactedpit.content.ContentListeners;
+import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class TreasureListeners extends BukkitRunnable implements Listener {
     private final Main plugin;
-    public static UtilBoundingBox treasureBox = new UtilBoundingBox(102, 47, 1, -20, 43, -87);
+    public static UtilBoundingBox treasureBox = new UtilBoundingBox(102, 47, 1, -20, 40, -87);
     // At any given time there will only be two places to dig
     public static ArrayList<TreasureChest> treasureList = new ArrayList<>();
     public static ArrayList<TreasureChest> dugTreasureList = new ArrayList<>();
@@ -76,12 +79,19 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 for (TreasureChest treasureChest : treasureList) {
-                    if (treasureChest.getBlockOrder().isEmpty()) continue;
+                    if (!treasureChest.hasStatus()) continue;
                     if (treasureChest.getBlockOrder().get(0).equals(event.getClickedBlock())) {
                         event.setCancelled(true);
-                        //treasureChest.progress(player);
-                        treasureChest.sink(player);
+                        treasureChest.progress(player);
                         break;
+                    } else {
+                        for (int i = 1; i < treasureChest.getBlockOrder().size(); i++) {
+                            if (treasureChest.getBlockOrder().get(i).equals(event.getClickedBlock())) {
+                                event.setCancelled(true);
+                                treasureChest.sink(player);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -109,8 +119,48 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
             for (TreasureChest treasureChest : dugTreasureList) {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
                     event.setCancelled(true);
-                    player.getInventory().addItem(RedactedGive.AncientArtifact(1));
-                    break;
+                    if (!treasureChest.hasLooted(player)) {
+                        ItemStack item = null;
+                        // Simple Loot Table
+                        // Chances at 5 different items
+                        // t-rex 3, divine glass 6, gold 4, ancient 3, why 1: total 17
+                        double random = Math.random() * 17;
+                        if (player == treasureChest.getDiscoverer()) {
+                            if (random <= 3) {
+                                item = RedactedGive.TRexTooth(1);
+                            } else if (random > 3 && random <= 9) {
+                                item = RedactedGive.DivineGlass((int) (Math.random() * 16));
+                            } else if (random > 9 && random <= 13) {
+                                item = new ItemStack(Material.GOLD_INGOT, 1);
+                            } else if (random > 13 && random <= 16) {
+                                item = RedactedGive.AncientArtifact(1);
+                            } else if (random > 16) {
+                                item = Utils.createGuiItem(Material.PAPER,
+                                        ChatColor.GRAY + "this is stupid", ChatColor.DARK_GRAY + "this feature is so boring");
+                            }
+                        } else {
+                            // Same thing but without ancient artifact
+                            if (random <= 3) {
+                                item = RedactedGive.TRexTooth(1);
+                            } else if (random > 3 && random <= 9) {
+                                item = RedactedGive.DivineGlass((int) (Math.random() * 16));
+                            } else if (random > 9 && random <= 16) {
+                                item = new ItemStack(Material.GOLD_INGOT, 1);
+                            } else if (random > 16) {
+                                item = Utils.createGuiItem(Material.PAPER,
+                                        ChatColor.GRAY + "this is stupid", ChatColor.DARK_GRAY + "this feature is so boring");
+                            }
+                        }
+                        Inventory inv = Bukkit.createInventory(null, 27, "Treasure Chest");
+                        inv.setItem((int) (Math.random() * 27), item);
+                        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+                        player.openInventory(inv);
+                        treasureChest.addLootedChest(player);
+                        ContentListeners.onTreasureDiscover(player);
+                        break;
+                    } else {
+                        player.sendMessage("You've already looted this chest!");
+                    }
                 }
             }
         }
@@ -126,8 +176,16 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     player.getItemInHand().getType() == Material.GOLD_SWORD ||
                     player.getItemInHand().getType() == Material.DIAMOND_SWORD) {
                 for (TreasureChest treasureChest : treasureList) {
-                    if (treasureChest.isSinking() && treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
-                        treasureChest.spawnSword(player.getItemInHand());
+                    if (treasureChest.getStatus() == ChestStatus.SINKING && treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
+                        if (!treasureChest.hasSword()) {
+                            treasureChest.spawnSword(player.getItemInHand());
+                        } else {
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 10));
+                            Utils.sendSandParticle(treasureChest.getLocation().add(0.5, 1, 0.5));
+                            player.playSound(player.getLocation(), Sound.DIG_SAND, 1, 1);
+                            treasureChest.addContributor(player);
+                            treasureChest.increaseClicks();
+                        }
                     }
                 }
             }
@@ -176,6 +234,28 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         return new TreasureChest(plugin, finalLoc, list);
     }
 
+    @EventHandler
+    public void onGoldClaim(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        if (e.getView().getTitle().equals("Treasure Chest")) {
+            if (e.getCurrentItem().getType() == Material.GOLD_INGOT && e.getClickedInventory().getTitle().equals("Treasure Chest")) {
+                e.setCancelled(true);
+                player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "GOLD! " +
+                        ChatColor.GRAY + "You obtained " + ChatColor.GOLD + "500g" + ChatColor.GRAY + "!");
+                ContentListeners.getRedactedPlayer(player).addGold(500);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
+                e.getClickedInventory().remove(Material.GOLD_INGOT);
+            } else if (e.getClickedInventory().getHolder() == player) {
+                if (e.getAction() == InventoryAction.PICKUP_ALL ||
+                        e.getAction() == InventoryAction.PICKUP_SOME ||
+                        e.getAction() == InventoryAction.PICKUP_ONE ||
+                        e.getAction() == InventoryAction.PICKUP_HALF ||
+                        e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                e.setCancelled(true);
+            }
+        }
+    }
+
 
     @Override
     public void run() {
@@ -196,25 +276,23 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         TreasureChest[] cloneList = new TreasureChest[0];
         cloneList = treasureList.toArray(cloneList);
         for (TreasureChest treasureChest : cloneList) {
-            if (!treasureChest.hasDiscoverer()) {
+            if (treasureChest.getStatus() != ChestStatus.IN_PROGRESS) {
                 Location location = treasureChest.getLocation().add(0.5, 1, 0.5);
                 Utils.sendSandParticle(location.getX(), location.getY(), location.getZ());
             }
-            if (treasureChest.isFinished()) {
-                if (treasureChest.isSinking()) {
-                    treasureList.remove(treasureChest);
-                } else {
-                    treasureList.remove(treasureChest);
-                    dugTreasureList.add(treasureChest);
-                    new BukkitRunnable() {
+            if (treasureChest.getStatus() == ChestStatus.FINISHED) {
+                treasureList.remove(treasureChest);
+                dugTreasureList.add(treasureChest);
+                new BukkitRunnable() {
 
-                        @Override
-                        public void run() {
-                            dugTreasureList.remove(treasureChest);
-                            treasureChest.getLocation().getBlock().setType(Material.AIR);
-                        }
-                    }.runTaskLater(plugin, 1200);
-                }
+                    @Override
+                    public void run() {
+                        dugTreasureList.remove(treasureChest);
+                        treasureChest.getLocation().getBlock().setType(Material.AIR);
+                    }
+                }.runTaskLater(plugin, 300);
+            } else if (treasureChest.getStatus() == ChestStatus.FINISHED_SANK) {
+                treasureList.remove(treasureChest);
             }
         }
     }

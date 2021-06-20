@@ -2,7 +2,6 @@ package com.articreep.redactedpit.content;
 
 import com.articreep.redactedpit.UtilBoundingBox;
 import org.bukkit.ChatColor;
-import org.graalvm.compiler.core.common.util.Util;
 
 public enum Content {
     // Some of these enums have boundingboxes that must be entered to discover
@@ -101,7 +100,12 @@ public enum Content {
             "Various command blocks for Rhylie's Stim Gun idea"),
     // TODO Add spikeaxe
     WARPING_TO_THE_PAST(null, "Warping to the Past",
-            "You can now buy Time Warp Pearls!");
+            "You can now buy Time Warp Pearls!"),
+    TREASURE_CHEST(null, "Treasure Chests",
+            "The generic treasure hunting game, with some extra spice.\n" +
+                    "Anyone can dig up treasure, but only the person who started it has a chance at Ancient Artifacts.\n" +
+                    ChatColor.ITALIC + "The soil underneath the top of the desert" +
+                    "shifts old treasures back up to the surface, and if not dug up correctly, they disappear forever..");
 
     private final UtilBoundingBox box;
     private final String id;

@@ -232,6 +232,14 @@ public class ContentListeners implements Listener {
         }
     }
 
+    // Specifically for treasure
+    public static void onTreasureDiscover(Player player) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        if (!redactedPlayer.hasContent(Content.TREASURE_CHEST)) {
+            discoverContent(redactedPlayer, Content.TREASURE_CHEST);
+        }
+    }
+
     /**
      * Gets a RedactedPlayer instance of the player. If one does not exist this will return null.
      * @param player Bukkit Player

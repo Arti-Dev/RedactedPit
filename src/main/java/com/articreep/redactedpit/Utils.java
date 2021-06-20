@@ -357,6 +357,12 @@ public class Utils {
 		}
 	}
 
+	public static void sendLavaParticle(Location loc) {
+		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(), 0, 0, 0, 0, 20);
+		for(Player online : Bukkit.getOnlinePlayers()) {
+			((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
+		}
+	}
 
 
 }

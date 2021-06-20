@@ -2,40 +2,36 @@ package com.articreep.redactedpit.treasure;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.Sandstone;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.EulerAngle;
-import org.bukkit.util.Vector;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("deprecation")
 public class TreasureChest {
-    private Main plugin;
+    private final Main plugin;
     private Player discoverer;
-    private boolean sinking = false;
-    private boolean finished = false;
-    private Location location;
-    private byte centerData;
-    private List<Block> blockOrder;
+    private ChestStatus status;
+    private final Location location;
+    private final byte centerData;
+    private final List<Block> blockOrder;
     private BukkitTask runnable;
+    private BukkitTask sinkingRunnable;
     private ArmorStand sword;
-    private HashMap<Block, HashMap<Material, Byte>> materialData = new HashMap<>();
+    private final HashMap<Block, HashMap<Material, Byte>> materialData = new HashMap<>();
+    private int clicks = 0;
+    private Set<Player> contributors = new HashSet<>();
+    private Set<Player> looted = new HashSet<>();
 
     public TreasureChest(Main plugin, Location location, List<Block> blocks) {
         this.plugin = plugin;
@@ -52,24 +48,17 @@ public class TreasureChest {
         centerData = location.getBlock().getData();
     }
 
-    public boolean hasDiscoverer() {
-        return discoverer != null;
-    }
-
-    public Location getLocation() {
-        return location.clone();
-    }
-
-    public List<Block> getBlockOrder() {
-        return blockOrder;
-    }
-
     public void start(Player player) {
+        // If the user already has done something don't start
+        if (hasStatus()) {
+            return;
+        }
+        status = ChestStatus.IN_PROGRESS;
         this.discoverer = player;
         player.sendMessage("Started, dig in the areas where particles are coming out!");
+        // Location in the ground
         this.location.getBlock().setType(Material.CHEST);
         runnable = new BukkitRunnable() {
-
             @Override
             public void run() {
                 if (blockOrder.isEmpty()) {
@@ -84,58 +73,91 @@ public class TreasureChest {
     }
 
     public void progress(Player player) {
-        blockOrder.get(0).setType(Material.STEP);
-        blockOrder.get(0).setData((byte) 1);
-        blockOrder.remove(0);
-        player.sendMessage("That's the spot.. next one, perhaps?");
-        if (discoverer != player) {
-            discoverer.sendMessage("The chest is one step closer from being grabbed!");
+        if (status == ChestStatus.SINKING) {
+            player.sendMessage("You probably should be trying to get the chest out!");
+        } else {
+            blockOrder.get(0).setType(Material.STEP);
+            blockOrder.get(0).setData((byte) 1);
+            blockOrder.remove(0);
         }
     }
 
     public void finish() {
         // Replace everything
         replaceBlocksAround();
-        if (sword != null) {
-            sword.remove();
-        }
-        if (sinking) {
-            location.clone().add(0, -1, 0).getBlock().setType(Material.STONE);
-        } else {
-            location.getBlock().setType(Material.CHEST);
-        }
+        clicks = 0;
+
         location.getBlock().setType(Material.SAND);
         location.getBlock().setData(centerData);
-        finished = true;
+
+        if (status == ChestStatus.SINKING) {
+            // Set the block two blocks under to stone
+            location.clone().add(0, -1, 0).getBlock().setType(Material.STONE);
+            status = ChestStatus.FINISHED_SANK;
+        } else {
+            // Make the location above ground now
+            location.add(0, 1, 0).getBlock().setType(Material.CHEST);
+            status = ChestStatus.FINISHED;
+        }
     }
 
-    public BukkitTask sink(Player player) {
-        replaceBlocksAround();
+    public void sink(Player player) {
+        if (status == ChestStatus.SINKING) {
+            return;
+        }
+        status = ChestStatus.SINKING;
+        Utils.sendLavaParticle(getLocation().add(0.5, 1, 0.5));
         location.getBlock().setType(Material.AIR);
+        // Move the location of the chest down
         location.add(0, -1, 0);
         location.getBlock().setType(Material.CHEST);
-        sinking = true;
         player.sendMessage("Something went wrong, and the treasure is sinking! Try preventing this by sticking your sword in!");
-        return new BukkitRunnable() {
-
+        sinkingRunnable = new BukkitRunnable() {
+            int i = 0;
             @Override
             public void run() {
-                player.sendMessage("The treasure sank back down to the depths..");
-                // Reset location to where it was originally
-                location.add(0, 1, 0);
-                // Clear the list of blocks
-                blockOrder.clear();
+                i++;
+                if (i >= 200) {
+                    player.sendMessage("The treasure sank back down to the depths..");
+                    // Reset location to where it was originally
+                    location.add(0, 1, 0);
+
+                    player.removePotionEffect(PotionEffectType.SLOW);
+                    for (Player player : contributors) {
+                        player.removePotionEffect(PotionEffectType.SLOW);
+                    }
+
+                    // Cancel the other runnable
+                    runnable.cancel();
+
+                    sword.remove();
+                    sword = null;
+
+                    finish();
+                    this.cancel();
+                } else if (clicks >= 20) {
+                    player.sendMessage("You got it out! Might want to be more careful next time..");
+                    location.getBlock().setType(Material.STONE);
+
+                    player.removePotionEffect(PotionEffectType.SLOW);
+                    for (Player player : contributors) {
+                        player.removePotionEffect(PotionEffectType.SLOW);
+                    }
+
+                    sword.remove();
+                    sword = null;
+
+                    // Move location back
+                    location.add(0, 1, 0);
+                    location.getBlock().setType(Material.CHEST);
+
+                    status = ChestStatus.IN_PROGRESS;
+                    clicks = 0;
+                    this.cancel();
+                }
             }
-        }.runTaskLater(plugin, 200);
+        }.runTaskTimer(plugin, 0, 1);
 
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public boolean isSinking() {
-        return sinking;
     }
 
     private void replaceBlocksAround() {
@@ -156,5 +178,47 @@ public class TreasureChest {
         sword.setVisible(false);
         sword.setItemInHand(item);
         sword.setRightArmPose(new EulerAngle(Math.toRadians(90), 0, 0));
+    }
+
+    public Location getLocation() {
+        return location.clone();
+    }
+
+    public List<Block> getBlockOrder() {
+        return blockOrder;
+    }
+
+    public ChestStatus getStatus() {
+        return status;
+    }
+
+    public boolean hasStatus() {
+        return status != null;
+    }
+
+    public boolean hasSword() {
+        return sword != null;
+    }
+
+    public void addContributor(Player player) {
+        if (!(player == discoverer)) {
+            contributors.add(player);
+        }
+    }
+
+    public void addLootedChest(Player player) {
+        looted.add(player);
+    }
+
+    public Player getDiscoverer() {
+        return discoverer;
+    }
+
+    public boolean hasLooted(Player player) {
+        return looted.contains(player);
+    }
+
+    public void increaseClicks() {
+        clicks++;
     }
 }
