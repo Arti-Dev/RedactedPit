@@ -2,6 +2,7 @@ package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.PlayerTouchVoidEvent;
+import com.articreep.redactedpit.UtilBoundingBox;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
@@ -43,6 +44,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -483,19 +485,27 @@ public class Listeners implements Listener {
 	// Sun Stones!
 	// Init stonelocation variable
 	public static Location stoneLocation = null;
+	public static Location daxLocation = null;
+	public static UtilBoundingBox daxBox = new UtilBoundingBox(13, 53, -106, 9, 56, -106);
+	public static UtilBoundingBox daxFallenBox = new UtilBoundingBox(9, 52, -106, 13, 49, -106);
 	// Init whether stone is placed or not
 	public static boolean stoneplaced = false;
+	public static boolean daxPlaced = false;
 	@EventHandler
 	public void onPlaceSunStone(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
 		World world = player.getWorld();
 		ItemMeta itemmeta = player.getItemInHand().getItemMeta();
 		stoneLocation = new Location(Bukkit.getServer().getWorld("redacted2"), 15, 50, -58);
+		daxLocation = new Location(Bukkit.getServer().getWorld("redacted2"), 11, 53, -102);
 		Location loc = event.getBlock().getLocation();
 		Location target = new Location(Bukkit.getServer().getWorld("redacted2"), 15.5, 60, -68.5);
 		// Fix stonelocation if world is null, does happen sometimes
 		if (stoneLocation.getWorld() == null) {
 			stoneLocation.setWorld(Bukkit.getServer().getWorld("redacted2"));
+		}
+		if (daxLocation.getWorld() == null) {
+			daxLocation.setWorld(Bukkit.getServer().getWorld("redacted2"));
 		}
 
 		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
@@ -562,6 +572,30 @@ public class Listeners implements Listener {
 				}.runTaskLater(plugin, 4800);
 				//End of runnables
 				
+			} else if (loc.equals(daxLocation)) {
+				// Make the wall fall
+				ArrayList<Block> list = daxBox.blockList();
+				for (Block block : list) {
+					block.getWorld().spawnFallingBlock(block.getLocation(), Material.GOLD_BLOCK, (byte) 0);
+					block.setType(Material.AIR);
+				}
+				daxPlaced = true;
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						// reset everything
+						daxLocation.getBlock().setType(Material.AIR);
+						for (Block block : daxFallenBox.blockList()) {
+							block.setType(Material.AIR);
+						}
+						for (Block block : daxBox.blockList()) {
+							block.setType(Material.GOLD_BLOCK);
+						}
+						daxPlaced = false;
+					}
+				}.runTaskLater(plugin, 1200);
+
 			} else if (!(event.getBlock().getLocation().equals(stoneLocation))) {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "Place the Sun Stone on top of the redstone block at the " + ChatColor.YELLOW + "Sun Pyramid!");
@@ -579,6 +613,13 @@ public class Listeners implements Listener {
 				player.sendMessage(ChatColor.YELLOW + "You may not break the Sun Stone!");
 			} else {
 				player.sendMessage(ChatColor.YELLOW + "Hmm, I don't know how this got here. Guess you can break it?");
+			}
+		} else if (event.getBlock().getLocation().equals(daxLocation)) {
+			if (daxPlaced) {
+				event.setCancelled(true);
+				player.sendMessage(ChatColor.YELLOW + "You may not break the Sun Stone!");
+			} else {
+				player.sendMessage(ChatColor.YELLOW + "My sister is watching me as I type this.");
 			}
 		}
 	}
@@ -658,6 +699,7 @@ public class Listeners implements Listener {
 		Player player = (Player) event.getPlayer();
 		chestSet.remove(player);
 	}
+
 	
 	
 }

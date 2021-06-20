@@ -3,7 +3,10 @@ package com.articreep.redactedpit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class UtilBoundingBox {
@@ -170,5 +173,23 @@ public class UtilBoundingBox {
         int randomY = ThreadLocalRandom.current().nextInt((int) lowerY, (int) higherY + 1);
         int randomZ = ThreadLocalRandom.current().nextInt((int) lowerZ, (int) higherZ + 1);
         return new Location(Bukkit.getWorld("redacted2"), randomX, randomY, randomZ);
+    }
+
+    /**
+     * Returns every single block location in the box.
+     * Does not account for exclusion areas
+     * @return List of locations
+     */
+    public ArrayList<Block> blockList() {
+        ArrayList<Block> listofblocks = new ArrayList<>();
+        for (double x = lowerX; x <= higherX; x++) {
+            for (double y = lowerY; y <= higherY; y++) {
+                for (double z = lowerZ; z <= higherZ; z++) {
+                    Location loc = new Location(world, x, y, z);
+                    listofblocks.add(loc.getBlock());
+                }
+            }
+        }
+        return listofblocks;
     }
 }
