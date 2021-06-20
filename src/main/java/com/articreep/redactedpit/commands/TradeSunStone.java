@@ -47,7 +47,7 @@ public class TradeSunStone implements CommandExecutor {
 			} else if (itemmeta.getDisplayName().equals(ChatColor.YELLOW + "Ancient Artifact")) {
 				inventory.removeItem(RedactedGive.AncientArtifact(1));
 				inventory.addItem(RedactedGive.SunStone(1));
-				player.sendMessage(ChatColor.YELLOW + "[NPC] Rem: " + ChatColor.WHITE + "Here you go!");
+				player.sendMessage(ChatColor.YELLOW + "[NPC] heartyou: " + ChatColor.WHITE + "Here you go!");
 				player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 				player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY! " + ChatColor.GRAY + "You obtained " + ChatColor.GOLD + "Sun Stone" + ChatColor.GRAY + " x1!");
 				return true;
