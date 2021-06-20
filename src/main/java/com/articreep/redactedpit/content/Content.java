@@ -22,7 +22,7 @@ public enum Content {
     LAVA_PIT(new UtilBoundingBox(-5, 43, -68, -20, 51, -87), "Pit of Things that are dead to me",
             ChatColor.RED + "" + ChatColor.BOLD + "jump in, you're dead to us."),
     HIDDEN_ARCHAEOLOGIST(new UtilBoundingBox(6, 38, -27, 0, 41, -34), "Hidden Archaeologist",
-            "This NPC has been living under de watah for ages. \nThis content was never properly coded."),
+            "This NPC has been living under de watah for ages. \nClick the guy next to her for a special shovel!"),
     FIRE_TRIAL(new UtilBoundingBox(69, 93, -95, 81, 105, -73), "Fire Trials",
             "Another rip-off from SkyBlock.."),
     BOB_DESERT(new UtilBoundingBox(49, 72, -99, 55, 84, -92), "Bob, fixing the ladder.",

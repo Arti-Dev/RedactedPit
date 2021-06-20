@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
@@ -39,19 +40,20 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (treasureList.size() == 0) {
                     player.sendMessage("Couldn't find a treasure.. try again?");
+                    player.playSound(player.getLocation(), Sound.DIG_GRASS, 1, 0.5F);
                 } else {
                     Location loc1 = treasureList.get(0).getLocation();
-                    //
                     if (treasureList.size() == 1) {
-                        player.sendMessage("Nearest block is at " + loc1.getX() + " " + loc1.getY() + " " + loc1.getZ());
+                        pathParticles(player.getLocation(), loc1.add(0.5, 2, 0.5));
                     } else if (treasureList.size() == 2) {
                         Location loc2 = treasureList.get(1).getLocation();
                         if (loc1.distanceSquared(player.getLocation()) < loc2.distanceSquared(player.getLocation())) {
-                            player.sendMessage("Nearest block is at " + loc1.getX() + " " + loc1.getY() + " " + loc1.getZ());
+                            pathParticles(player.getLocation(), loc1.add(0.5, 2, 0.5));
                         } else {
-                            player.sendMessage("Nearest block is at " + loc2.getX() + " " + loc2.getY() + " " + loc2.getZ());
+                            pathParticles(player.getLocation(), loc2.add(0.5, 2, 0.5));
                         }
                     }
+                    player.playSound(player.getLocation(), Sound.DIG_GRASS, 1, 1);
                 }
             }
         }
@@ -232,6 +234,23 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
             throw new BlockNotFoundException("A block was not found after randomly generating blocks " + i + " times.");
         }
         return new TreasureChest(plugin, finalLoc, list);
+    }
+
+    public static void pathParticles(Location loc1, Location loc2) {
+        double distance = loc1.distance(loc2);
+        double inbetween = 0.5;
+        Vector vec1 = loc1.toVector();
+        Vector vec2 = loc2.toVector();
+        Vector vector = vec2.clone().subtract(vec1).normalize().multiply(inbetween);
+        int i = 0;
+        for (double covered = 0; covered < distance; vec1.add(vector)) {
+            Utils.sendDirtParticle(vec1.getX(), vec1.getY(), vec1.getZ());
+            covered += inbetween;
+            i++;
+            if (i >= 10) {
+                break;
+            }
+        }
     }
 
     @EventHandler
