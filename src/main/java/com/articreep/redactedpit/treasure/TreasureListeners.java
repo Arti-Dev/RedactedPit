@@ -232,6 +232,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         }
         if (finalLoc == null) {
             throw new BlockNotFoundException("A block was not found after randomly generating blocks " + i + " times.");
+
         }
         return new TreasureChest(plugin, finalLoc, list);
     }
@@ -251,6 +252,20 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 break;
             }
         }
+    }
+
+    /**
+     * This method is used for the chest system - if the chest is part of the TreasureChest system modification is allowed
+     * @param event PlayerInteractEVent
+     * @return If the chest clicked is a TreasureChest
+     */
+    public static boolean isTreasureChest(PlayerInteractEvent event) {
+        for (TreasureChest treasureChest : dugTreasureList) {
+            if (event.getClickedBlock().equals(treasureChest.getLocation().getBlock())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @EventHandler
@@ -288,7 +303,6 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 }
             } catch (BlockNotFoundException e) {
                 e.printStackTrace();
-                break;
             }
         }
         // ConcurrentModificationException was happening, so clone into an array ig

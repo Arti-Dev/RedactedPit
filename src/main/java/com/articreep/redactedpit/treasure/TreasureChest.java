@@ -130,8 +130,10 @@ public class TreasureChest {
                     // Cancel the other runnable
                     runnable.cancel();
 
-                    sword.remove();
-                    sword = null;
+                    if (sword != null) {
+                        sword.remove();
+                        sword = null;
+                    }
 
                     finish();
                     this.cancel();

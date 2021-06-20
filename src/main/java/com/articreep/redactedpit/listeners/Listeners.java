@@ -9,6 +9,7 @@ import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
 import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
+import com.articreep.redactedpit.treasure.TreasureListeners;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
@@ -622,9 +623,13 @@ public class Listeners implements Listener {
 		Player player = event.getPlayer();
 		// Is it a chest?
 		if (event.getClickedBlock() == null) return;
-		if (event.getClickedBlock().getType() == Material.CHEST) {
-			if (!player.hasPermission("redactedpit.modifychests")) {
-				chestSet.add(player);
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if (event.getClickedBlock().getType() == Material.CHEST) {
+				if (!player.hasPermission("redactedpit.modifychests")) {
+					if (!TreasureListeners.isTreasureChest(event)) {
+						chestSet.add(player);
+					}
+				}
 			}
 		}
 	}
