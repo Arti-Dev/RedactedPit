@@ -7,6 +7,7 @@ import com.articreep.redactedpit.commands.RedactedGive;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class TreasureListeners extends BukkitRunnable implements Listener {
     private final Main plugin;
@@ -77,7 +79,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     if (treasureChest.getBlockOrder().isEmpty()) continue;
                     if (treasureChest.getBlockOrder().get(0).equals(event.getClickedBlock())) {
                         event.setCancelled(true);
-                        treasureChest.progress(player);
+                        //treasureChest.progress(player);
+                        treasureChest.sink(player);
                         break;
                     }
                 }
@@ -108,6 +111,24 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     event.setCancelled(true);
                     player.getInventory().addItem(RedactedGive.AncientArtifact(1));
                     break;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onTreasureSink(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (player.getItemInHand().getType() == Material.WOOD_SWORD ||
+                    player.getItemInHand().getType() == Material.STONE_SWORD ||
+                    player.getItemInHand().getType() == Material.IRON_SWORD ||
+                    player.getItemInHand().getType() == Material.GOLD_SWORD ||
+                    player.getItemInHand().getType() == Material.DIAMOND_SWORD) {
+                for (TreasureChest treasureChest : treasureList) {
+                    if (treasureChest.isSinking() && treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
+                        treasureChest.spawnSword(player.getItemInHand());
+                    }
                 }
             }
         }
@@ -171,22 +192,29 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 break;
             }
         }
-        for (TreasureChest treasureChest : treasureList) {
+        // ConcurrentModificationException was happening, so clone into an array ig
+        TreasureChest[] cloneList = new TreasureChest[0];
+        cloneList = treasureList.toArray(cloneList);
+        for (TreasureChest treasureChest : cloneList) {
             if (!treasureChest.hasDiscoverer()) {
-                Location location = treasureChest.getLocation();
-                Utils.sendSandParticle(location.getX() + 0.5, location.getY() + 1, location.getZ() + 0.5);
+                Location location = treasureChest.getLocation().add(0.5, 1, 0.5);
+                Utils.sendSandParticle(location.getX(), location.getY(), location.getZ());
             }
             if (treasureChest.isFinished()) {
-                treasureList.remove(treasureChest);
-                dugTreasureList.add(treasureChest);
-                new BukkitRunnable() {
+                if (treasureChest.isSinking()) {
+                    treasureList.remove(treasureChest);
+                } else {
+                    treasureList.remove(treasureChest);
+                    dugTreasureList.add(treasureChest);
+                    new BukkitRunnable() {
 
-                    @Override
-                    public void run() {
-                        dugTreasureList.remove(treasureChest);
-                        treasureChest.getLocation().getBlock().setType(Material.AIR);
-                    }
-                }.runTaskLater(plugin, 1200);
+                        @Override
+                        public void run() {
+                            dugTreasureList.remove(treasureChest);
+                            treasureChest.getLocation().getBlock().setType(Material.AIR);
+                        }
+                    }.runTaskLater(plugin, 1200);
+                }
             }
         }
     }
