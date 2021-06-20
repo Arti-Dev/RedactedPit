@@ -107,7 +107,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
             for (TreasureChest treasureChest : treasureList) {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
                     event.setCancelled(true);
-                    player.sendMessage("The chest can't be opened just yet.. you need to dig it up first.");
+                    player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "LOCKED! " +
+                            ChatColor.GRAY + "You can't open the chest yet!");
                     break;
                 }
             }
@@ -161,7 +162,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                         ContentListeners.onTreasureDiscover(player);
                         break;
                     } else {
-                        player.sendMessage("You've already looted this chest!");
+                        player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "GREEDY! " +
+                                ChatColor.GRAY + "You've already looted this chest!");
                     }
                 }
             }

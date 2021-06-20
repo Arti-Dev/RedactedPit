@@ -2,6 +2,7 @@ package com.articreep.redactedpit.treasure;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -55,7 +56,8 @@ public class TreasureChest {
         }
         status = ChestStatus.IN_PROGRESS;
         this.discoverer = player;
-        player.sendMessage("Started, dig in the areas where particles are coming out!");
+        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "TREASURE! " + ChatColor.GRAY +
+                "Started, dig in the areas where particles are coming out!");
         // Location in the ground
         this.location.getBlock().setType(Material.CHEST);
         runnable = new BukkitRunnable() {
@@ -74,7 +76,7 @@ public class TreasureChest {
 
     public void progress(Player player) {
         if (status == ChestStatus.SINKING) {
-            player.sendMessage("You probably should be trying to get the chest out!");
+            player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "UHH.. " + ChatColor.GRAY + "You probably should be trying to get the chest out!");
         } else {
             blockOrder.get(0).setType(Material.STEP);
             blockOrder.get(0).setData((byte) 1);
@@ -111,14 +113,15 @@ public class TreasureChest {
         // Move the location of the chest down
         location.add(0, -1, 0);
         location.getBlock().setType(Material.CHEST);
-        player.sendMessage("Something went wrong, and the treasure is sinking! Try preventing this by sticking your sword in!");
+        player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "UH OH! " + ChatColor.GRAY + "Something went wrong, and the treasure is sinking! " +
+                "Try preventing this by sticking your sword in and pulling.");
         sinkingRunnable = new BukkitRunnable() {
             int i = 0;
             @Override
             public void run() {
                 i++;
                 if (i >= 200) {
-                    player.sendMessage("The treasure sank back down to the depths..");
+                    player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "BUMMER! " + ChatColor.GRAY + "The treasure sank back down to the depths..");
                     // Reset location to where it was originally
                     location.add(0, 1, 0);
 
@@ -138,7 +141,6 @@ public class TreasureChest {
                     finish();
                     this.cancel();
                 } else if (clicks >= 20) {
-                    player.sendMessage("You got it out! Might want to be more careful next time..");
                     location.getBlock().setType(Material.STONE);
 
                     player.removePotionEffect(PotionEffectType.SLOW);
