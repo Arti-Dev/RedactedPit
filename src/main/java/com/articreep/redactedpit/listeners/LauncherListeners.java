@@ -9,13 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.Vector;
-import org.graalvm.compiler.core.common.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LauncherListeners implements Listener {
-    private Main plugin;
+    private final Main plugin;
     public static HashMap<Player, ArmorStand> launchingList = new HashMap<>();
 
     public LauncherListeners(Main plugin) {
