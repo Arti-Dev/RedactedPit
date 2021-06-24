@@ -23,15 +23,15 @@ public class LauncherListeners implements Listener {
     }
     //TODO Configurable?
     public static UtilLauncherBox futureToColoLauncher = new UtilLauncherBox(-18, 55, 83, -25, 49, 76, new HashMap<Vector, Integer>() {{
-        put(new Vector(-3, 1, -3), 46);
-        put(new Vector(-3.3, 1, -1), 46);
-        put(new Vector(-0.7, 1, -3.3), 46);
+        put(new Vector(-3, 1, -3), 47);
+        put(new Vector(-3.3, 1, -1), 47);
+        put(new Vector(-0.7, 1, -3.3), 47);
     }});
 
     public static UtilLauncherBox jurassicToColoLauncher = new UtilLauncherBox(-63, 54, 9, -54, 46, 15, new HashMap<Vector, Integer>() {{
-        put(new Vector(0, 1, 3), 46);
-        put(new Vector(1, 1, 2), 46);
-        put(new Vector(-1, 1, 2), 46);
+        put(new Vector(0, 1, 3), 47);
+        put(new Vector(1, 1, 2), 47);
+        put(new Vector(-1, 1, 2), 47);
     }});
 
     public static UtilLauncherBox egyptLauncher = new UtilLauncherBox(25, 67, -16, 14, 80, -27, new HashMap<Vector, Integer>() {{
@@ -46,9 +46,9 @@ public class LauncherListeners implements Listener {
     }});
 
     public static UtilLauncherBox coloLauncher = new UtilLauncherBox(-23, 69, 13, -14, 77, 21, new HashMap<Vector, Integer>() {{
-        put(new Vector(-1.5, 2, 4), 46);
-        put(new Vector(-3, 2, 3), 46);
-        put(new Vector(-4, 2, 1.5), 46);
+        put(new Vector(-1.5, 2, 4), 47);
+        put(new Vector(-3, 2, 3), 47);
+        put(new Vector(-4, 2, 1.5), 47);
     }});
 
     public static UtilLauncherBox futureLauncher = new UtilLauncherBox(24, 78, 14, 15, 69, 24, new HashMap<Vector, Integer>() {{
