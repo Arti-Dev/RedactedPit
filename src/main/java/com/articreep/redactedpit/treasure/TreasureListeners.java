@@ -62,14 +62,18 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
-            if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                for (TreasureChest treasureChest : treasureList) {
-                    if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
-                        event.setCancelled(true);
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            for (TreasureChest treasureChest : treasureList) {
+                if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
+                    event.setCancelled(true);
+                    if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
                         treasureChest.start(player);
-                        break;
+                    } else {
+                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "TREASURE! " + ChatColor.GRAY +
+                                "You need an " + ChatColor.YELLOW + "Archeologist Shovel" + ChatColor.GRAY + "to uncover this mystery!");
+                        player.sendMessage(ChatColor.YELLOW + "Maybe someone under a certain well can help you..");
                     }
+                    break;
                 }
             }
         }
