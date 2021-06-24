@@ -1,9 +1,6 @@
 package com.articreep.redactedpit.listeners;
 
-import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.PlayerTouchVoidEvent;
-import com.articreep.redactedpit.UtilBoundingBox;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.*;
 import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
@@ -16,11 +13,9 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -35,6 +30,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -699,6 +696,7 @@ public class Listeners implements Listener {
 		Player player = (Player) event.getPlayer();
 		chestSet.remove(player);
 	}
+
 
 	
 	

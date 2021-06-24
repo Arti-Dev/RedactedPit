@@ -4,6 +4,7 @@ import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.*;
 import com.articreep.redactedpit.content.ContentExpansion;
 import com.articreep.redactedpit.content.ContentListeners;
+import com.articreep.redactedpit.listeners.LauncherListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
 import com.articreep.redactedpit.listeners.TradingListeners;
@@ -28,6 +29,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
 		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
+		getServer().getPluginManager().registerEvents(new LauncherListeners(this), this);
 		TreasureListeners treasureListeners = new TreasureListeners(this);
 		treasureListeners.runTaskTimerAsynchronously(this, 0, 20);
 		getServer().getPluginManager().registerEvents(treasureListeners, this);
@@ -85,6 +87,7 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
+
 
 
 
