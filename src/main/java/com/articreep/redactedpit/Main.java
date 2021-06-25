@@ -45,21 +45,21 @@ public class Main extends JavaPlugin {
 			new ContentExpansion(this).register();
 		}
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
-		this.getCommand("forcerespawn").setExecutor(new ForceRespawn());
-		this.getCommand("sendup").setExecutor(new SendUp());
-		this.getCommand("resetcontent").setExecutor(new ResetContent());
-		this.getCommand("redacteddebug").setExecutor(new Debug(this));
-		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
-		this.getCommand("importgold").setExecutor(new ImportGold(this));
-		this.getCommand("tradetimewarp").setExecutor(new TradeTimeWarp(this));
-		this.getCommand("redactedgive").setExecutor(new RedactedGive(this));
-		this.getCommand("cancelrace").setExecutor(new CancelRace());
-		this.getCommand("tradedivineglass").setExecutor(new TradeDivineGlass(this));
-		this.getCommand("tradingmaster").setExecutor(new TradingGUIs(this));
-		this.getCommand("tradeSunStone").setExecutor(new TradeSunStone(this));
-		this.getCommand("tradevoidcharm").setExecutor(new TradeVoidCharm(this));
-		this.getCommand("redactedgive").setTabCompleter(new RedactedGiveTabComplete());
-		this.getCommand("coloinfo").setExecutor(new ColoInfo());
+		getCommand("forcerespawn").setExecutor(new ForceRespawn());
+		getCommand("sendup").setExecutor(new SendUp());
+		getCommand("resetcontent").setExecutor(new ResetContent());
+		getCommand("redacteddebug").setExecutor(new Debug(this));
+		getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
+		getCommand("importgold").setExecutor(new ImportGold(this));
+		getCommand("tradetimewarp").setExecutor(new TradeTimeWarp(this));
+		getCommand("redactedgive").setExecutor(new RedactedGive(this));
+		getCommand("cancelrace").setExecutor(new CancelRace());
+		getCommand("tradedivineglass").setExecutor(new TradeDivineGlass(this));
+		getCommand("tradingmaster").setExecutor(new TradingGUIs(this));
+		getCommand("tradeSunStone").setExecutor(new TradeSunStone(this));
+		getCommand("tradevoidcharm").setExecutor(new TradeVoidCharm(this));
+		getCommand("redactedgive").setTabCompleter(new RedactedGiveTabComplete());
+		getCommand("coloinfo").setExecutor(new ColoInfo());
 		getLogger().info("RedactedPit has been loaded!");
 	}
     @Override
