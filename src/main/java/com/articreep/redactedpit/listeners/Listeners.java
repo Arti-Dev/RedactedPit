@@ -93,8 +93,10 @@ public class Listeners implements Listener {
 				public void run() {
 					player.spigot().respawn();
 					player.teleport(location);
-					ColosseumRunnable.getColosseumPlayer(player, true).clearStreakCount();
-					ColosseumRunnable.getColosseumPlayer(player, true).increaseDeathStreakCount(1);
+					if (Utils.isInColosseum(player.getLocation())) {
+						ColosseumRunnable.getColosseumPlayer(player, true).clearStreakCount();
+						ColosseumRunnable.getColosseumPlayer(player, true).increaseDeathStreakCount(1);
+					}
 				}
 			}.runTaskLater(plugin, 1);
 		}

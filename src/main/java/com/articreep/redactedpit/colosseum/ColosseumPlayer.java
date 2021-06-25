@@ -207,7 +207,7 @@ public class ColosseumPlayer {
 		player.sendMessage("Kills: " + kills);
 		player.sendMessage("Killstreak: " + killstreak);
 		player.sendMessage("Deaths: " + deaths);
-		player.sendMessage("Deathstreak: " + deaths);
+		player.sendMessage("Deathstreak: " + deathstreak);
 		player.sendMessage("Hits Dealt: " + hitsDealt);
 		player.sendMessage("Hits Taken: "+ hitsTaken);
 		player.sendMessage("Inactivity: " + inactive);
