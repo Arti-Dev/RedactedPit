@@ -69,9 +69,11 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
                         treasureChest.start(player);
                     } else {
-                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "TREASURE! " + ChatColor.GRAY +
-                                "You need an " + ChatColor.YELLOW + "Archeologist Shovel" + ChatColor.GRAY + "to uncover this mystery!");
-                        player.sendMessage(ChatColor.YELLOW + "Maybe someone under a certain well can help you..");
+                        if (!treasureChest.hasStatus()) {
+                            player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "TREASURE! " + ChatColor.GRAY +
+                                    "You need an " + ChatColor.YELLOW + "Archeologist Shovel" + ChatColor.GRAY + "to uncover this mystery!");
+                            player.sendMessage(ChatColor.YELLOW + "Maybe someone under a certain well can help you..");
+                        }
                     }
                     break;
                 }
@@ -136,7 +138,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                             if (random <= 3) {
                                 item = RedactedGive.TRexTooth(1);
                             } else if (random > 3 && random <= 9) {
-                                item = RedactedGive.DivineGlass((int) (Math.random() * 16));
+                                item = RedactedGive.DivineGlass((int) (Math.random() * 16) + 1);
                             } else if (random > 9 && random <= 13) {
                                 item = new ItemStack(Material.GOLD_INGOT, 1);
                             } else if (random > 13 && random <= 16) {
@@ -251,7 +253,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         Vector vector = vec2.clone().subtract(vec1).normalize().multiply(inbetween);
         int i = 0;
         for (double covered = 0; covered < distance; vec1.add(vector)) {
-            Utils.sendDirtParticle(vec1.getX(), vec1.getY(), vec1.getZ());
+            Utils.sendDirtParticle(vec1.getX(), loc1.getY(), vec1.getZ());
             covered += inbetween;
             i++;
             if (i >= 10) {
