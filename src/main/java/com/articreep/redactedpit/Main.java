@@ -45,6 +45,8 @@ public class Main extends JavaPlugin {
 			new ContentExpansion(this).register();
 		}
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
+		this.getCommand("forcerespawn").setExecutor(new ForceRespawn());
+		this.getCommand("sendup").setExecutor(new SendUp());
 		this.getCommand("resetcontent").setExecutor(new ResetContent());
 		this.getCommand("redacteddebug").setExecutor(new Debug(this));
 		this.getCommand("togglejumppads").setExecutor(new ToggleJumpPads());

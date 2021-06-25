@@ -40,3 +40,9 @@ commands:
   tradevoidcharm:
     description: Trade Void Charms
     usage: /tradevoidcharm
+  sendup:
+    description: Sends the specified player(s) up. lol
+    usage: /sendup <player1> <player2> <player3>...
+  forcerespawn:
+    description: Force respawns a player
+    usage: /forcerespawn <player>
