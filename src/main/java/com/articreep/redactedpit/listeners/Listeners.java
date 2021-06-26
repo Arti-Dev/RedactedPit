@@ -394,7 +394,6 @@ public class Listeners implements Listener {
 		if (!(playertouchvoidevent.isCancelled())) {
 			player.setHealth(0);
 			player.sendMessage(ChatColor.RED + "You fell in the void!");
-			System.gc();
 		}
 	}
 	
