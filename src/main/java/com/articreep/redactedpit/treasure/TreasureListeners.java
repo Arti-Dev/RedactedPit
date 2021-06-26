@@ -67,13 +67,10 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (cooldown.contains(player)) {
-            event.setCancelled(true);
-            return;
-        }
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             for (TreasureChest treasureChest : treasureList) {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
+                    if (cooldown.contains(player)) return;
                     event.setCancelled(true);
                     if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
                         treasureChest.start(player);
@@ -94,12 +91,12 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandProgress(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (cooldown.contains(player)) {
-            event.setCancelled(true);
-            return;
-        }
         if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (cooldown.contains(player)) {
+                    event.setCancelled(true);
+                    return;
+                }
                 for (TreasureChest treasureChest : treasureList) {
                     if (!treasureChest.hasStatus() || treasureChest.getBlockOrder().isEmpty()) continue;
                     if (treasureChest.getBlockOrder().get(0).equals(event.getClickedBlock())) {
