@@ -9,6 +9,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryAction;
@@ -22,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class TreasureListeners extends BukkitRunnable implements Listener {
     private final Main plugin;
@@ -29,6 +31,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     // At any given time there will only be two places to dig
     public static ArrayList<TreasureChest> treasureList = new ArrayList<>();
     public static ArrayList<TreasureChest> dugTreasureList = new ArrayList<>();
+    public static HashSet<Player> cooldown = new HashSet<>();
     public TreasureListeners(Main plugin) {
         this.plugin = plugin;
     }
@@ -36,6 +39,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onShovelClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (cooldown.contains(player)) return;
         if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (treasureList.size() == 0) {
@@ -55,6 +59,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     }
                     player.playSound(player.getLocation(), Sound.DIG_GRASS, 1, 1);
                 }
+                addcooldown(player);
             }
         }
     }
@@ -62,6 +67,10 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (cooldown.contains(player)) {
+            event.setCancelled(true);
+            return;
+        }
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             for (TreasureChest treasureChest : treasureList) {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
@@ -75,6 +84,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                             player.sendMessage(ChatColor.YELLOW + "Maybe someone under a certain well can help you..");
                         }
                     }
+                    addcooldown(player);
                     break;
                 }
             }
@@ -84,19 +94,25 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandProgress(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (cooldown.contains(player)) {
+            event.setCancelled(true);
+            return;
+        }
         if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 for (TreasureChest treasureChest : treasureList) {
-                    if (!treasureChest.hasStatus()) continue;
+                    if (!treasureChest.hasStatus() || treasureChest.getBlockOrder().isEmpty()) continue;
                     if (treasureChest.getBlockOrder().get(0).equals(event.getClickedBlock())) {
                         event.setCancelled(true);
                         treasureChest.progress(player);
+                        addcooldown(player);
                         break;
                     } else {
                         for (int i = 1; i < treasureChest.getBlockOrder().size(); i++) {
                             if (treasureChest.getBlockOrder().get(i).equals(event.getClickedBlock())) {
                                 event.setCancelled(true);
                                 treasureChest.sink(player);
+                                addcooldown(player);
                                 break;
                             }
                         }
@@ -106,7 +122,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onLockedChestOpen(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -115,6 +131,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                     event.setCancelled(true);
                     player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "LOCKED! " +
                             ChatColor.GRAY + "You can't open the chest yet!");
+                    addcooldown(player);
                     break;
                 }
             }
@@ -171,6 +188,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                         player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "GREEDY! " +
                                 ChatColor.GRAY + "You've already looted this chest!");
                     }
+                    addcooldown(player);
                 }
             }
         }
@@ -269,7 +287,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
      */
     public static boolean isTreasureChest(PlayerInteractEvent event) {
         for (TreasureChest treasureChest : dugTreasureList) {
-            if (event.getClickedBlock().equals(treasureChest.getLocation().getBlock())) {
+            if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
                 return true;
             }
         }
@@ -296,6 +314,17 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+    public void addcooldown(Player player) {
+        cooldown.add(player);
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                cooldown.remove(player);
+            }
+        }.runTaskLater(plugin, 10);
     }
 
 

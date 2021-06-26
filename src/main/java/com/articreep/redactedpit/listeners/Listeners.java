@@ -17,6 +17,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -656,9 +657,9 @@ public class Listeners implements Listener {
 	}
 
 	// HashSet to store people who've opened chests
-	HashSet<Player> chestSet = new HashSet<>();
+	public static HashSet<Player> chestSet = new HashSet<>();
 	// If a player opens a chest, they cannot interact with the contents
-	@EventHandler
+	@EventHandler (priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onOpenChest(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		// Is it a chest?
@@ -666,9 +667,7 @@ public class Listeners implements Listener {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (event.getClickedBlock().getType() == Material.CHEST) {
 				if (!player.hasPermission("redactedpit.modifychests")) {
-					if (!TreasureListeners.isTreasureChest(event)) {
-						chestSet.add(player);
-					}
+					chestSet.add(player);
 				}
 			}
 		}

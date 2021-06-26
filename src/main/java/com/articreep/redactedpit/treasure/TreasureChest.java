@@ -27,12 +27,11 @@ public class TreasureChest {
     private final byte centerData;
     private final List<Block> blockOrder;
     private BukkitTask runnable;
-    private BukkitTask sinkingRunnable;
     private ArmorStand sword;
     private final HashMap<Block, HashMap<Material, Byte>> materialData = new HashMap<>();
     private int clicks = 0;
-    private Set<Player> contributors = new HashSet<>();
-    private Set<Player> looted = new HashSet<>();
+    private final Set<Player> contributors = new HashSet<>();
+    private final Set<Player> looted = new HashSet<>();
 
     public TreasureChest(Main plugin, Location location, List<Block> blocks) {
         this.plugin = plugin;
@@ -115,8 +114,12 @@ public class TreasureChest {
         location.getBlock().setType(Material.CHEST);
         player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "UH OH! " + ChatColor.GRAY + "Something went wrong, and the treasure is sinking! " +
                 "Try preventing this by sticking your sword in and pulling.");
-        sinkingRunnable = new BukkitRunnable() {
+        // Reset location to where it was originally
+        // Cancel the other runnable
+        // Move location back
+        BukkitTask sinkingRunnable = new BukkitRunnable() {
             int i = 0;
+
             @Override
             public void run() {
                 i++;
