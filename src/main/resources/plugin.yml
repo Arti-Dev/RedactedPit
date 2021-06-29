@@ -46,3 +46,6 @@ commands:
   forcerespawn:
     description: Force respawns a player
     usage: /forcerespawn <player>
+  spikeaxeminer:
+    description: spikeaxe miner
+    usage: /spikeaxeminer

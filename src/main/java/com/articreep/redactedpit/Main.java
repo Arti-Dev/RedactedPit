@@ -44,7 +44,10 @@ public class Main extends JavaPlugin {
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
 			new ContentExpansion(this).register();
 		}
+
+		// add permissions to these commands why not
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
+		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
 		getCommand("forcerespawn").setExecutor(new ForceRespawn());
 		getCommand("sendup").setExecutor(new SendUp());
 		getCommand("resetcontent").setExecutor(new ResetContent());
