@@ -105,7 +105,14 @@ public enum Content {
             "The generic treasure hunting game, with some extra spice.\n" +
                     "Anyone can dig up treasure, but only the person who started it has a chance at Ancient Artifacts.\n" +
                     ChatColor.ITALIC + "The soil underneath the top of the desert" +
-                    "shifts old treasures back up to the surface, and if not dug up correctly, they disappear forever..");
+                    "shifts old treasures back up to the surface, and if not dug up correctly, they disappear forever.."),
+    TALK_TO_MINER(null, "Strange Miner", "This guy seems like a weirdo if you ask me..\n" +
+            "Upgrade your pickaxe, maybe you'll find something cool..\n" +
+            "Click on him again for tips!"),
+    SPIKEAXE_OBTAIN(null, "The Spikeaxe", "You've finally upgraded your pickaxe to the best possible, the Spikeaxe!\n" +
+            "Crits with this pickaxe sends your opponents straight down..\n" +
+            "If they hit the ground hard enough, they'll bounce back up!\n"+
+            "Or you can send them straight into the void!");
 
     private final UtilBoundingBox box;
     private final String id;

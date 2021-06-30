@@ -454,6 +454,8 @@ public class Listeners implements Listener {
 		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.DivineGlass(1).getItemMeta().getDisplayName())) { 
 			glassLocations.put(location, time);
+			// Override blocks not being able to be placed
+			event.setCancelled(false);
 			ContentListeners.onDivineGlassPlace(event);
 
 			new BukkitRunnable() {
@@ -478,7 +480,10 @@ public class Listeners implements Listener {
 	public void onBreakDivineGlass(BlockBreakEvent event) {
 		Location location = event.getBlock().getLocation();
 		// If it was a Divine Glass prevent them from being auto-removed
-		glassLocations.remove(location);
+		if (glassLocations.containsKey(location)) {
+			event.setCancelled(false);
+			glassLocations.remove(location);
+		}
 	}
 	
 	// Sun Stones!
@@ -510,6 +515,7 @@ public class Listeners implements Listener {
 		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.SunStone(1).getItemMeta().getDisplayName())) {
 			if (loc.equals(stoneLocation)) {
+				event.setCancelled(false);
 				player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SUN STONE! " + ChatColor.DARK_AQUA + "Your Sun Stone will last 4 minutes!");
 				stoneplaced = true;
 
@@ -572,6 +578,7 @@ public class Listeners implements Listener {
 				//End of runnables
 				
 			} else if (loc.equals(daxLocation)) {
+				event.setCancelled(false);
 				// Make the wall fall
 				ArrayList<Block> list = daxBox.blockList();
 				for (Block block : list) {
@@ -611,6 +618,7 @@ public class Listeners implements Listener {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.YELLOW + "You may not break the Sun Stone!");
 			} else {
+				event.setCancelled(false);
 				player.sendMessage(ChatColor.YELLOW + "Hmm, I don't know how this got here. Guess you can break it?");
 			}
 		} else if (event.getBlock().getLocation().equals(daxLocation)) {
@@ -618,6 +626,7 @@ public class Listeners implements Listener {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.YELLOW + "You may not break the Sun Stone!");
 			} else {
+				event.setCancelled(false);
 				player.sendMessage(ChatColor.YELLOW + "My sister is watching me as I type this.");
 			}
 		}
@@ -695,6 +704,80 @@ public class Listeners implements Listener {
 	public void onCloseChest(InventoryCloseEvent event) {
 		Player player = (Player) event.getPlayer();
 		chestSet.remove(player);
+	}
+
+	// Prevent players from breaking blocks
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onBlockBreak(BlockBreakEvent event) {
+		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			// Other things can override this if needed
+			event.setCancelled(true);
+		}
+	}
+
+	// Prevent players from placing blocks
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onBlockPlace(BlockPlaceEvent event) {
+		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			// Other things can override this if needed
+			event.setCancelled(true);
+		}
+	}
+
+	// Spikeaxe Quest
+	UtilBoundingBox stoneBox = new UtilBoundingBox(-42, 43, -38, -50, 50, -47);
+	UtilBoundingBox ironBox = new UtilBoundingBox(-96, 44, 11, -107, 53, 3);
+	UtilBoundingBox goldBox = new UtilBoundingBox(7, 43, -52, 16, 37, -46);
+	UtilBoundingBox diamondBox = new UtilBoundingBox(107, 50, -31, 87, 39, -21);
+	@EventHandler
+	public void onStoneBreak(BlockBreakEvent event) {
+		Block block = event.getBlock();
+		Player player = event.getPlayer();
+		// Block broken must be in stone box
+		if (stoneBox.isInBox(block.getLocation())) {
+			if (block.getType() == Material.STONE || block.getType() == Material.COBBLESTONE) {
+				event.setCancelled(true);
+				Material mat = block.getType();
+				// Break the block but put it back
+				block.breakNaturally(player.getItemInHand());
+				block.setType(mat);
+			}
+		} else if (ironBox.isInBox(block.getLocation())) {
+			if (block.getType() == Material.IRON_ORE) {
+				event.setCancelled(true);
+				// Break the block but put it back
+				block.breakNaturally(player.getItemInHand());
+				block.setType(Material.IRON_ORE);
+			}
+		} else if (goldBox.isInBox(block.getLocation())) {
+			if (block.getType() == Material.GOLD_ORE) {
+				event.setCancelled(true);
+				// Break the block but put it back
+				block.breakNaturally(player.getItemInHand());
+				block.setType(Material.GOLD_ORE);
+			}
+		} else if (diamondBox.isInBox(block.getLocation())) {
+			if (block.getType() == Material.DIAMOND_ORE) {
+				event.setCancelled(true);
+				// Break the block but put it back
+				if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
+					block.breakNaturally();
+					block.setType(Material.DIAMOND_ORE);
+				}
+			} else if (block.getType() == Material.SANDSTONE) {
+				event.setCancelled(true);
+				if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
+					block.setType(Material.AIR);
+					new BukkitRunnable() {
+
+						@Override
+						public void run() {
+							block.setType(Material.SANDSTONE);
+						}
+					}.runTaskLater(plugin, 200);
+				}
+			}
+		}
 	}
 
 

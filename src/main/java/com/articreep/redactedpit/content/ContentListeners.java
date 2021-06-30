@@ -240,6 +240,21 @@ public class ContentListeners implements Listener {
         }
     }
 
+    // Min*r
+    public static void onMinerTalk(Player player) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        if (!redactedPlayer.hasContent(Content.TALK_TO_MINER)) {
+            discoverContent(redactedPlayer, Content.TALK_TO_MINER, ChatColor.DARK_PURPLE + "Quest Started");
+        }
+    }
+
+    public static void onSpikeaxeObtain(Player player) {
+        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
+        if (!redactedPlayer.hasContent(Content.SPIKEAXE_OBTAIN)) {
+            discoverContent(redactedPlayer, Content.SPIKEAXE_OBTAIN, ChatColor.DARK_PURPLE + "Quest Complete");
+        }
+    }
+
     /**
      * Gets a RedactedPlayer instance of the player. If one does not exist this will return null.
      * @param player Bukkit Player

@@ -6,6 +6,7 @@ import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class TradingListeners implements Listener {
@@ -143,6 +145,64 @@ public class TradingListeners implements Listener {
 			}
 
 		}
+    	if (e.getView().getTitle().equals("Miner")) {
+    		e.setCancelled(true);
+			if (e.getSlot() == 9) {
+				inventory.addItem(addPickaxe(Material.WOOD_PICKAXE));
+				p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+				p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go, try not to lose it again!");
+				p.closeInventory();
+			} else if (e.getSlot() == 11) {
+				if (inventory.containsAtLeast(new ItemStack(Material.COBBLESTONE), 3) &&
+						inventory.contains(Material.WOOD_PICKAXE, 1)) {
+					inventory.removeItem(new ItemStack(Material.COBBLESTONE, 3));
+					removeOnePickaxe(inventory, Material.WOOD_PICKAXE);
+					inventory.addItem(addPickaxe(Material.STONE_PICKAXE));
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go!");
+					p.closeInventory();
+				} else {
+					p.sendMessage(ChatColor.RED + "You don't have enough resources!");
+				}
+			} else if (e.getSlot() == 13) {
+				if (inventory.containsAtLeast(new ItemStack(Material.IRON_ORE), 3) &&
+						inventory.contains(Material.STONE_PICKAXE, 1)) {
+					inventory.removeItem(new ItemStack(Material.IRON_ORE, 3));
+					removeOnePickaxe(inventory, Material.STONE_PICKAXE);
+					inventory.addItem(addPickaxe(Material.IRON_PICKAXE));
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go!");
+					p.closeInventory();
+				} else {
+					p.sendMessage(ChatColor.RED + "You don't have enough resources!");
+				}
+			} else if (e.getSlot() == 15) {
+				if (inventory.containsAtLeast(new ItemStack(Material.GOLD_ORE), 3) &&
+						inventory.contains(Material.IRON_PICKAXE, 1)) {
+					inventory.removeItem(new ItemStack(Material.GOLD_ORE, 3));
+					removeOnePickaxe(inventory, Material.IRON_PICKAXE);
+					inventory.addItem(addPickaxe(Material.GOLD_PICKAXE));
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go!");
+					p.closeInventory();
+				} else {
+					p.sendMessage(ChatColor.RED + "You don't have enough resources!");
+				}
+			} else if (e.getSlot() == 17) {
+				if (inventory.containsAtLeast(new ItemStack(Material.DIAMOND), 3) &&
+						inventory.contains(Material.GOLD_PICKAXE, 1)) {
+					inventory.removeItem(new ItemStack(Material.DIAMOND, 3));
+					removeOnePickaxe(inventory, Material.GOLD_PICKAXE);
+					inventory.addItem(RedactedGive.Spikeaxe(1));
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go!");
+					ContentListeners.onSpikeaxeObtain(p);
+					p.closeInventory();
+				} else {
+					p.sendMessage(ChatColor.RED + "You don't have enough resources!");
+				}
+			}
+		}
 	}
 	//TODO sus
 	// Cancel dragging in our inventory
@@ -152,4 +212,23 @@ public class TradingListeners implements Listener {
           e.setCancelled(true);
         }
     }
+	// bad method
+    private void removeOnePickaxe(Inventory inv, Material material) {
+		for (ItemStack item : inv.getContents()) {
+			if (item.getType() == material) {
+				ItemStack itemClone = item.clone();
+				item.setAmount(1);
+				inv.removeItem(itemClone);
+				break;
+			}
+		}
+	}
+
+	private ItemStack addPickaxe(Material material) {
+		ItemStack item = new ItemStack(material);
+		ItemMeta meta = item.getItemMeta();
+		meta.spigot().setUnbreakable(true);
+		item.setItemMeta(meta);
+		return item;
+	}
 }

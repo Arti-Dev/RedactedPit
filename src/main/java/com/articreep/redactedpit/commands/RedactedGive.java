@@ -44,7 +44,6 @@ public class RedactedGive implements CommandExecutor {
 				return true;
 			}
 			//There are exactly two arguments? Check if the first argument is valid.
-			ArrayList<String> list = generateList();
 			for (int i = 0; i < list.size(); i++) { //loop through array
 				if (args[0].equalsIgnoreCase(list.get(i))) { //if the argument is equal to something in the list
 					itemname = list.get(i);
@@ -94,13 +93,12 @@ public class RedactedGive implements CommandExecutor {
 	public static void sendErrorMessage(Player player, String message) {
 		player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + message);
 		player.sendMessage(ChatColor.RED + "Usage: /redactedgive <item> <quantity>");
-		player.sendMessage(ChatColor.RED + "Acceptable items include: AncientArtifact, DivineGlass, TimeWarpPearl, SunStone, TRexTooth, VoidCharm");
+		player.sendMessage(ChatColor.RED + "Acceptable items include: AncientArtifact, DivineGlass, TimeWarpPearl, SunStone, TRexTooth, VoidCharm, ArcheologistShovel, Spikeaxe");
 	}
 	
 	// Makes the list that we check against. Kind of like "registering" the methods.
 	// TODO Whenever a new item is added, ALWAYS register them here!
-	public static ArrayList<String> generateList() {
-		ArrayList<String> list = new ArrayList<String>();
+	ArrayList<String> list = new ArrayList<String>() {{
 		list.add("AncientArtifact");
 		list.add("DivineGlass");
 		list.add("TimeWarpPearl");
@@ -109,9 +107,9 @@ public class RedactedGive implements CommandExecutor {
 		list.add("HotPotato");
 		list.add("TRexTooth");
 		list.add("ArcheologistShovel");
-		return list;	
-	}
-	
+		list.add("Spikeaxe");
+	}};
+
 	// TODO All item methods go here now!!
 
 	public static ItemStack AncientArtifact(int quantity) {
@@ -269,5 +267,15 @@ public class RedactedGive implements CommandExecutor {
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 		return item;
 
+	}
+
+	public static ItemStack Spikeaxe(int quantity) {
+		ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, quantity);
+		final ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.AQUA + "Spikeaxe");
+		meta.setLore(Arrays.asList(ChatColor.GRAY + "Knocks your opponent", ChatColor.GRAY + "downwards when you", ChatColor.GRAY + "crit them."));
+		meta.spigot().setUnbreakable(true);
+		item.setItemMeta(meta);
+		return item;
 	}
 }

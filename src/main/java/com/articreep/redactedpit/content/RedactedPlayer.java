@@ -30,7 +30,7 @@ public class RedactedPlayer {
         this.importedGold = false;
         this.fracContent = "0/" + Content.values().length;
         this.percentContent = 0.00;
-        this.contentDiscovered = new HashSet<Content>();
+        this.contentDiscovered = new HashSet<>();
     }
     public Player getPlayer() {
         return player;
@@ -65,7 +65,7 @@ public class RedactedPlayer {
         plugin.getPlayerConfig().set("players." + uuidstring + ".percentcontent", percentContent);
         // Convert HashSet to List<String>
         HashSet<Content> tempSet = (HashSet<Content>) contentDiscovered.clone();
-        List<String> tempList = new ArrayList<String>();
+        List<String> tempList = new ArrayList<>();
         for (Content content : tempSet) {
             tempList.add(content.toString());
         }
@@ -75,7 +75,7 @@ public class RedactedPlayer {
 
     public void resetData() throws IOException {
         percentContent = 0.00;
-        contentDiscovered = new HashSet<Content>();
+        contentDiscovered = new HashSet<>();
         gold = 0.0;
         importedGold = false;
         saveData();
