@@ -1,5 +1,6 @@
 package com.articreep.redactedpit.commands;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class RedactedGive implements CommandExecutor {
 				sendErrorMessage(player, "Too many arguments.");
 				return true;
 			}
+			ArrayList<String> list = createList();
 			//There are exactly two arguments? Check if the first argument is valid.
 			for (int i = 0; i < list.size(); i++) { //loop through array
 				if (args[0].equalsIgnoreCase(list.get(i))) { //if the argument is equal to something in the list
@@ -98,7 +100,8 @@ public class RedactedGive implements CommandExecutor {
 	
 	// Makes the list that we check against. Kind of like "registering" the methods.
 	// TODO Whenever a new item is added, ALWAYS register them here!
-	ArrayList<String> list = new ArrayList<String>() {{
+	public static ArrayList<String> createList() {
+		ArrayList<String> list = new ArrayList<>();
 		list.add("AncientArtifact");
 		list.add("DivineGlass");
 		list.add("TimeWarpPearl");
@@ -108,7 +111,8 @@ public class RedactedGive implements CommandExecutor {
 		list.add("TRexTooth");
 		list.add("ArcheologistShovel");
 		list.add("Spikeaxe");
-	}};
+		return list;
+	}
 
 	// TODO All item methods go here now!!
 

@@ -725,7 +725,8 @@ public class Listeners implements Listener {
 	}
 
 	// Spikeaxe Quest
-	UtilBoundingBox stoneBox = new UtilBoundingBox(-42, 43, -38, -50, 50, -47);
+	// Allow the stone box to span the entire jungle
+	UtilBoundingBox stoneBox = new UtilBoundingBox(-87, 75, -57, -40, 42, -3);
 	UtilBoundingBox ironBox = new UtilBoundingBox(-96, 44, 11, -107, 53, 3);
 	UtilBoundingBox goldBox = new UtilBoundingBox(7, 43, -52, 16, 37, -46);
 	UtilBoundingBox diamondBox = new UtilBoundingBox(107, 50, -31, 87, 39, -21);
@@ -740,21 +741,21 @@ public class Listeners implements Listener {
 				Material mat = block.getType();
 				// Break the block but put it back
 				block.breakNaturally(player.getItemInHand());
-				block.setType(mat);
+				replaceLater(mat, block);
 			}
 		} else if (ironBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.IRON_ORE) {
 				event.setCancelled(true);
 				// Break the block but put it back
 				block.breakNaturally(player.getItemInHand());
-				block.setType(Material.IRON_ORE);
+				replaceLater(Material.IRON_ORE, block);
 			}
 		} else if (goldBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.GOLD_ORE) {
 				event.setCancelled(true);
 				// Break the block but put it back
 				block.breakNaturally(player.getItemInHand());
-				block.setType(Material.GOLD_ORE);
+				replaceLater(Material.GOLD_ORE, block);
 			}
 		} else if (diamondBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.DIAMOND_ORE) {
@@ -762,7 +763,7 @@ public class Listeners implements Listener {
 				// Break the block but put it back
 				if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
 					block.breakNaturally();
-					block.setType(Material.DIAMOND_ORE);
+					replaceLater(Material.DIAMOND_ORE, block);
 				}
 			} else if (block.getType() == Material.SANDSTONE) {
 				event.setCancelled(true);
@@ -778,6 +779,17 @@ public class Listeners implements Listener {
 				}
 			}
 		}
+	}
+
+	private void replaceLater(Material material, Block block) {
+		block.setType(Material.BEDROCK);
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				block.setType(material);
+			}
+		}.runTaskLater(plugin, 100);
 	}
 
 

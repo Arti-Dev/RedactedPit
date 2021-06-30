@@ -82,7 +82,8 @@ public class SpikeaxeMiner implements CommandExecutor {
         inv.setItem(18, Utils.createGuiItem(Material.PAPER, ChatColor.YELLOW + "Tips:",
                 ChatColor.GRAY + "Don't lose your pickaxe.."));
         inv.setItem(20, Utils.createGuiItem(Material.PAPER, ChatColor.YELLOW + "Tips:",
-                ChatColor.GRAY + "There's a mineable boulder", ChatColor.GRAY + "near the tree at the entrance to the cave."));
+                ChatColor.GRAY + "There's a mineable boulder", ChatColor.GRAY + "near the tree at the entrance to the cave.",
+                ChatColor.GRAY + "Actually, most of the cobblestone and stone blocks ", ChatColor.GRAY + "in the jungle are mineable."));
 
         inv.setItem(22, Utils.createGuiItem(Material.PAPER, ChatColor.YELLOW + "Tips:",
                 ChatColor.GRAY + "There's a hidden cave in the ", ChatColor.GRAY + "far-southwest of the Jurassic area."));

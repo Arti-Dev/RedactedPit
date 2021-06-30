@@ -16,7 +16,7 @@ public class RedactedGiveTabComplete implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		List<String> commands = new ArrayList<>();
 		if (args.length == 1) {
-			commands.addAll(RedactedGive.generateList());
+			commands.addAll(RedactedGive.createList());
 		}
 		final List<String> completions = new ArrayList<>();
 		StringUtil.copyPartialMatches(args[0], commands, completions);
