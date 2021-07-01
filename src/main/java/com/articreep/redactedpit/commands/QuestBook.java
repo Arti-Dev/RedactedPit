@@ -87,12 +87,12 @@ public class QuestBook implements CommandExecutor {
         inv.setItem(10, Utils.createGuiItem(Material.DIRT, ChatColor.AQUA + "Welcome to the Redacted Pit - the Time Travel Map!",
                 ChatColor.YELLOW + "This server was created as a place\nto develop lots of ideas that the\n[redacted] group wanted to make,\nall on one server.\n\n" +
                 "Please note that not all ideas will be good,\nand not all ideas are completed and usable.\n\n" +
-                        "Some things are also intentionally unbalanced for accessibility.\n\n" +
+                        "Some things are also intentionally\nunbalanced for accessibility.\n\n" +
                 "Hover over the other items for more!"));
         inv.setItem(12, Utils.createGuiItem(Material.SEA_LANTERN, ChatColor.AQUA + "Progression",
                 ChatColor.YELLOW + "The goal of this server is not to level up,\nit's to discover all of the content that \nwe have put out on here.\n\n" +
-                "Reaching 100% Content Discovered on your scoreboard \nmeans that you've seen everything we've created,\nand there isn't much else for you on this server.\n\n" +
-                "Feel free to let us know if \nyou found something you think we forgot to include!\n"));
+                "Reaching 100% Content Discovered\non your scoreboard \nmeans that you've seen\neverything we've created,\nand there isn't much else\nfor you on this server.\n\n" +
+                "Feel free to let us know if \nyou found something you\nthink we forgot to include!\n"));
         inv.setItem(14, Utils.createGuiItem(Material.CHEST, ChatColor.AQUA + "Chests!",
                 ChatColor.YELLOW + "All players are encouraged to open any chest they see.\n\n" +
                 "A lot of ideas were stored in chests anyways,\nso they're very important.\n\n" +
@@ -109,9 +109,9 @@ public class QuestBook implements CommandExecutor {
                 "Everything is kept on death.\n\n" +
                 "Do not spam kills on NPCs that trigger kill messages."));
         inv.setItem(30, Utils.createGuiItem(Material.GOLD_INGOT, ChatColor.AQUA + "Pit Mechanics",
-                ChatColor.YELLOW + "You can import your gold from actual Pit using /importgold.\nYou can only do this once.\n\n" +
+                ChatColor.YELLOW + "You can import your gold from\nactual Pit using /importgold.\nYou can only do this once.\n\n" +
                 "The launchers should work.\nThey aren't perfect, but they're launchers.\n\n" +
-                "Certain statistics are only tracked in the Colosseum\nand can be viewed with /coloinfo"));
+                "Certain statistics are only tracked\nin the Colosseum\nand can be viewed with /coloinfo"));
         inv.setItem(32, Utils.createGuiItem(Material.FLINT, ChatColor.AQUA + "TL:DR",
                 ChatColor.YELLOW + "- We made a lot of ideas and dumped them in this server\n" +
                 "- Your goal is to reach 100% Content Discovered\n" +
