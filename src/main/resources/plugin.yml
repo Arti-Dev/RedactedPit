@@ -49,3 +49,6 @@ commands:
   spikeaxeminer:
     description: spikeaxe miner
     usage: /spikeaxeminer
+  questbook:
+    description: Quest Book
+    usage: /questbook

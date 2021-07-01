@@ -1,6 +1,7 @@
 package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
+import com.articreep.redactedpit.commands.QuestBook;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.ChatColor;
@@ -17,9 +18,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TradingListeners implements Listener {
+public class GUIListeners implements Listener {
 	Main plugin;
-	public TradingListeners(Main plugin) {
+	public GUIListeners(Main plugin) {
 		this.plugin = plugin;
 	}
 	@EventHandler
@@ -203,6 +204,19 @@ public class TradingListeners implements Listener {
 				}
 			}
 		}
+    	if (e.getView().getTitle().equals("Tutorial")) {
+    		e.setCancelled(true);
+    		if (e.getSlot() == 34) {
+    			p.openInventory(QuestBook.createInventory(p));
+
+			}
+		}
+    	if (e.getView().getTitle().equals("Quest Book")) {
+    		e.setCancelled(true);
+    		if (e.getSlot() == 49) {
+    			p.openInventory(QuestBook.createTutorial());
+			}
+		}
 	}
 	//TODO sus
 	// Cancel dragging in our inventory
@@ -213,7 +227,7 @@ public class TradingListeners implements Listener {
         }
     }
 	// bad method
-    private void removeOnePickaxe(Inventory inv, Material material) {
+    private static void removeOnePickaxe(Inventory inv, Material material) {
 		for (ItemStack item : inv.getContents()) {
 			if (item.getType() == material) {
 				ItemStack itemClone = item.clone();
@@ -224,7 +238,7 @@ public class TradingListeners implements Listener {
 		}
 	}
 
-	private ItemStack addPickaxe(Material material) {
+	private static ItemStack addPickaxe(Material material) {
 		ItemStack item = new ItemStack(material);
 		ItemMeta meta = item.getItemMeta();
 		meta.spigot().setUnbreakable(true);

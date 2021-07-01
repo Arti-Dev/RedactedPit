@@ -13,9 +13,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SpikeaxeMiner implements CommandExecutor {
@@ -44,7 +44,7 @@ public class SpikeaxeMiner implements CommandExecutor {
                         } else if (i == 3) {
                             player.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here, take this pickaxe!");
                         } else if (i == 4) {
-                            player.getInventory().addItem(new ItemStack(Material.WOOD_PICKAXE));
+                            player.getInventory().addItem(addPickaxe(Material.WOOD_PICKAXE));
                             player.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Since you'll only see me standing here, " +
                                     "I'm always happy to upgrade your pickaxe if you bring the materials for it! Who knows, maybe I can grant you an ability..");
                         } else if (i == 5) {
@@ -93,5 +93,13 @@ public class SpikeaxeMiner implements CommandExecutor {
                 ChatColor.GRAY + "There's a small cave blocked off by mineable sandstone ", ChatColor.GRAY + "east of the Sun Stone merchant."));
         inv.setItem(31, RedactedGive.Spikeaxe(1));
         return inv;
+    }
+
+    private static ItemStack addPickaxe(Material material) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.spigot().setUnbreakable(true);
+        item.setItemMeta(meta);
+        return item;
     }
 }

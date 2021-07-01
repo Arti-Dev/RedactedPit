@@ -7,10 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldSaveEvent;
 
 import java.io.IOException;
@@ -31,7 +28,10 @@ public class ContentListeners implements Listener {
 
     //Create a RedactedPlayer object when players log in
     @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent event) throws IOException {
+    public void onPlayerLogin(PlayerJoinEvent event) throws IOException {
+        Player player = event.getPlayer();
+        Utils.sendTitle(player, ChatColor.DARK_AQUA + "Welcome!", ChatColor.DARK_PURPLE + "Check /questbook for info!", 5, 40, 20);
+        player.playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
         newRedactedPlayer(event.getPlayer());
     }
 

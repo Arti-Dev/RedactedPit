@@ -7,7 +7,7 @@ import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.listeners.LauncherListeners;
 import com.articreep.redactedpit.listeners.Listeners;
 import com.articreep.redactedpit.listeners.RaceListeners;
-import com.articreep.redactedpit.listeners.TradingListeners;
+import com.articreep.redactedpit.listeners.GUIListeners;
 import com.articreep.redactedpit.treasure.TreasureListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,7 +28,7 @@ public class Main extends JavaPlugin {
 		createPlayerData();
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		getServer().getPluginManager().registerEvents(new RaceListeners(this), this);
-		getServer().getPluginManager().registerEvents(new TradingListeners(this), this);
+		getServer().getPluginManager().registerEvents(new GUIListeners(this), this);
 		getServer().getPluginManager().registerEvents(new LauncherListeners(this), this);
 		TreasureListeners treasureListeners = new TreasureListeners(this);
 		treasureListeners.runTaskTimerAsynchronously(this, 0, 20);
@@ -48,6 +48,7 @@ public class Main extends JavaPlugin {
 		// add permissions to these commands why not
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
+		getCommand("questbook").setExecutor(new QuestBook());
 		getCommand("forcerespawn").setExecutor(new ForceRespawn());
 		getCommand("sendup").setExecutor(new SendUp());
 		getCommand("resetcontent").setExecutor(new ResetContent());

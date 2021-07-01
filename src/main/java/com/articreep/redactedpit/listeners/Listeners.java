@@ -217,6 +217,7 @@ public class Listeners implements Listener {
 		// Was it actually a kill?
 		if (victim.getHealth() <= event.getFinalDamage()) {
 			damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, quantity));
+			ContentListeners.getRedactedPlayer(damager).addGold(50);
 			if (quantity == 2 && onKOTH) {
 				damager.sendMessage(ChatColor.GREEN + "You gained two golden apples because of the Sun KOTH!");
 			} else if (inColo) {
@@ -737,45 +738,55 @@ public class Listeners implements Listener {
 		// Block broken must be in stone box
 		if (stoneBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.STONE || block.getType() == Material.COBBLESTONE) {
-				event.setCancelled(true);
-				Material mat = block.getType();
-				// Break the block but put it back
-				block.breakNaturally(player.getItemInHand());
-				replaceLater(mat, block);
+				if (!(player.hasPermission("redactedpit.modifyblocks") && player.getGameMode() == GameMode.CREATIVE)) {
+					event.setCancelled(true);
+					Material mat = block.getType();
+					// Break the block but put it back
+					block.breakNaturally(player.getItemInHand());
+					replaceLater(mat, block);
+				}
 			}
 		} else if (ironBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.IRON_ORE) {
-				event.setCancelled(true);
-				// Break the block but put it back
-				block.breakNaturally(player.getItemInHand());
-				replaceLater(Material.IRON_ORE, block);
+				if (!(player.hasPermission("redactedpit.modifyblocks") && player.getGameMode() == GameMode.CREATIVE)) {
+					event.setCancelled(true);
+					// Break the block but put it back
+					block.breakNaturally(player.getItemInHand());
+					replaceLater(Material.IRON_ORE, block);
+				}
 			}
 		} else if (goldBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.GOLD_ORE) {
-				event.setCancelled(true);
-				// Break the block but put it back
-				block.breakNaturally(player.getItemInHand());
-				replaceLater(Material.GOLD_ORE, block);
+				if (!(player.hasPermission("redactedpit.modifyblocks") && player.getGameMode() == GameMode.CREATIVE)) {
+					event.setCancelled(true);
+					// Break the block but put it back
+					block.breakNaturally(player.getItemInHand());
+					replaceLater(Material.GOLD_ORE, block);
+				}
 			}
 		} else if (diamondBox.isInBox(block.getLocation())) {
 			if (block.getType() == Material.DIAMOND_ORE) {
-				event.setCancelled(true);
-				// Break the block but put it back
-				if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
-					block.breakNaturally();
-					replaceLater(Material.DIAMOND_ORE, block);
+				if (!(player.hasPermission("redactedpit.modifyblocks") && player.getGameMode() == GameMode.CREATIVE)) {
+					event.setCancelled(true);
+					// Break the block but put it back
+					if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
+						block.breakNaturally();
+						replaceLater(Material.DIAMOND_ORE, block);
+					}
 				}
 			} else if (block.getType() == Material.SANDSTONE) {
-				event.setCancelled(true);
-				if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
-					block.setType(Material.AIR);
-					new BukkitRunnable() {
+				if (!(player.hasPermission("redactedpit.modifyblocks") && player.getGameMode() == GameMode.CREATIVE)) {
+					event.setCancelled(true);
+					if (player.getItemInHand().getType() == Material.GOLD_PICKAXE || player.getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
+						block.setType(Material.AIR);
+						new BukkitRunnable() {
 
-						@Override
-						public void run() {
-							block.setType(Material.SANDSTONE);
-						}
-					}.runTaskLater(plugin, 200);
+							@Override
+							public void run() {
+								block.setType(Material.SANDSTONE);
+							}
+						}.runTaskLater(plugin, 200);
+					}
 				}
 			}
 		}
@@ -791,6 +802,7 @@ public class Listeners implements Listener {
 			}
 		}.runTaskLater(plugin, 100);
 	}
+
 
 
 	

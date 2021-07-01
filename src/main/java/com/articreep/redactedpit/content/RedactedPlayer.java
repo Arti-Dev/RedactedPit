@@ -78,6 +78,7 @@ public class RedactedPlayer {
         contentDiscovered = new HashSet<>();
         gold = 0.0;
         importedGold = false;
+        fracContent = "0/" + Content.values().length;
         saveData();
     }
 
