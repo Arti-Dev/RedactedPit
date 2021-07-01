@@ -104,8 +104,6 @@ public enum Content {
     LARGEKB(null, "Increased KB Hit", "Probably one of the most powerful moves that the Colosseum can grant you.\n" +
             "However, I can see how people might hate it, even if they were the one who inflicted it.",
             "Audience Colosseum effect"),
-    BLASTED_AWAY(null, "Blasted Away Effect", "This is one of the more unique effects that might help with crowd control.",
-            "Audience Colosseum effect"),
     SKYBLOCK_ROOM(new UtilBoundingBox(0, 28, 10, 8, 35, -1), "SkyBlock Ripoff Room",
             "This room contains lots of SkyBlock-like concepts that have been banished to this room.\n" +
                     "There's also a few teleport corridors that lead to a few places.",

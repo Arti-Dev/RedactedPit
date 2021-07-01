@@ -219,8 +219,6 @@ public class ContentListeners implements Listener {
             discoverContent(redactedPlayer, Content.HOT_POTATO);
         } else if (effect == AudienceEffect.LARGEKB) {
             discoverContent(redactedPlayer, Content.LARGEKB);
-        } else if (effect == AudienceEffect.BLASTED_AWAY) {
-            discoverContent(redactedPlayer, Content.BLASTED_AWAY);
         }
     }
 
