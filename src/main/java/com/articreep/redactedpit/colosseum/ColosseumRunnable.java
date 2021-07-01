@@ -336,6 +336,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 					// Give the player their effect
 					
 					if (effect == AudienceEffect.ABSORPTION) {
+						player.removePotionEffect(PotionEffectType.ABSORPTION);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 0));
 						player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.YELLOW + 
 								"granted you 4 HP of absorption for 10 seconds!");
@@ -364,16 +365,19 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 								"healed you for 8 HP!");
 						
 					} else if (effect == AudienceEffect.REGENERATION) {
+						player.removePotionEffect(PotionEffectType.REGENERATION);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 0));
 						player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.GREEN + 
 								"granted you Regen I for 10 seconds!");
 						
 					} else if (effect == AudienceEffect.STRENGTH) {
+						player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 120, 0));
 						player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.RED + 
 								"granted you Strength I for 6 seconds!");
 						
 					} else if (effect == AudienceEffect.WEAKNESS) {
+						player.removePotionEffect(PotionEffectType.WEAKNESS);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 1));
 						player.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_GRAY + 
 								"inflicted Weakness II for 20 seconds!");
