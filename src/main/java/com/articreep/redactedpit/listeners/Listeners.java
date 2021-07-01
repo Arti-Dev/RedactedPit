@@ -33,6 +33,9 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
@@ -786,6 +789,23 @@ public class Listeners implements Listener {
 		}
 	}
 
+	// Prevent players from emptying buckets
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onBucketEmpty(PlayerBucketEmptyEvent event) {
+		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			// Other things can override this if needed
+			event.setCancelled(true);
+		}
+	}
+
+	// Prevent players from filling buckets
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onBucketFill(PlayerBucketFillEvent event) {
+		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			// Other things can override this if needed
+			event.setCancelled(true);
+		}
+	}
 	// Spikeaxe Quest
 	// Allow the stone box to span the entire jungle
 	UtilBoundingBox stoneBox = new UtilBoundingBox(-87, 75, -57, -40, 42, -3);
