@@ -86,7 +86,8 @@ public class QuestBook implements CommandExecutor {
         Inventory inv = Bukkit.createInventory(null, 54, "Tutorial");
         inv.setItem(10, Utils.createGuiItem(Material.DIRT, ChatColor.AQUA + "Welcome to the Redacted Pit - the Time Travel Map!",
                 ChatColor.YELLOW + "This server was created as a place\nto develop lots of ideas that the\n[redacted] group wanted to make,\nall on one server.\n\n" +
-                "Please note that not all ideas will be good,\nand not all ideas are completed and usable.\nSome things are also intentionally \n" +
+                "Please note that not all ideas will be good,\nand not all ideas are completed and usable.\n\n" +
+                        "Some things are also intentionally unbalanced for accessibility.\n\n" +
                 "Hover over the other items for more!"));
         inv.setItem(12, Utils.createGuiItem(Material.SEA_LANTERN, ChatColor.AQUA + "Progression",
                 ChatColor.YELLOW + "The goal of this server is not to level up,\nit's to discover all of the content that \nwe have put out on here.\n\n" +
@@ -104,7 +105,7 @@ public class QuestBook implements CommandExecutor {
                 ChatColor.YELLOW + "This server is not meant to be competitive,\nhowever PVP is enabled.\n\n" +
                 "You probably shouldn't be 100% PVPing on this server.\n\n" +
                 "Each kill grants a flat 50g.\nNot all kill mechanics are enabled.\n\n" +
-                "There are no perks, but there\nare golden apples on kill.\nUse /kit pit and /kit shopdia.\n\n" +
+                "There are no perks, but there\nare golden apples on kill.\nUse /kit pit, /kit shopdia, and /spawn.\n\n" +
                 "Everything is kept on death.\n\n" +
                 "Do not spam kills on NPCs that trigger kill messages."));
         inv.setItem(30, Utils.createGuiItem(Material.GOLD_INGOT, ChatColor.AQUA + "Pit Mechanics",

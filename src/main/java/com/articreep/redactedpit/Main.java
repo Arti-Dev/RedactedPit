@@ -14,6 +14,8 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +50,7 @@ public class Main extends JavaPlugin {
 		// add permissions to these commands why not
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
+		getCommand("spawn").setExecutor(new Spawn(this));
 		getCommand("questbook").setExecutor(new QuestBook());
 		getCommand("forcerespawn").setExecutor(new ForceRespawn());
 		getCommand("sendup").setExecutor(new SendUp());

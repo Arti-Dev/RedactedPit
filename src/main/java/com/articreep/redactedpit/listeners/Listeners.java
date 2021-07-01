@@ -1,21 +1,25 @@
 package com.articreep.redactedpit.listeners;
 
-import com.articreep.redactedpit.*;
+import com.articreep.redactedpit.Main;
+import com.articreep.redactedpit.PlayerTouchVoidEvent;
+import com.articreep.redactedpit.UtilBoundingBox;
+import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.commands.ToggleJumpPads;
 import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
-import com.articreep.redactedpit.treasure.TreasureListeners;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,8 +35,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -102,7 +104,9 @@ public class Listeners implements Listener {
 			}.runTaskLater(plugin, 1);
 		}
 	}
-
+	// Map victims to damagers and victims to cooldowns
+	public static HashMap<Player, Player> taggedMap = new HashMap<Player, Player>();
+	public static HashMap<Player, BukkitTask> cooldownMap = new HashMap<>();
 	@EventHandler //TODO Clean up
 	public void onPlayerKillPlayer(EntityDamageByEntityEvent event) { //Grants players golden apples on killing other players
 		if (event.isCancelled()) return;
@@ -130,6 +134,7 @@ public class Listeners implements Listener {
 		} else {
 			return;
 		}
+		// Map damager to victim
 		loc = damager.getLocation();
 		// Is the KOTH on/Is the player on the KOTH?
 		if (stoneplaced) {
@@ -200,7 +205,6 @@ public class Listeners implements Listener {
 					}
 					
 				}.runTaskTimer(plugin, 1, 1);
-				//TODO Add particle trail
 				damager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 9));
 				damager.getWorld().playSound(damager.getLocation(), Sound.ENDERDRAGON_HIT, 1, 0.5F);
 				damagercolo.setLargeKB(false);
@@ -216,8 +220,17 @@ public class Listeners implements Listener {
 		}
 		// Was it actually a kill?
 		if (victim.getHealth() <= event.getFinalDamage()) {
-			damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, quantity));
-			ContentListeners.getRedactedPlayer(damager).addGold(50);
+			if (ContentListeners.isRedactedPlayer(damager)) {
+				damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, quantity));
+				ContentListeners.getRedactedPlayer(damager).addGold(50);
+				damager.sendMessage(ChatColor.GOLD + "+50g");
+			}
+			taggedMap.remove(victim);
+
+			if (cooldownMap.containsKey(victim)) {
+				cooldownMap.get(victim).cancel();
+				cooldownMap.remove(victim);
+			}
 			if (quantity == 2 && onKOTH) {
 				damager.sendMessage(ChatColor.GREEN + "You gained two golden apples because of the Sun KOTH!");
 			} else if (inColo) {
@@ -228,9 +241,34 @@ public class Listeners implements Listener {
 					damagercolo.increaseKillStreakCount(1);
 				}
 			} else if (inJurassic) {
-				damager.getInventory().addItem(RedactedGive.TRexTooth(1));
+				if (Math.random() * 10 > 9) {
+					damager.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "TOOTH! " + ChatColor.YELLOW + "You found a T-Rex Tooth!");
+					damager.getInventory().addItem(RedactedGive.TRexTooth(1));
+				}
 			}
+		} else {
+			// If not, just tag them and be happy
+			// If they already exist in the map cancel the existing one and put in a new one
+			if (taggedMap.containsKey(victim)) {
+				// Go to the cooldown map and reset the timer
+				cooldownMap.get(victim).cancel();
+				cooldownMap.remove(victim);
+			}
+			BukkitTask task = new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					taggedMap.remove(victim);
+					cooldownMap.remove(victim);
+				}
+			}.runTaskLater(plugin, 200);
+			taggedMap.put(victim, damager);
+			cooldownMap.put(victim, task);
 		}
+	}
+
+	public static boolean isInCombat(Player player) {
+		return (taggedMap.containsKey(player) || taggedMap.containsValue(player));
 	}
 	
 	
@@ -395,6 +433,19 @@ public class Listeners implements Listener {
 		if (!(playertouchvoidevent.isCancelled())) {
 			player.setHealth(0);
 			player.sendMessage(ChatColor.RED + "You fell in the void!");
+			if (taggedMap.containsKey(player)) {
+				Player damager = taggedMap.get(player);
+				if (ContentListeners.isRedactedPlayer(player)) {
+					damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+					ContentListeners.getRedactedPlayer(damager).addGold(50);
+					damager.sendMessage(ChatColor.GOLD + "+50g");
+				}
+				// Remove the victim from all HashMaps
+				taggedMap.remove(player);
+				cooldownMap.get(player).cancel();
+				cooldownMap.remove(player);
+
+			}
 		}
 	}
 	
@@ -416,6 +467,16 @@ public class Listeners implements Listener {
 			player.damage(6);
 			if (player.getHealth() == 0) {
 				player.sendMessage(ChatColor.DARK_PURPLE + "Your Void Charm couldn't save you!");
+				if (taggedMap.containsKey(player)) {
+					Player damager = taggedMap.get(player);
+					damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
+					ContentListeners.getRedactedPlayer(damager).addGold(50);
+					// Remove the victim from all HashMaps
+					taggedMap.remove(player);
+					cooldownMap.get(player).cancel();
+					cooldownMap.remove(player);
+
+				}
 				return;
 			}
 			player.setVelocity(new Vector(0, 4, 0));

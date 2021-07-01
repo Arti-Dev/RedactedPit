@@ -7,21 +7,26 @@ commands:
   togglejumppads:
     description: Toggles jumppads
     usage: /togglejumppads
+    permission: redactedpit.togglejumppads
   cancelrace:
     description: Cancels the race if you're doing it.
     usage: /cancelrace
   tradedivineglass:
     description: Used for trading ancient artifacts for Divine Glass. Only if I could get Citizens' API to work.. ;-;
     usage: /tradedivineglass
+    permission: redactedpit.tradingcommands
   tradingmaster:
     description: Used for using the trading master
     usage: /tradingmaster
+    permission: redactedpit.tradingcommands
   tradesunstone:
     description: Used for trading ancient artifacts for Sun Stones.
     usage: /tradesunstone
+    permission: redactedpit.tradingcommands
   redactedgive:
     description: Give command for a variety of items coded in by Arti
     usage: /redactedgive <item> <quantity>
+    permission: redactedpit.give
   coloinfo:
     description: See your or someone else's Colosseum Stats!
     usage: /coloinfo <player>
@@ -37,18 +42,25 @@ commands:
   tradetimewarp:
     description: Trade Time Warp Pearls
     usage: /tradetimewarp
+    permission: redactedpit.tradingcommands
   tradevoidcharm:
     description: Trade Void Charms
     usage: /tradevoidcharm
+    permission: redactedpit.tradingcommands
   sendup:
     description: Sends the specified player(s) up. lol
     usage: /sendup <player1> <player2> <player3>...
+    permission: redactedpit.sendup
   forcerespawn:
     description: Force respawns a player
     usage: /forcerespawn <player>
   spikeaxeminer:
     description: spikeaxe miner
     usage: /spikeaxeminer
+    permission: redactedpit.tradingcommands
   questbook:
     description: Quest Book
     usage: /questbook
+  spawn:
+    description: teleports you to spawn
+    usage: /spawn

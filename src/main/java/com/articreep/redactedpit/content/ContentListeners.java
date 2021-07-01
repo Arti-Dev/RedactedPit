@@ -264,6 +264,10 @@ public class ContentListeners implements Listener {
         return redactedPlayerHashMap.get(player);
     }
 
+    public static boolean isRedactedPlayer(Player player) {
+        return redactedPlayerHashMap.containsKey(player);
+    }
+
     public void newRedactedPlayer(Player player) throws IOException {
         RedactedPlayer redactedPlayer = new RedactedPlayer(player, plugin);
         redactedPlayerHashMap.put(player, redactedPlayer);
