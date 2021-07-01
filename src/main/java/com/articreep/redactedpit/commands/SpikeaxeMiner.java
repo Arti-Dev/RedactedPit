@@ -70,7 +70,7 @@ public class SpikeaxeMiner implements CommandExecutor {
         Inventory inv;
         inv = Bukkit.createInventory(null, 36, "Miner");
         inv.setItem(9, Utils.createGuiItem(Material.WOOD_PICKAXE, ChatColor.YELLOW + "Get another Wooden Pickaxe",
-                ChatColor.GRAY + "Lost yours already? I can give you another one.."));
+                ChatColor.GRAY + "Lost yours already? I can give you another one for 500g.."));
         inv.setItem(11, Utils.createGuiItem(Material.STONE_PICKAXE, ChatColor.YELLOW + "Craft a Stone Pickaxe",
                 ChatColor.GRAY + "Requires 3 Cobblestone and a Wooden Pickaxe"));
         inv.setItem(13, Utils.createGuiItem(Material.IRON_PICKAXE, ChatColor.YELLOW + "Craft an Iron Pickaxe",

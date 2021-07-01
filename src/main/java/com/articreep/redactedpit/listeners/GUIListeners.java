@@ -149,9 +149,13 @@ public class GUIListeners implements Listener {
     	if (e.getView().getTitle().equals("Miner")) {
     		e.setCancelled(true);
 			if (e.getSlot() == 9) {
-				inventory.addItem(addPickaxe(Material.WOOD_PICKAXE));
-				p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
-				p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go, try not to lose it again!");
+				if (!ContentListeners.getRedactedPlayer(p).subtractGold(500)) {
+					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
+				} else {
+					inventory.addItem(addPickaxe(Material.WOOD_PICKAXE));
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					p.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here you go, try not to lose it again!");
+				}
 				p.closeInventory();
 			} else if (e.getSlot() == 11) {
 				if (inventory.containsAtLeast(new ItemStack(Material.COBBLESTONE), 3) &&
