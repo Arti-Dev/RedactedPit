@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -50,6 +51,7 @@ public class Main extends JavaPlugin {
 		// add permissions to these commands why not
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
+		getCommand("content").setExecutor(new ContentCommand());
 		getCommand("spawn").setExecutor(new Spawn(this));
 		getCommand("questbook").setExecutor(new QuestBook());
 		getCommand("forcerespawn").setExecutor(new ForceRespawn());
@@ -71,6 +73,13 @@ public class Main extends JavaPlugin {
 	}
     @Override
     public void onDisable() {
+		for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
+			try {
+				ContentListeners.getRedactedPlayer(onlineplayer).saveData();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
     	getLogger().info("Disabling RedactedPit!");
     }
 

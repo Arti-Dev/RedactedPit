@@ -31,6 +31,8 @@ public class ContentListeners implements Listener {
     public void onPlayerLogin(PlayerJoinEvent event) throws IOException {
         Player player = event.getPlayer();
         Utils.sendTitle(player, ChatColor.DARK_AQUA + "Welcome!", ChatColor.DARK_PURPLE + "Check /questbook for info!", 5, 40, 20);
+        // dew it again
+        Utils.sendTitle(player, ChatColor.DARK_AQUA + "Welcome!", ChatColor.DARK_PURPLE + "Check /questbook for info!", 5, 40, 20);
         player.playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
         newRedactedPlayer(event.getPlayer());
     }
@@ -272,7 +274,7 @@ public class ContentListeners implements Listener {
         redactedPlayer.loadData();
     }
 
-    public void removeRedactedPlayer(Player player) throws IOException {
+    public static void removeRedactedPlayer(Player player) throws IOException {
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
         redactedPlayer.saveData();
         redactedPlayerHashMap.remove(player);

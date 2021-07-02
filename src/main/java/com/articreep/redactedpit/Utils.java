@@ -32,6 +32,8 @@ public class Utils {
      */
 	public static boolean isInColosseum(Location loc) {
 		if (!(loc.getWorld() == Bukkit.getWorld("redacted2"))) return false;
+		// bad hotfix
+		if (loc.clone().add(0, -1, 0).getBlock().getType() == Material.GRASS) return false;
 		int locX = loc.getBlockX();
 		int locY = loc.getBlockY();
 		int locZ = loc.getBlockZ();
