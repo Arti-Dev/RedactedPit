@@ -52,7 +52,7 @@ public enum Content {
             "The 'charging' mechanic where you must stand there for a second before it launches you is actually unintentional, but it's good balance.",
             "Look for pressure plates in Future!"),
     VOID_CHARM(null, "Void Charms", "A lot of people don't like void, so this item gives you a second chance at living!",
-            "There's a NPC on a floating island in Future."),
+            "There's a NPC on a floating island in Future. Buy a charm and use it."),
     STIM_GUN_RHYLIE(new UtilBoundingBox(18, 43, 39, 8, 57, 76), "AgentRhylie's Stim Gun",
             "Rhylie, what do you want me to put here?", "Located on the far right side of Future"),
     POG_TOWER(new UtilBoundingBox(100, 103, 25, 121, 108, 47), "Pog Tower",

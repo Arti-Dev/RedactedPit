@@ -811,8 +811,8 @@ public class Listeners implements Listener {
 	@EventHandler (priority = EventPriority.LOWEST)
 	public void onFireExtinguish(PlayerInteractEvent event) {
 		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			if (event.getClickedBlock() == null) return;
 			Block block = event.getClickedBlock().getLocation().add(0, 1, 0).getBlock();
-			if (block.isEmpty()) return;
 			if (block.getType() == Material.FIRE) {
 				// Other things can override this if needed
 				event.setCancelled(true);

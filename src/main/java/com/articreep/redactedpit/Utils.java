@@ -155,6 +155,24 @@ public class Utils {
 			}
 		}.runTaskTimer(plugin, 0, 5);
 	}
+
+	public static void sendSnowParticles(Main plugin, Player player) {
+		new BukkitRunnable() {
+			int i = 0;
+			@Override
+			public void run() {
+				Location loc = player.getLocation().add(0, 1, 0);
+				PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.SNOW_SHOVEL, true, (float) loc.getX(), (float) ((float) loc.getY() + 0.5), (float) loc.getZ(), 0, 0, 0, 1, 75);
+				for(Player online : Bukkit.getOnlinePlayers()) {
+					((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
+				}
+				i++;
+				if (i > 2) {
+					this.cancel();
+				}
+			}
+		}.runTaskTimer(plugin, 0, 5);
+	}
 	
 	/**
 	 * Sends a pre-determined redstone particle at specified location

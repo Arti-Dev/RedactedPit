@@ -19,7 +19,7 @@ public class ContentCommand implements CommandExecutor {
         boolean operation;
         // Two arguments: The action (add or remove), online player, and content
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "Usage: /content [add/remove] [content]");
+            sender.sendMessage(ChatColor.RED + "Usage: /content [add/remove] [player] [content]");
             return true;
         } else {
             // Is it a valid action?
