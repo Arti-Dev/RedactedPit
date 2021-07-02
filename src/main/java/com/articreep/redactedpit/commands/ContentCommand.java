@@ -39,10 +39,25 @@ public class ContentCommand implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Invalid player! Must be online.");
                         return true;
                     }
+                    RedactedPlayer redactedPlayer = ContentListeners.getRedactedPlayer(player);
+                    if (args[2].equalsIgnoreCase("all")) {
+                        if (operation == true) {
+                            for (Content content : Content.values()) {
+                                redactedPlayer.addContent(content);
+                            }
+                            sender.sendMessage(ChatColor.GREEN + "Sucessfully added all content to " + player.getName());
+                        } else {
+                            for (Content content : Content.values()) {
+                                redactedPlayer.removeContent(content);
+                            }
+                            sender.sendMessage(ChatColor.GREEN + "Sucessfully removed all content from " + player.getName());
+                            sender.sendMessage(ChatColor.GREEN + "Use /resetcontent <player> to reset everything from a player!");
+                        }
+                        return true;
+                    }
                     // Is the content correct?
                     try {
                         Content content = Content.valueOf(args[2].toUpperCase(Locale.ROOT));
-                        RedactedPlayer redactedPlayer = ContentListeners.getRedactedPlayer(player);
                         if (operation == true) {
                             if (!redactedPlayer.hasContent(content)) {
                                 redactedPlayer.addContent(content);

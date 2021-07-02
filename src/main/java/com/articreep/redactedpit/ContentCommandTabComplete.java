@@ -31,6 +31,7 @@ public class ContentCommandTabComplete implements TabCompleter {
 			}
 			StringUtil.copyPartialMatches(args[1], strings, completions);
 		} else if (args.length == 3) {
+			strings.add("ALL");
 			for (Content content : Content.values()) {
 				strings.add(content.toString());
 			}
