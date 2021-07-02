@@ -48,7 +48,6 @@ public class Main extends JavaPlugin {
 			new ContentExpansion(this).register();
 		}
 
-		// add permissions to these commands why not
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
 		getCommand("content").setExecutor(new ContentCommand());
@@ -68,6 +67,7 @@ public class Main extends JavaPlugin {
 		getCommand("tradeSunStone").setExecutor(new TradeSunStone(this));
 		getCommand("tradevoidcharm").setExecutor(new TradeVoidCharm(this));
 		getCommand("redactedgive").setTabCompleter(new RedactedGiveTabComplete());
+		getCommand("content").setTabCompleter(new ContentCommandTabComplete());
 		getCommand("coloinfo").setExecutor(new ColoInfo());
 		getLogger().info("RedactedPit has been loaded!");
 	}

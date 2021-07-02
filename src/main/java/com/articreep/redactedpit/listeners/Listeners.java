@@ -806,6 +806,19 @@ public class Listeners implements Listener {
 			event.setCancelled(true);
 		}
 	}
+
+	// Etcetinguish
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onFireExtinguish(PlayerInteractEvent event) {
+		if (!event.getPlayer().hasPermission("redactedpit.modifyblocks")) {
+			Block block = event.getClickedBlock().getLocation().add(0, 1, 0).getBlock();
+			if (block.isEmpty()) return;
+			if (block.getType() == Material.FIRE) {
+				// Other things can override this if needed
+				event.setCancelled(true);
+			}
+		}
+	}
 	// Spikeaxe Quest
 	// Allow the stone box to span the entire jungle
 	UtilBoundingBox stoneBox = new UtilBoundingBox(-87, 75, -57, -40, 42, -3);
