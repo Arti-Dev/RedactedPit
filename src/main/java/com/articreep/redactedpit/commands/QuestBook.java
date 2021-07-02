@@ -85,42 +85,47 @@ public class QuestBook implements CommandExecutor {
     public static Inventory createTutorial() {
         Inventory inv = Bukkit.createInventory(null, 54, "Tutorial");
         inv.setItem(10, Utils.createGuiItem(Material.DIRT, ChatColor.AQUA + "Welcome to the Redacted Pit - the Time Travel Map!",
-                ChatColor.YELLOW + "This server was created as a place\nto develop lots of ideas that the\n[redacted] group wanted to make,\nall on one server.\n\n" +
-                "Please note that not all ideas will be good,\nand not all ideas are completed and usable.\n\n" +
-                        "Some things are also intentionally\nunbalanced for accessibility,\nin addition we are not professional builders.\n\n" +
+                ChatColor.YELLOW + "This server was created as a place", ChatColor.YELLOW + "to develop lots of ideas that the", ChatColor.YELLOW +
+                        "[redacted] group wanted to make,", ChatColor.YELLOW + "all on one server.", "", ChatColor.YELLOW +
+                "Please note that not all ideas will be good,", ChatColor.YELLOW + "and not all ideas are completed and usable.", "", ChatColor.YELLOW +
+                        "Some things are also intentionally", ChatColor.YELLOW + "unbalanced for accessibility,", ChatColor.YELLOW +
+                        "in addition we are not professional builders.", "", ChatColor.YELLOW +
                 "Hover over the other items for more!"));
         inv.setItem(12, Utils.createGuiItem(Material.SEA_LANTERN, ChatColor.AQUA + "Progression",
-                ChatColor.YELLOW + "The goal of this server is not to level up,\nit's to discover all of the content that \nwe have put out on here.\n\n" +
-                "Reaching 100% Content Discovered\non your scoreboard \nmeans that you've seen\neverything we've created,\nand there isn't much else\nfor you on this server.\n\n" +
-                "Feel free to let us know if \nyou found something you\nthink we forgot to include!\n"));
+                ChatColor.YELLOW + "The goal of this server is not to level up,", ChatColor.YELLOW + "it's to discover all of the content that", ChatColor.YELLOW +
+                        "we have put out on here.", "", ChatColor.YELLOW +
+                "Reaching 100% Content Discovered", ChatColor.YELLOW + "on your scoreboard ", ChatColor.YELLOW + "means that you've seen", ChatColor.YELLOW +
+                        "everything we've created,", ChatColor.YELLOW + "and there isn't much else", ChatColor.YELLOW + "for you on this server.", "", ChatColor.YELLOW +
+                "Feel free to let us know if", ChatColor.YELLOW + "you found something you", ChatColor.YELLOW + "think we forgot to include!"));
         inv.setItem(14, Utils.createGuiItem(Material.CHEST, ChatColor.AQUA + "Chests!",
-                ChatColor.YELLOW + "All players are encouraged to open any chest they see.\n\n" +
-                "A lot of ideas were stored in chests anyways,\nso they're very important.\n\n" +
+                ChatColor.YELLOW + "All players are encouraged to open any chest they see.", "", ChatColor.YELLOW +
+                "A lot of ideas were stored in chests anyways,", ChatColor.YELLOW + "so they're very important.", "", ChatColor.YELLOW +
                 "You cannot modify them, however."));
         inv.setItem(16, Utils.createGuiItem(Material.BOOK, ChatColor.AQUA + "Discovering things",
-                ChatColor.YELLOW + "In order to increase your Content Discovered percentage,\nyou must travel throughout the map.\n\n" +
-                "Entering certain areas will grant you a discovery,\nwhile some require you to interact\nwith NPCs or use items.\n\n" +
-                "If you're not sure what to do,\nlook at your quest book!"));
+                ChatColor.YELLOW + "In order to increase your Content Discovered percentage,", ChatColor.YELLOW + "you must travel throughout the map.", "", ChatColor.YELLOW +
+                "Entering certain areas will grant you a discovery,", ChatColor.YELLOW + "while some require you to interact", ChatColor.YELLOW + "with NPCs or use items.", "", ChatColor.YELLOW +
+                "If you're not sure what to do,", ChatColor.YELLOW + "look at your quest book!"));
         inv.setItem(28, Utils.createGuiItem(Material.IRON_SWORD, ChatColor.AQUA + "PVP",
-                ChatColor.YELLOW + "This server is not meant to be competitive,\nhowever PVP is enabled.\n\n" +
-                "You probably shouldn't be 100% PVPing on this server.\n\n" +
-                "Each kill grants a flat 50g.\nNot all kill mechanics are enabled.\n\n" +
-                "There are no perks, but there\nare golden apples on kill.\nUse /kit pit, /kit shopdia, and /spawn.\n\n" +
-                "Everything is kept on death.\n\n" +
+                ChatColor.YELLOW + "This server is not meant to be competitive,", ChatColor.YELLOW + "however PVP is enabled.", "", ChatColor.YELLOW +
+                "You probably shouldn't be 100% PVPing on this server.", "", ChatColor.YELLOW +
+                "Each kill grants a flat 50g.", ChatColor.YELLOW + "Not all kill mechanics are enabled.", "", ChatColor.YELLOW +
+                "There are no perks, but there", ChatColor.YELLOW + "are golden apples on kill.", ChatColor.YELLOW + "Use /kit pit, /kit shopdia, and /spawn.", "", ChatColor.YELLOW +
+                "Everything is kept on death.", "", ChatColor.YELLOW +
                 "Do not spam kills on NPCs that trigger kill messages."));
         inv.setItem(30, Utils.createGuiItem(Material.GOLD_INGOT, ChatColor.AQUA + "Pit Mechanics",
-                ChatColor.YELLOW + "You can import your gold from\nactual Pit using /importgold.\nYou can only do this once.\n\n" +
-                "The launchers should work.\nThey aren't perfect, but they're launchers.\n\n" +
-                "Certain statistics are only tracked\nin the Colosseum\nand can be viewed with /coloinfo"));
+                ChatColor.YELLOW + "You can import your gold from", ChatColor.YELLOW + "actual Pit using /importgold.", ChatColor.YELLOW +
+                        "You can only do this once.", "", ChatColor.YELLOW +
+                "The launchers should work.", ChatColor.YELLOW + "They aren't perfect, but they're launchers.", "", ChatColor.YELLOW +
+                "Certain statistics are only tracked", ChatColor.YELLOW + "in the Colosseum", ChatColor.YELLOW + "and can be viewed with /coloinfo"));
         inv.setItem(32, Utils.createGuiItem(Material.FLINT, ChatColor.AQUA + "TL:DR",
-                ChatColor.YELLOW + "- We made a lot of ideas and dumped them in this server\n" +
-                "- Your goal is to reach 100% Content Discovered\n" +
-                "- You can open chests, just can't modify them\n" +
-                "- Look at your Quest Book if you don't know what to do\n" +
+                ChatColor.YELLOW + "- We made a lot of ideas and dumped them in this server", ChatColor.YELLOW +
+                "- Your goal is to reach 100% Content Discovered", ChatColor.YELLOW +
+                "- You can open chests, just can't modify them", ChatColor.YELLOW +
+                "- Look at your Quest Book if you don't know what to do", ChatColor.YELLOW +
                 "- Use /importgold to import your gold from actual Pit"));
         inv.setItem(34, Utils.createGuiItem(Material.ARROW, ChatColor.AQUA + "Ready to go?",
-                ChatColor.YELLOW + "Click here to view the Quest Book.\n" +
-                "If you keep getting this tutorial every single time,\nyou need to import your gold!"));
+                ChatColor.YELLOW + "Click here to view the Quest Book.", ChatColor.YELLOW +
+                "If you keep getting this tutorial every single time,", ChatColor.YELLOW + "you need to import your gold!"));
         return inv;
     }
 }
