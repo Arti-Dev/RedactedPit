@@ -49,14 +49,14 @@ public class QuestBook implements CommandExecutor {
         Inventory inv = Bukkit.createInventory(null, 54, "Quest Book");
         inv.setItem(4, Utils.createGuiItem(Material.PAPER, ChatColor.AQUA + "Quest Book"));
         int i = 0;
-        if (!ContentListeners.getRedactedPlayer(player).hasContent(Content.HIDDEN_ARCHAEOLOGIST)) {
-            inv.setItem(numberToSlot.get(i + 1), Utils.createGuiItem(Material.BOOK_AND_QUILL, ChatColor.AQUA + Content.HIDDEN_ARCHAEOLOGIST.getId(),
-                    ChatColor.YELLOW + Content.HIDDEN_ARCHAEOLOGIST.getBookDescription()));
-            i++;
-        }
         if (!ContentListeners.getRedactedPlayer(player).hasContent(Content.WARPING_TO_THE_PAST)) {
             inv.setItem(numberToSlot.get(i + 1), Utils.createGuiItem(Material.BOOK_AND_QUILL, ChatColor.AQUA + Content.WARPING_TO_THE_PAST.getId(),
                     ChatColor.YELLOW + Content.WARPING_TO_THE_PAST.getBookDescription()));
+            i++;
+        }
+        if (!ContentListeners.getRedactedPlayer(player).hasContent(Content.HIDDEN_ARCHAEOLOGIST)) {
+            inv.setItem(numberToSlot.get(i + 1), Utils.createGuiItem(Material.BOOK_AND_QUILL, ChatColor.AQUA + Content.HIDDEN_ARCHAEOLOGIST.getId(),
+                    ChatColor.YELLOW + Content.HIDDEN_ARCHAEOLOGIST.getBookDescription()));
             i++;
         }
         if (!ContentListeners.getRedactedPlayer(player).hasContent(Content.TALK_TO_MINER)) {
