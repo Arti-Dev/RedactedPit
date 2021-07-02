@@ -36,6 +36,7 @@ commands:
   resetcontent:
     description: Resets content for people
     usage: /resetcontent <optional player>
+    permission: redactedpit.resetcontent
   importgold:
     description: Import your gold from actual Pit!
     usage: /importgold

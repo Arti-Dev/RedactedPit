@@ -23,21 +23,15 @@ public class ResetContent implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "Your \"Content\" data has been reset!");
                 return true;
             } else if (args.length == 1) {
-                if (sender.hasPermission("redactedpit.resetcontent")) {
-                    Player reset;
-                    try {
-                        reset = Bukkit.getPlayer(args[0]);
-                        ContentListeners.getRedactedPlayer(reset).resetData();
-                        sender.sendMessage(ChatColor.RED + "Cleared \"Content\" stats for " + reset.getName());
-                    } catch (Exception e) {
-                        sender.sendMessage(ChatColor.RED + "That is not an online player!");
-                    }
-                    return true;
-                } else {
-                    sender.sendMessage(ChatColor.RED + "You do not have permission to reset another player's content!");
-                    return true;
+                Player reset;
+                try {
+                    reset = Bukkit.getPlayer(args[0]);
+                    ContentListeners.getRedactedPlayer(reset).resetData();
+                    sender.sendMessage(ChatColor.RED + "Cleared \"Content\" stats for " + reset.getName());
+                } catch (Exception e) {
+                    sender.sendMessage(ChatColor.RED + "That is not an online player!");
                 }
-
+                return true;
             } else {
                 sender.sendMessage(ChatColor.RED + "Too many arguments!");
                 return true;

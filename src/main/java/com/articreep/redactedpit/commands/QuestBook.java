@@ -111,7 +111,8 @@ public class QuestBook implements CommandExecutor {
                 "Each kill grants a flat 50g.", ChatColor.YELLOW + "Not all kill mechanics are enabled.", "", ChatColor.YELLOW +
                 "There are no perks, but there", ChatColor.YELLOW + "are golden apples on kill.", ChatColor.YELLOW + "Use /kit pit, /kit shopdia, and /spawn.", "", ChatColor.YELLOW +
                 "Everything is kept on death.", "", ChatColor.YELLOW +
-                "Do not spam kills on NPCs that trigger kill messages."));
+                "Do not spam kills on NPCs that trigger kill messages.", "", ChatColor.YELLOW + "If you wish to opt out of PVP, use /god.",
+                ChatColor.YELLOW + "Abuse of commands will result in a ban."));
         inv.setItem(30, Utils.createGuiItem(Material.GOLD_INGOT, ChatColor.AQUA + "Pit Mechanics",
                 ChatColor.YELLOW + "You can import your gold from", ChatColor.YELLOW + "actual Pit using /importgold.", ChatColor.YELLOW +
                         "You can only do this once.", "", ChatColor.YELLOW +

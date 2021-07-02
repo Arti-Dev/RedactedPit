@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -103,14 +104,20 @@ public class RedactedPlayer {
         fracContent = contentDiscovered.size() + "/" + Content.values().length;
         if (percentContent >= 100 && !hundredAchieved) {
             hundredAchieved = true;
-            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
-            Utils.sendTitle(player, ChatColor.AQUA + "" + ChatColor.BOLD + "GRATS!", "You achieved 100% Content Discovered!", 5, 40, 5);
+            new BukkitRunnable() {
 
-            // Not firework
-            Utils.sendSnowParticles(plugin, player);
+                @Override
+                public void run() {
+                    player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+                    Utils.sendTitle(player, ChatColor.AQUA + "" + ChatColor.BOLD + "GRATS!", "You achieved 100% Content Discovered!", 5, 40, 5);
 
-            Bukkit.broadcastMessage(ChatColor.AQUA + player.getName() + ChatColor.YELLOW + " has achieved 100% Content Discovered!");
-        } else {
+                    // Not firework
+                    Utils.sendSnowParticles(plugin, player);
+
+                    Bukkit.broadcastMessage(ChatColor.AQUA + player.getName() + ChatColor.YELLOW + " has achieved 100% Content Discovered!");
+                }
+            }.runTaskLater(plugin, 80);
+        } else if (percentContent < 100) {
             hundredAchieved = false;
         }
     }
