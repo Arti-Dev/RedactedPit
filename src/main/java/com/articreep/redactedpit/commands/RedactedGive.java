@@ -142,7 +142,8 @@ public class RedactedGive implements CommandExecutor {
 		meta.setLore(Arrays.asList("",
 				ChatColor.GRAY + "Find " + ChatColor.YELLOW + "treasures " + ChatColor.GRAY + "with this shovel.",
 				ChatColor.GRAY + "Right click to point towards",
-				ChatColor.GRAY + "the nearest " + ChatColor.YELLOW + "treasure" + ChatColor.GRAY + "."));
+				ChatColor.GRAY + "the nearest " + ChatColor.YELLOW + "treasure" + ChatColor.GRAY + ".",
+				ChatColor.GRAY + "Treasures may contain " + ChatColor.YELLOW + "Ancient Artifacts"));
 		meta.spigot().setUnbreakable(true);
 
 		item.setItemMeta(meta);

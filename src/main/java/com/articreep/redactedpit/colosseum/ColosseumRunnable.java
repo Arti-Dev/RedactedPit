@@ -156,7 +156,11 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		if (Math.random() < audienceChance / 100.0) {
 			// Choose a player at random
 			ColosseumPlayer chosen = Utils.getRandomElement(audiencePlayers);
-			sendPlayerAudienceEffect(new Location(chosen.getPlayer().getWorld(), -11, 61, 40), chosen.getPlayer(), audienceReasons.get(chosen), chosen.getOpinion(), 0.7);
+			double speed = 0.7;
+			if (audienceReasons.get(chosen) == AudienceReason.LOW_HEALTH) {
+				speed += 0.7;
+			}
+			sendPlayerAudienceEffect(new Location(chosen.getPlayer().getWorld(), -11, 61, 40), chosen.getPlayer(), audienceReasons.get(chosen), chosen.getOpinion(), speed);
 			selectionCooldown = 10;
 		} else {
 			selectionCooldown -= 1;

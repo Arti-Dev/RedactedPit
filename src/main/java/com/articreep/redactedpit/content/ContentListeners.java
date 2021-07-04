@@ -121,7 +121,9 @@ public class ContentListeners implements Listener {
             discoverContent(redactedPlayer, Content.SCRAPPED_ALTAR);
         }
         if (Content.JURASSIC.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.JURASSIC);
+            if (!Content.STRANDED_TRAVELER.getBox().isInBox(loc)) {
+                discoverContent(redactedPlayer, Content.JURASSIC);
+            }
         }
         if (Content.COLOSSEUM.getBox().isInBoxExclude(loc)) {
             discoverContent(redactedPlayer, Content.COLOSSEUM);

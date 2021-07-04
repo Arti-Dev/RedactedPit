@@ -52,7 +52,7 @@ public enum Content {
             "The 'charging' mechanic where you must stand there for a second before it launches you is actually unintentional, but it's good balance.",
             "Look for pressure plates in Future!"),
     VOID_CHARM(null, "Void Charms", "A lot of people don't like void, so this item gives you a second chance at living!",
-            "There's a NPC on a floating island in Future. Buy a charm and use it."),
+            "There's an NPC at 47, 60, 70. Buy a charm and use it."),
     STIM_GUN_RHYLIE(new UtilBoundingBox(18, 43, 39, 8, 57, 76), "AgentRhylie's Stim Gun",
             "The Stim Gun is designed to be a support weapon.\n" +
                     "It was never coded, but you can check out the doc here:\n" +
@@ -65,7 +65,7 @@ public enum Content {
     FUTURE_RACE_COMPLETE(null, "Future Race Complete", "There's a secret reward that probably isn't obtainable with commands.",
             "Complete the Future Race"),
     SUN_STONE_PLACE(null, "Sun Stone Placed", "The Sun Stone powers the age-old Pyramid, \ngranting it its ancient reward buffs.",
-            "Buy a Sun Stone in Egypt"),
+            "Buy a Sun Stone in Egypt and place it"),
     DAX_DUNGEON(new UtilBoundingBox(7, 53, -105, 15, 63, -100), "Dax's Strange Dungeon",
             "What do you want me to put here, Dax?",
             "Look for a gold door in Egypt.."),
@@ -92,8 +92,7 @@ public enum Content {
             "This area is home to a lush jungle, in addition to many Dinos.\nThis area was the third area the [redacted] team worked on.", null),
     COLOSSEUM(new UtilBoundingBox(-4, 98, 10, -100, 30, 98, -4, 98, 10, -23, 30, 23), "Roman Colosseum",
             "The Colosseum is a nice and flat area for (hopefully) fair fights!\nThis is the last section the [redacted] team worked on.\n" +
-                    "An audience cheers on the sidelines, powering up or striking down certain fighters.\n" +
-                    ChatColor.ITALIC + "From Arti: I wanted to add horses, but we never got around to it..", "Enter the Colosseum"),
+                    "An audience cheers on the sidelines, powering up or striking down certain fighters.\n", "Enter the Colosseum"),
     ARTI_CAKE(new UtilBoundingBox(-88, 48, 64, -91, 53, 68), "Arti's Cake",
             "One day, there was a running joke that it was always my birthday for some dumb reason.\n" +
                     "This was in commemoration of that..", "Use Divine Glass to climb the empty spectator area"),
@@ -114,14 +113,14 @@ public enum Content {
             "The entrance is between the Egypt and Future launchers."),
     TAYLOR_HATS(new UtilBoundingBox(-5, 28, -4, 0, 33, -8), "Taylor's hats",
             "Designed by LogicSoba, these are actually pretty interesting ideas. They're single-use hats that provide one-time effects.\n" +
-                    "If they were to be in the game, though, they'd need major reworking to make them slightly more viable.", "Located in the SkyBlock Ripoff room"),
+                    "If they were to be in the game, though, they'd need major reworking to make them slightly more viable.", "Located in the SkyBlock Ripoff room - entrance is in spawn"),
     AUCTION_HOUSE(new UtilBoundingBox(-15, 28, -6, -6, 35, -11), "Pit Auction House", "Designed by SoulCrushing. \n" +
             "A possible way to implement skyblock's Auction House into Pit while still trying to preserve Pit's unique trading culture.\n" +
             "Basically, after you would put a item up for auction, other people would be able to search for it, and place offers.\n" +
-            "The person who put it up could then choose at the end of the auction which offer to choose.", "Located in the SkyBlock Ripoff room"),
+            "The person who put it up could then choose at the end of the auction which offer to choose.", "Located in the SkyBlock Ripoff room - entrance is in spawn"),
     PUNCHING_BAG(new UtilBoundingBox(-16, 28, 7, -22, 34, 13), "Punching Bag",
             "Very similar to the Fire Trials, except for damage. This really wouldn't work well with Pit since we use vanilla damaging, however, there" +
-                    "might be a better way to achieve 'progression' in this.", "Located in the SkyBlock Ripoff room"),
+                    "might be a better way to achieve 'progression' in this.", "Located in the SkyBlock Ripoff room - entrance is in spawn"),
     RHYLIE_COMMAND_BUNKER(new UtilBoundingBox(-24, 34, 88, -18, 38, 102), "Rhylie's Command Block Bunker",
             "Various command blocks for Rhylie's Stim Gun idea",
             "There's a button in Dr. Zork's tent in Future.."),

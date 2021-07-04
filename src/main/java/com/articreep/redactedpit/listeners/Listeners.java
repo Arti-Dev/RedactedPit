@@ -92,17 +92,16 @@ public class Listeners implements Listener {
 		float yaw = (float) plugin.getConfig().getDouble("spawn.yaw");
 		float pitch = (float) plugin.getConfig().getDouble("spawn.pitch");
 		Location location = new Location(Bukkit.getWorld("redacted2"), x, y, z, yaw, pitch);
-
 		if (player.getWorld().getName().equals("redacted2")) {
+			if (Utils.isInColosseum(player.getLocation())) {
+				ColosseumRunnable.getColosseumPlayer(player, true).clearStreakCount();
+				ColosseumRunnable.getColosseumPlayer(player, true).increaseDeathStreakCount(1);
+			}
 			new BukkitRunnable() {
 				@Override
 				public void run() {
 					player.spigot().respawn();
 					player.teleport(location);
-					if (Utils.isInColosseum(player.getLocation())) {
-						ColosseumRunnable.getColosseumPlayer(player, true).clearStreakCount();
-						ColosseumRunnable.getColosseumPlayer(player, true).increaseDeathStreakCount(1);
-					}
 				}
 			}.runTaskLater(plugin, 1);
 		}
@@ -466,7 +465,7 @@ public class Listeners implements Listener {
 				}
 				return;
 			}
-			player.setVelocity(new Vector(0, 4, 0));
+			player.setVelocity(new Vector(0, 5, 0));
 			player.sendMessage(ChatColor.DARK_PURPLE + "Your Void Charm saved you from dying to the void!");
 			inventory.removeItem(RedactedGive.VoidCharm(1));
 			VoidCharmCooldown.add(player);
@@ -505,6 +504,7 @@ public class Listeners implements Listener {
 
 		if (!itemmeta.hasDisplayName()) return; //if it's a regular item, don't continue
 		if (itemmeta.getDisplayName().equals(RedactedGive.DivineGlass(1).getItemMeta().getDisplayName())) {
+			ContentListeners.onDivineGlassPlace(event);
 			glassLocations.put(location, time);
 			// Place old block materials here
 			// Override blocks not being able to be placed
@@ -729,7 +729,7 @@ public class Listeners implements Listener {
 		// Is it a chest?
 		if (event.getClickedBlock() == null) return;
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if (event.getClickedBlock().getType() == Material.CHEST) {
+			if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
 				if (!player.hasPermission("redactedpit.modifychests")) {
 					chestSet.add(player);
 				}
