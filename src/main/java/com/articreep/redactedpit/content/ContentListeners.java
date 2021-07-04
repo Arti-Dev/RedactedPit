@@ -185,9 +185,12 @@ public class ContentListeners implements Listener {
 
     // Specifically for jumppads
     public static void onJumppad(PlayerInteractEvent event) {
-        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
-        if (!redactedPlayer.hasContent(Content.JUMPPADS)) {
-            discoverContent(redactedPlayer, Content.JUMPPADS);
+        // The player must be in future
+        if (Content.FUTURE.getBox().isInBox(event.getPlayer().getLocation())) {
+            RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
+            if (!redactedPlayer.hasContent(Content.JUMPPADS)) {
+                discoverContent(redactedPlayer, Content.JUMPPADS);
+            }
         }
     }
 
@@ -242,10 +245,7 @@ public class ContentListeners implements Listener {
 
     // Min*r
     public static void onMinerTalk(Player player) {
-        RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(player);
-        if (!redactedPlayer.hasContent(Content.TALK_TO_MINER)) {
-            discoverContent(redactedPlayer, Content.TALK_TO_MINER, ChatColor.DARK_PURPLE + "Quest Started");
-        }
+        discoverContent(redactedPlayerHashMap.get(player), Content.TALK_TO_MINER, ChatColor.DARK_PURPLE + "Quest Started");
     }
 
     public static void onSpikeaxeObtain(Player player) {
@@ -286,6 +286,7 @@ public class ContentListeners implements Listener {
      * @param content The content being given
      */
     public static void discoverContent(RedactedPlayer redplayer, Content content) {
+        if (redplayer == null) return;
         if (redplayer.hasContent(content)) return;
         Player player = redplayer.getPlayer();
         redplayer.addContent(content);

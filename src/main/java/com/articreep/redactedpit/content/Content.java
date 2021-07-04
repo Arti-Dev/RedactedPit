@@ -78,7 +78,9 @@ public enum Content {
             "Looks like he's stuck..\nThis could have definitely been turned into a quest.",
             "Look for a campsite in Jurassic"),
     JURASSIC_CAVE(new UtilBoundingBox(-60, 47, -62, -46, 38, -79), "Jurrasic Cave",
-            "I'm not sure what the lore behind this is.. Woool? Can you help me?", "Look for where the river flows into in Jurassic"),
+            "The first person to time travel back to the Jurassic area got stuck in the time era.\n" +
+                    "According to the notes he left behind, deep in the cave lies a magical pond (that has special fishing properties)\n" +
+                    "and a mysterious miner whose existence goes beyond the laws of spacetime.", "Look for where the river flows into in Jurassic"),
     BOBCATG(new UtilBoundingBox(-103, 67, -42, -108, 73, -50), "bobcatg's grave",
             "He was a god of the bow.", "Climb the mountain in Jurassic"),
     SCRAPPED_ALTAR(new UtilBoundingBox(-47, 21, 1, -63, 29, 11), "Scrapped Jurassic Altar",
