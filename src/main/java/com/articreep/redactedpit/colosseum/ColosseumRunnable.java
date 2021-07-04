@@ -34,9 +34,6 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 	
 	public static HashMap<Player, ColosseumPlayer> ColosseumMap = new HashMap<Player, ColosseumPlayer>();
 	private int selectionCooldown = 10;
-	private int hotPotatoCountdown = 10;
-	private static Player hotPotatoVictim = null; 
-	private static boolean hotPotatoMode = false;
 
 	@Override
 	public void run() {
@@ -164,25 +161,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		} else {
 			selectionCooldown -= 1;
 		}
-		
-		// Hot Potato Countdown
-		if (hotPotatoMode) {
-			if (hotPotatoCountdown <= 0) {
-				if (hotPotatoVictim != null) {
-					hotPotatoVictim.damage(3);
-					hotPotatoVictim.setFireTicks(200);
-					Bukkit.broadcastMessage(ChatColor.RED + hotPotatoVictim.getName() + " was set on fire by a Hot Potato!");
-					hotPotatoVictim.getInventory().remove(RedactedGive.HotPotato(1));
-					hotPotatoMode = false;
-					hotPotatoVictim = null;
-				}
-			} else if (hotPotatoCountdown > 0) {
-				Bukkit.broadcastMessage(ChatColor.RED + "The Hot Potato will burn in " + Integer.toString(hotPotatoCountdown) + " seconds");
-				hotPotatoCountdown -= 1;
-			}
-			
-			
-		}
+
 		
 	}
 	
@@ -205,20 +184,8 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		if (ColosseumMap.containsKey(player)) {
 			ColosseumMap.remove(player);
 		}
-		// I'll handle Hot Potato stuff here too
-		if (hotPotatoVictim == player) {
-			hotPotatoVictim.getInventory().remove(RedactedGive.HotPotato(1));
-			hotPotatoVictim = null;
-		}
 	}
-	
-	public static void setPotatoVictim(Player player) {
-		hotPotatoVictim = player;
-	}
-	
-	public static boolean isPotatoMode() {
-		return hotPotatoMode;
-	}
+
 	/**
 	 * 
 	 * @param startingLoc Starting location of the smoke trail
@@ -282,9 +249,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 			possibleEffects.add(AudienceEffect.SMITE);
 			possibleEffects.add(AudienceEffect.EXPLOSION);
 			possibleEffects.add(AudienceEffect.FIRE);
-			if (hotPotatoMode == false) {
-				possibleEffects.add(AudienceEffect.HOT_POTATO);
-			}
+			possibleEffects.add(AudienceEffect.HOT_POTATO);
 			coloplayer.setCrowdOpinion(AudienceOpinion.NEGATIVE);
 			audienceMessage = ChatColor.GRAY + "" + ChatColor.ITALIC + "The audience is disappointed in " + player.getName() + " for not fighting!";
 		} else if (reason == AudienceReason.STRUGGLING_DEATHS) {
@@ -422,9 +387,6 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 						player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
 					} else if (effect == AudienceEffect.HOT_POTATO) {
 						player.getInventory().addItem(RedactedGive.HotPotato(1));
-						hotPotatoMode = true;
-						hotPotatoCountdown = 10;
-						hotPotatoVictim = player;
 					}
 					Utils.sendAudienceEffectParticles(player.getLocation().add(0, 1, 0), effect.getOpinion());
 					this.cancel();

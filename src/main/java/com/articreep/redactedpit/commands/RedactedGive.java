@@ -227,8 +227,8 @@ public class RedactedGive implements CommandExecutor {
         meta.setDisplayName(ChatColor.RED + "Hot Potato");
 
         // Set the lore of the item
-        meta.setLore(Arrays.asList("Never gonna give you up", ChatColor.RED + "If this item was obtained with the /redactedgive command", 
-        		ChatColor.RED + "it may mess with the Colosseum's system!"));
+        meta.setLore(Arrays.asList("Never gonna give you up",
+        		ChatColor.RED + "This item's functionality was removed!"));
         
 
         item.setItemMeta(meta);

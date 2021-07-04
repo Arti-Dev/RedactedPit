@@ -99,7 +99,7 @@ public enum Content {
     AUDIENCE(null, "Colosseum Audience", "Ah, the audience. They love to cheer on people they like, and hate on people they don't like.\n" +
             "Their opinion on your will change over time based on what you do. For example, if you don't fight for a while, you'll get hated on, and will receive debuffs.\n" +
             "However, if for example you're low on health, the audience might try and save you!", "Fight in the Colosseum with other players"),
-    HOT_POTATO(null, "Hot Potato", "Hurry up and pass it on!",
+    HOT_POTATO(null, "Hot Potato", "This item's functionality was removed due to it being really annoying :)",
             "Audience Colosseum effect"),
     LARGEKB(null, "Increased KB Hit", "Probably one of the most powerful moves that the Colosseum can grant you.\n" +
             "However, I can see how people might hate it, even if they were the one who inflicted it.",

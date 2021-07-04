@@ -167,21 +167,6 @@ public class Listeners implements Listener {
 				damagercolo.increaseHitsDealt(1);
 			}
 		}
-		// Did the player smack them with a hot potato?
-		if (damager.getItemInHand().hasItemMeta() && damager.getItemInHand().getItemMeta().hasDisplayName()) {
-			if (damager.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.HotPotato(1).getItemMeta().getDisplayName())) {
-				// Only real players can pass the potato
-				if (!(victimcolo == null || damagercolo == null)) {
-					damager.getInventory().removeItem(RedactedGive.HotPotato(1));
-					victim.getWorld().playSound(event.getEntity().getLocation(), Sound.FIZZ, 1, 1);
-					Utils.sendGenericParticleOnHead(plugin, victim, EnumParticle.VILLAGER_ANGRY);
-					victim.getInventory().addItem(RedactedGive.HotPotato(1));
-					if (ColosseumRunnable.isPotatoMode()) {
-						ColosseumRunnable.setPotatoVictim(victim);
-					}
-				}
-			}
-		}
 		// Does the player have an increased punch buff?
 		if (!(damagercolo == null)) {
 			if (damagercolo.getlargeKB()) {
