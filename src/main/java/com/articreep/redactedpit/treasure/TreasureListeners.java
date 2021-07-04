@@ -41,6 +41,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     public void onShovelClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (cooldown.contains(player)) return;
+        if (!player.getItemInHand().hasItemMeta()) return;
         if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
         if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -74,6 +75,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
                     if (cooldown.contains(player)) return;
                     event.setCancelled(true);
+                    if (!player.getItemInHand().hasItemMeta()) return;
                     if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
                     if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
                         treasureChest.start(player);
@@ -94,6 +96,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandProgress(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (!player.getItemInHand().hasItemMeta()) return;
         if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
         if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
