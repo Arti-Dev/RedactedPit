@@ -118,8 +118,8 @@ public class RaceListeners implements Listener {
 					// Send event data to ContentListeners
 					ContentListeners.onFutureRaceComplete(event);
 					player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "RACE CLEAR! " + ChatColor.WHITE + "You finished in " + ChatColor.YELLOW + Utils.formattime(millis));
-					if (!RaceFlying.get(player) && millis < 25000) {
-						player.sendMessage(ChatColor.GREEN + "You were awarded with an " + ChatColor.YELLOW + "Ancient Artifact " + ChatColor.GREEN + "for completing the race under 25 seconds without flying!");
+					if (!RaceFlying.get(player) && millis < 31000) {
+						player.sendMessage(ChatColor.GREEN + "You were awarded with an " + ChatColor.YELLOW + "Ancient Artifact " + ChatColor.GREEN + "for completing the race under 31 seconds without flying!");
 						player.getInventory().addItem(RedactedGive.AncientArtifact(1));
 					}
 					Bukkit.getLogger().info(player.getName() + " completed the Future Race in " + Utils.formattime(millis));
