@@ -494,8 +494,6 @@ public class Listeners implements Listener {
 	// Divine Glass
 	// This map holds the locations of glass and what time they were placed
 	public static HashMap<Location, Long> glassLocations = new HashMap<>();
-	public static HashMap<Location, Material> oldBlockTypes = new HashMap<>();
-	public static HashMap<Material, Byte> oldBlockData = new HashMap<>();
 	@EventHandler
 	public void onPlaceDivineGlass(BlockPlaceEvent event) {
 		ItemMeta itemmeta = event.getPlayer().getItemInHand().getItemMeta(); //get item meta in hand
@@ -509,8 +507,6 @@ public class Listeners implements Listener {
 		if (itemmeta.getDisplayName().equals(RedactedGive.DivineGlass(1).getItemMeta().getDisplayName())) {
 			glassLocations.put(location, time);
 			// Place old block materials here
-			oldBlockTypes.put(location, oldMaterial);
-			oldBlockData.put(oldMaterial, data);
 			// Override blocks not being able to be placed
 			event.setCancelled(false);
 
@@ -519,18 +515,17 @@ public class Listeners implements Listener {
 				//If the block was broken and replaced, it will not remove the block in this Runnable instance.
 				@Override
 				public void run() {
+					Block block = location.getBlock();
 					if (glassLocations.containsKey(location)) { //check if the block is there
 						if (glassLocations.get(location).equals(time)) {
-							Block block = location.getBlock();
 							block.breakNaturally();
 							block.getWorld().playSound(location, Sound.GLASS, 0.5F, 1);
-							block.setType(oldMaterial);
-							block.setData(data);
 							glassLocations.remove(location);
-							oldBlockTypes.remove(location);
-							oldBlockData.remove(oldMaterial);
 						}
 					}
+					// reset block to what it used to be no matter what
+					block.setType(oldMaterial);
+					block.setData(data);
 				}
 			}.runTaskLater(plugin, 200);
 
@@ -544,8 +539,6 @@ public class Listeners implements Listener {
 		if (glassLocations.containsKey(location)) {
 			event.setCancelled(false);
 			glassLocations.remove(location);
-			oldBlockData.remove(oldBlockTypes.get(location));
-			oldBlockTypes.remove(location);
 		}
 	}
 	
