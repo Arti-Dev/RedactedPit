@@ -149,6 +149,9 @@ public class ContentListeners implements Listener {
         if (Content.RHYLIE_COMMAND_BUNKER.getBox().isInBox(loc)) {
             discoverContent(redactedPlayer, Content.RHYLIE_COMMAND_BUNKER, ChatColor.DARK_GRAY + "Secret Discovered");
         }
+        if (Content.MYSTIC_CAR.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.MYSTIC_CAR, ChatColor.RED + "Random Crap Discovered");
+        }
     }
 
     // Specifically for placement of the Sun Stone
@@ -208,11 +211,9 @@ public class ContentListeners implements Listener {
     @EventHandler
     public void onPogTowerClick(PlayerInteractEvent event) {
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
-        if (!redactedPlayer.hasContent(Content.POG_TOWER)) {
-            Location loc = event.getPlayer().getTargetBlock((Set<Material>) null, 200).getLocation();
-            if (Content.POG_TOWER.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.POG_TOWER, ChatColor.RED + "Random Crap Discovered");
-            }
+        Location loc = event.getPlayer().getTargetBlock((Set<Material>) null, 200).getLocation();
+        if (Content.POG_TOWER.getBox().isInBox(loc)) {
+            discoverContent(redactedPlayer, Content.POG_TOWER, ChatColor.RED + "Random Crap Discovered");
         }
     }
 

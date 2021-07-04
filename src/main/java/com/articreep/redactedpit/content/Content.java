@@ -51,7 +51,9 @@ public enum Content {
     JUMPPADS(null, "Future Jumppads", "A cool mechanic that provides for some interesting gameplay!\n" +
             "The 'charging' mechanic where you must stand there for a second before it launches you is actually unintentional, but it's good balance.",
             "Look for pressure plates in Future!"),
-    VOID_CHARM(null, "Void Charms", "A lot of people don't like void, so this item gives you a second chance at living!",
+    VOID_CHARM(null, "Void Charms", "A lot of people don't like void, so this item gives you a second chance at living!\n" +
+            "I'm aware that these are " + ChatColor.BOLD + "very " + ChatColor.RESET + "exploitable.\nTo balance it, we'd make it deal more damage the more you use it, but" +
+            "to keep things fun, we're not doing that.",
             "There's an NPC at 47, 60, 70. Buy a charm and use it."),
     STIM_GUN_RHYLIE(new UtilBoundingBox(18, 43, 39, 8, 57, 76), "AgentRhylie's Stim Gun",
             "The Stim Gun is designed to be a support weapon.\n" +
@@ -140,7 +142,9 @@ public enum Content {
     SPIKEAXE_OBTAIN(null, "The Spikeaxe", "You've finally upgraded your pickaxe to the best possible, the Spikeaxe!\n" +
             "Crits with this pickaxe sends your opponents straight down..\n" +
             "If they hit the ground hard enough, they'll bounce back up!\n"+
-            "Or you can send them straight into the void!", "Upgrade your pickaxe to diamond through the Miner in Jurassic");
+            "Or you can send them straight into the void!", "Upgrade your pickaxe to diamond through the Miner in Jurassic"),
+    MYSTIC_CAR(new UtilBoundingBox(73, 46, 56, 86, 52, 65), "Mystic Car", "MYSTIC CAR MYSTIC CAR",
+            "There's a car near the Future Race");
 
     private final UtilBoundingBox box;
     private final String id;

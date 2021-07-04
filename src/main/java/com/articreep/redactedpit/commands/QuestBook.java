@@ -86,7 +86,7 @@ public class QuestBook implements CommandExecutor {
         Inventory inv = Bukkit.createInventory(null, 54, "Tutorial");
         inv.setItem(10, Utils.createGuiItem(Material.DIRT, ChatColor.AQUA + "Welcome to the Redacted Pit - the Time Travel Map!",
                 ChatColor.YELLOW + "This server was created as a place", ChatColor.YELLOW + "to develop lots of ideas that the", ChatColor.YELLOW +
-                        "[redacted] group wanted to make,", ChatColor.YELLOW + "all on one server.", "", ChatColor.YELLOW +
+                        "[redacted] group wanted to make,", ChatColor.YELLOW + "all on one server.." + ChatColor.YELLOW + "treat it like a museum.", "", ChatColor.YELLOW +
                 "Please note that not all ideas will be good,", ChatColor.YELLOW + "and not all ideas are completed and usable.", "", ChatColor.YELLOW +
                         "Some things are also intentionally", ChatColor.YELLOW + "unbalanced for accessibility,", ChatColor.YELLOW +
                         "in addition we are not professional builders.", "", ChatColor.YELLOW +

@@ -164,6 +164,9 @@ public class RedactedPlayer {
 
     public void addGold(double amount) {
         this.gold += amount;
+        BigDecimal bd = BigDecimal.valueOf(gold);
+        bd = bd.setScale(2, RoundingMode.DOWN);
+
     }
 
     public void importedSuccessfully() {
