@@ -124,7 +124,6 @@ public class Listeners implements Listener {
 		boolean inJurassic = false;
 		ColosseumPlayer victimcolo;
 		ColosseumPlayer damagercolo;
-		int quantity = 1;
 		// Find out who the damager is
 		
 		// Melee hit?
@@ -145,7 +144,6 @@ public class Listeners implements Listener {
 					&& 51 <= loc.getY() && loc.getY() <= 58 
 					&& -75 <= loc.getZ() && loc.getZ() <= -63 )) {
 				onKOTH = true;
-				quantity = 2;
 			}
 		}
 		// Is the player in the Jurrassic Era?
@@ -209,7 +207,7 @@ public class Listeners implements Listener {
 		// Was it actually a kill?
 		if (victim.getHealth() <= event.getFinalDamage()) {
 			if (ContentListeners.isRedactedPlayer(damager)) {
-				damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, quantity));
+				damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
 				ContentListeners.getRedactedPlayer(damager).addGold(50);
 				damager.sendMessage(ChatColor.GOLD + "+50g");
 			}
@@ -219,8 +217,9 @@ public class Listeners implements Listener {
 				cooldownMap.get(victim).cancel();
 				cooldownMap.remove(victim);
 			}
-			if (quantity == 2 && onKOTH) {
-				damager.sendMessage(ChatColor.GREEN + "You gained two golden apples because of the Sun KOTH!");
+			if (onKOTH) {
+				damager.sendMessage(ChatColor.GOLD + "+50g (KOTH Bonus)");
+				ContentListeners.getRedactedPlayer(damager).addGold(50);
 			} else if (inColo) {
 				// Increase kill and death counts
 				if (!(victimcolo == null)) victimcolo.increaseDeathCount(1);
