@@ -54,7 +54,9 @@ public enum Content {
     VOID_CHARM(null, "Void Charms", "A lot of people don't like void, so this item gives you a second chance at living!",
             "There's a NPC on a floating island in Future. Buy a charm and use it."),
     STIM_GUN_RHYLIE(new UtilBoundingBox(18, 43, 39, 8, 57, 76), "AgentRhylie's Stim Gun",
-            "Rhylie, what do you want me to put here?", "Located on the far right side of Future"),
+            "The Stim Gun is designed to be a support weapon.\n" +
+                    "It was never coded, but you can check out the doc here:\n" +
+                    "https://docs.google.com/document/d/1Jljhf_jPTV8QNoN-fMGsQwldX8saaF-yLW5i7iE0uMM/edit", "Located on the far right side of Future"),
     POG_TOWER(new UtilBoundingBox(100, 103, 25, 121, 108, 47), "Pog Tower",
             "The tower is pogging :pog:",
             "Click the POG tower in Future"),
@@ -120,7 +122,6 @@ public enum Content {
     PUNCHING_BAG(new UtilBoundingBox(-16, 28, 7, -22, 34, 13), "Punching Bag",
             "Very similar to the Fire Trials, except for damage. This really wouldn't work well with Pit since we use vanilla damaging, however, there" +
                     "might be a better way to achieve 'progression' in this.", "Located in the SkyBlock Ripoff room"),
-    //TODO Make this accessible
     RHYLIE_COMMAND_BUNKER(new UtilBoundingBox(-24, 34, 88, -18, 38, 102), "Rhylie's Command Block Bunker",
             "Various command blocks for Rhylie's Stim Gun idea",
             "There's a button in Dr. Zork's tent in Future.."),
