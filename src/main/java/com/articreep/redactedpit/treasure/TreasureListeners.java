@@ -5,6 +5,7 @@ import com.articreep.redactedpit.UtilBoundingBox;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.content.ContentListeners;
+import com.articreep.redactedpit.content.RedactedPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -40,7 +41,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     public void onShovelClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (cooldown.contains(player)) return;
-        if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
+        if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
+        if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (treasureList.size() == 0) {
                     player.sendMessage("Couldn't find a treasure.. try again?");
@@ -72,7 +74,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
                     if (cooldown.contains(player)) return;
                     event.setCancelled(true);
-                    if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
+                    if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
+                    if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
                         treasureChest.start(player);
                     } else {
                         if (!treasureChest.hasStatus()) {
@@ -91,7 +94,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     @EventHandler
     public void onSandProgress(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (player.getItemInHand().isSimilar(RedactedGive.ArcheologistShovel(1))) {
+        if (!player.getItemInHand().getItemMeta().hasDisplayName()) return;
+        if (player.getItemInHand().getItemMeta().getDisplayName().equals(RedactedGive.ArcheologistShovel(1).getItemMeta().getDisplayName())) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 if (cooldown.contains(player)) {
                     event.setCancelled(true);
@@ -307,7 +311,8 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                         e.getAction() == InventoryAction.PICKUP_SOME ||
                         e.getAction() == InventoryAction.PICKUP_ONE ||
                         e.getAction() == InventoryAction.PICKUP_HALF ||
-                        e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                        e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY ||
+                        e.getAction() == InventoryAction.SWAP_WITH_CURSOR)
                 e.setCancelled(true);
             }
         }
