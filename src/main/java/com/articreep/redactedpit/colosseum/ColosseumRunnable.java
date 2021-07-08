@@ -353,7 +353,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 						
 					} else if (effect == AudienceEffect.SMITE) {
 						player.getWorld().strikeLightningEffect(player.getLocation());
-						player.damage(6);
+						player.setHealth(player.getHealth() - 6);
 						player.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_GRAY + 
 								"Their opinions struck you for 6 true damage!");
 						
