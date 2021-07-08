@@ -48,6 +48,10 @@ public class GUIListeners implements Listener {
 	        if (e.getSlot() == 14) {
 	        	if (inventory.containsAtLeast(RedactedGive.AncientArtifact(1), 1)) {
 	        		p.closeInventory();
+					if (p.getInventory().firstEmpty() == -1) {
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(new ItemStack(Material.GOLD_INGOT, 5000));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Trading Master: " + ChatColor.WHITE + "Here you go! Five thousand gold ingots.");
@@ -69,6 +73,11 @@ public class GUIListeners implements Listener {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.addItem(RedactedGive.TimeWarpPearl(2));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Pearl" + ChatColor.WHITE + ": Enjoy!");
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "COOL! " + ChatColor.GRAY + "You obtained " + ChatColor.AQUA + "Time Warp Pearl" + ChatColor.GRAY + " x2!");
@@ -78,6 +87,11 @@ public class GUIListeners implements Listener {
 			}
 			if (e.getSlot() == 14) {
 				if (inventory.containsAtLeast(RedactedGive.AncientArtifact(1), 1)) {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(RedactedGive.TimeWarpPearl(16));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Pearl" + ChatColor.WHITE + ": Enjoy!");
@@ -97,6 +111,11 @@ public class GUIListeners implements Listener {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.addItem(RedactedGive.DivineGlass(32));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Rem" + ChatColor.WHITE + ": Enjoy!");
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY! " + ChatColor.GRAY + "You obtained " + ChatColor.AQUA + "Divine Glass" + ChatColor.GRAY + " x32!");
@@ -106,6 +125,11 @@ public class GUIListeners implements Listener {
 			}
 			if (e.getSlot() == 14) {
 				if (inventory.containsAtLeast(RedactedGive.AncientArtifact(1), 1)) {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(RedactedGive.DivineGlass(64));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] Rem" + ChatColor.WHITE + ": Enjoy!");
@@ -125,6 +149,11 @@ public class GUIListeners implements Listener {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.addItem(RedactedGive.VoidCharm(1));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] ???" + ChatColor.WHITE + ": Enjoy!");
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SPOOKY.. " + ChatColor.GRAY + "You obtained " + ChatColor.DARK_PURPLE + "Void Charm" + ChatColor.GRAY + " x1!");
@@ -134,6 +163,11 @@ public class GUIListeners implements Listener {
 			}
 			if (e.getSlot() == 14) {
 				if (inventory.containsAtLeast(RedactedGive.AncientArtifact(1), 1)) {
+					if (p.getInventory().firstEmpty() == -1) {
+						p.closeInventory();
+						p.sendMessage(ChatColor.RED + "You don't have enough inventory space!");
+						return;
+					}
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(RedactedGive.VoidCharm(4));
 					p.sendMessage(ChatColor.YELLOW + "[NPC] ???" + ChatColor.WHITE + ": Enjoy!");
