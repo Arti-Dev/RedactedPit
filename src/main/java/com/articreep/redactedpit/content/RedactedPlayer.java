@@ -156,21 +156,21 @@ public class RedactedPlayer {
 
     public void setGold(double amount) {
         this.gold = amount;
+        BigDecimal bd = BigDecimal.valueOf(gold);
+        bd = bd.setScale(2, RoundingMode.DOWN);
+        this.gold = bd.doubleValue();
     }
 
     public boolean subtractGold(double amount) {
         if (this.gold - amount < 0) {
             return false;
         }
-        this.gold -= amount;
+        setGold(this.gold - amount);
         return true;
     }
 
     public void addGold(double amount) {
-        this.gold += amount;
-        BigDecimal bd = BigDecimal.valueOf(gold);
-        bd = bd.setScale(2, RoundingMode.DOWN);
-
+        setGold(this.gold + amount);
     }
 
     public void importedSuccessfully() {
