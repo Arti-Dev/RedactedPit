@@ -57,7 +57,11 @@ public class RedactedPlayer {
             // Clear hashset and load in everything
             contentDiscovered.clear();
             for (String string : tempList) {
-                contentDiscovered.add(Content.valueOf(string));
+                try {
+                    contentDiscovered.add(Content.valueOf(string));
+                } catch (IllegalArgumentException e) {
+                    Bukkit.getLogger().severe("I don't recognize " + string + ", ignoring this!");
+                }
             }
             // Update percentContent just in case something new was added
             calculatePercentContent();
