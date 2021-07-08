@@ -257,12 +257,24 @@ public class ContentListeners implements Listener {
      * @param title Title to show player
      */
     public static void discoverContent(RedactedPlayer redplayer, Content content, String title) {
+        if (redplayer == null) return;
         if (redplayer.hasContent(content)) return;
+        if (contentCooldown.contains(redplayer)) return;
+        // All checks have passed, so put them on cooldown now
+        contentCooldown.add(redplayer);
         Player player = redplayer.getPlayer();
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, title, content.getId(), 5, 60, 5);
         player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
         player.sendMessage(content.getDescription());
+        // Bukkitrunnable to eventually remove them from cooldown
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                contentCooldown.remove(redplayer);
+            }
+        }.runTaskLater(Main.getInstance(), 80);
     }
 }
