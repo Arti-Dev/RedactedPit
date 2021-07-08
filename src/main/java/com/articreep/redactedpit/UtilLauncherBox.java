@@ -22,7 +22,6 @@ import java.util.Set;
 
 public class UtilLauncherBox extends UtilBoundingBox {
     private final HashMap<Vector, Integer> velocityMap;
-    private Main plugin;
     /**
      *
      * @param x1 x1
@@ -36,7 +35,6 @@ public class UtilLauncherBox extends UtilBoundingBox {
     public UtilLauncherBox(double x1, double y1, double z1, double x2, double y2, double z2, HashMap<Vector, Integer> velocityMap) {
         super(x1, y1, z1, x2, y2, z2);
         this.velocityMap = velocityMap;
-        this.plugin = plugin;
     }
 
     public void launch(PlayerMoveEvent event, Main plugin) {

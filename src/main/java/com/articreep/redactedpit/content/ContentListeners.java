@@ -62,10 +62,9 @@ public class ContentListeners implements Listener {
             discoverContent(redactedPlayer, Content.FUTURE_RACE_DISCOVERY);
         }
         // Is the user discovering Dax's Dungeon?
-        if (Content.DAX_DUNGEON.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.DAX_DUNGEON);
-        }
-        //TODO deprecated
+        //if (Content.DAX_DUNGEON.getBox().isInBox(loc)) {
+        //    discoverContent(redactedPlayer, Content.DAX_DUNGEON);
+        //}
         //if (Content.DAX_DUNGEON_END.getBox().isInBox(loc)) {
         //    discoverContent(redactedPlayer, Content.DAX_DUNGEON_END);
         //}

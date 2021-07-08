@@ -22,7 +22,6 @@ public enum Content {
                     "Here are some things you can do:\n" +
                     "Sell your artifacts to the villagers for gold\n" +
                     "Sell your artifacts for special items", "The town is located on the right side of Egypt."),
-    //TODO add shovel item
     LAVA_PIT(new UtilBoundingBox(-5, 43, -68, -20, 51, -87), "Pit of Things that are dead to me",
             ChatColor.RED + "" + ChatColor.BOLD + "jump in, you're dead to us.", "-12, 45, -78"),
     HIDDEN_ARCHAEOLOGIST(new UtilBoundingBox(6, 38, -27, 0, 41, -34), "Hidden Archaeologist",
@@ -68,12 +67,11 @@ public enum Content {
             "Complete the Future Race"),
     SUN_STONE_PLACE(null, "Sun Stone Placed", "The Sun Stone powers the age-old Pyramid, \ngranting it its ancient reward buffs.",
             "Buy a Sun Stone in Egypt and place it"),
-    DAX_DUNGEON(new UtilBoundingBox(7, 53, -105, 15, 63, -100), "Dax's Strange Dungeon",
-            "What do you want me to put here, Dax?",
-            "Look for a gold door in Egypt.."),
-    //TODO UPDATE IN FUTURE
-    DAX_DUNGEON_END(new UtilBoundingBox(16, 53, -134, 8, 56, -137), "Dax's locked chest",
-            "Pretend that there were Bank I books in here..", "Unobtainable right now!"),
+    //DAX_DUNGEON(new UtilBoundingBox(7, 53, -105, 15, 63, -100), "Dax's Strange Dungeon",
+    //        "What do you want me to put here, Dax?",
+    //        "Look for a gold door in Egypt.."),
+    //DAX_DUNGEON_END(new UtilBoundingBox(16, 53, -134, 8, 56, -137), "Dax's locked chest",
+    //        "Pretend that there were Bank I books in here..", "Unobtainable right now!"),
     TIME_MACHINE(new UtilBoundingBox(98, 43, 46, 101, 40, 42), "Time Machine",
             "Transports you between the Future and Jurassic time periods.\n\"non-euclidean time machine done\n" +
                     "it only works flawlessly if ur render distance is like the whole map oofie\"\n",
