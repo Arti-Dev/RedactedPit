@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import com.articreep.redactedpit.Main;
 import net.minecraft.server.v1_8_R3.*;
@@ -12,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -20,8 +23,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.util.StringUtil;
 
-public class RedactedGive implements CommandExecutor {
+public class RedactedGive implements CommandExecutor, TabCompleter {
 	Main plugin;
 	public RedactedGive(Main plugin) {
 		this.plugin = plugin;
@@ -282,5 +286,17 @@ public class RedactedGive implements CommandExecutor {
 		meta.spigot().setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		List<String> commands = new ArrayList<>();
+		if (args.length == 1) {
+			commands.addAll(createList());
+		}
+		final List<String> completions = new ArrayList<>();
+		StringUtil.copyPartialMatches(args[0], commands, completions);
+		Collections.sort(completions);
+		return completions;
 	}
 }

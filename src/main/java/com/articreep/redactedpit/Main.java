@@ -66,8 +66,6 @@ public class Main extends JavaPlugin {
 		getCommand("tradingmaster").setExecutor(new TradingGUIs(this));
 		getCommand("tradeSunStone").setExecutor(new TradeSunStone(this));
 		getCommand("tradevoidcharm").setExecutor(new TradeVoidCharm(this));
-		getCommand("redactedgive").setTabCompleter(new RedactedGiveTabComplete());
-		getCommand("content").setTabCompleter(new ContentCommandTabComplete());
 		getCommand("coloinfo").setExecutor(new ColoInfo());
 		getLogger().info("RedactedPit has been loaded!");
 	}

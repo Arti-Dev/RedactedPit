@@ -8,11 +8,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
-public class ContentCommand implements CommandExecutor {
+public class ContentCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -90,5 +95,29 @@ public class ContentCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        final ArrayList<String> strings = new ArrayList<>();
+        final List<String> completions = new ArrayList<>();
+        if (args.length == 1) {
+            strings.add("add");
+            strings.add("remove");
+            StringUtil.copyPartialMatches(args[0], strings, completions);
+        } else if (args.length == 2) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                strings.add(player.getName());
+            }
+            StringUtil.copyPartialMatches(args[1], strings, completions);
+        } else if (args.length == 3) {
+            strings.add("ALL");
+            for (Content content : Content.values()) {
+                strings.add(content.toString());
+            }
+            StringUtil.copyPartialMatches(args[2], strings, completions);
+        }
+        Collections.sort(completions);
+        return completions;
     }
 }
