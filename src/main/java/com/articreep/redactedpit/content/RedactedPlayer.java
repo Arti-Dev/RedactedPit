@@ -108,6 +108,7 @@ public class RedactedPlayer {
         fracContent = contentDiscovered.size() + "/" + Content.values().length;
         if (percentContent >= 100 && !hundredAchieved) {
             hundredAchieved = true;
+            // Wait a little bit before showing the achievement. This is independent of the other system.
             new BukkitRunnable() {
 
                 @Override

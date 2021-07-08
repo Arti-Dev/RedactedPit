@@ -9,22 +9,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ContentListeners implements Listener {
-    private Main plugin;
-    private static HashMap<Player, RedactedPlayer> redactedPlayerHashMap = new HashMap<>();
+    private final Main plugin;
+    private static final HashMap<Player, RedactedPlayer> redactedPlayerHashMap = new HashMap<>();
+    // To prevent players from discovering multiple content at the same time, we have a set that ensures they're displayed separately
+    private static final HashSet<RedactedPlayer> contentCooldown = new HashSet<>();
 
     public ContentListeners(Main plugin) throws IOException {
         this.plugin = plugin;
+
         // Make the plugin create redactedplayer objects for people already on the server
         for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
             newRedactedPlayer(onlineplayer);
         }
     }
+
 
     //Create a RedactedPlayer object when players log in
     @EventHandler
@@ -54,103 +60,38 @@ public class ContentListeners implements Listener {
     // Specifically for content that only requires user to step inside a box
     @EventHandler
     public void onContentDiscover(PlayerMoveEvent event) {
-        //TODO Condense into a loop
+        // Get the location
         Location loc = event.getTo();
+        // Grab a redactedPlayer
         RedactedPlayer redactedPlayer = redactedPlayerHashMap.get(event.getPlayer());
-        // Is the user discovering the Future Race?
-        if (Content.FUTURE_RACE_DISCOVERY.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.FUTURE_RACE_DISCOVERY);
+        // Verify that it worked
+        if (redactedPlayer == null) return;
+        // Loop through all content
+        for (Content content : Content.values()) {
+            // Some contents don't have hitboxes, so skip them
+            if (content.getBox() == null) continue;
+            if (content.getBox().isInBox(loc)) {
+                if (content == Content.SHITASS_CHEST || content == Content.LAVA_PIT || content == Content.BOBCATG || content == Content.ARTI_CAKE ||
+                content == Content.MYSTIC_CAR || content == Content.NINJAFREEZE) {
+                    discoverContent(redactedPlayer, content, ChatColor.RED + "Random Crap Discovered");
+                } else if (content == Content.BOB_DESERT) {
+                    discoverContent(redactedPlayer, content, ChatColor.AQUA + "Bob");
+                } else if (content == Content.FIRE_TRIAL || content == Content.PUNCHING_BAG) {
+                    discoverContent(redactedPlayer, content, ChatColor.AQUA + "Bad Content Discovered");
+                } else if (content == Content.RHYLIE_COMMAND_BUNKER) {
+                    discoverContent(redactedPlayer, content, ChatColor.DARK_GRAY + "Secret Discovered");
+                } else {
+                    discoverContent(redactedPlayer, content);
+                }
+            }
         }
         // Is the user discovering Dax's Dungeon?
         //if (Content.DAX_DUNGEON.getBox().isInBox(loc)) {
-        //    discoverContent(redactedPlayer, Content.DAX_DUNGEON);
+        //   discoverContent(redactedPlayer, Content.DAX_DUNGEON);
         //}
         //if (Content.DAX_DUNGEON_END.getBox().isInBox(loc)) {
         //    discoverContent(redactedPlayer, Content.DAX_DUNGEON_END);
         //}
-        if (Content.JUMP_IN_PIT.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.JUMP_IN_PIT);
-        }
-        if (Content.SHITASS_CHEST.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.SHITASS_CHEST, ChatColor.RED + "Random Crap Discovered");
-        }
-        if (Content.EGYPT.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.EGYPT);
-        }
-        if (Content.SUN_PYRAMID.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.SUN_PYRAMID);
-        }
-        if (Content.ANCIENT_TOWN.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.ANCIENT_TOWN);
-        }
-        if (Content.HIDDEN_ARCHAEOLOGIST.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.HIDDEN_ARCHAEOLOGIST);
-        }
-        if (Content.LAVA_PIT.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.LAVA_PIT, ChatColor.RED + "Random Crap Discovered");
-        }
-        if (Content.FIRE_TRIAL.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.FIRE_TRIAL, ChatColor.AQUA + "Bad Content Discovered");
-        }
-        if (Content.BOB_DESERT.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.BOB_DESERT, ChatColor.AQUA + "Bob");
-        }
-        if (Content.NINJAFREEZE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.NINJAFREEZE, ChatColor.RED + "Random Crap Discovered");
-        }
-        if (Content.FUTURE.getBox().isInBoxExclude(loc)) {
-            discoverContent(redactedPlayer, Content.FUTURE);
-        }
-        if (Content.STIM_GUN_RHYLIE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.STIM_GUN_RHYLIE);
-        }
-        if (Content.TIME_MACHINE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.TIME_MACHINE);
-        }
-        if (Content.STRANDED_TRAVELER.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.STRANDED_TRAVELER);
-        }
-        if (Content.JURASSIC_CAVE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.JURASSIC_CAVE);
-        }
-        if (Content.BOBCATG.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.BOBCATG, ChatColor.RED + "Random Crap Discovered");
-        }
-        if (Content.SCRAPPED_ALTAR.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.SCRAPPED_ALTAR);
-        }
-        if (Content.JURASSIC.getBox().isInBox(loc)) {
-            if (!Content.STRANDED_TRAVELER.getBox().isInBox(loc)) {
-                discoverContent(redactedPlayer, Content.JURASSIC);
-            }
-        }
-        if (Content.COLOSSEUM.getBox().isInBoxExclude(loc)) {
-            discoverContent(redactedPlayer, Content.COLOSSEUM);
-        }
-        if (Content.ARTI_CAKE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.ARTI_CAKE, ChatColor.RED + "Random Crap Discovered");
-        }
-        if (Content.UNDERGROUND_SHORTCUTS.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.UNDERGROUND_SHORTCUTS);
-        }
-        if (Content.SKYBLOCK_ROOM.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.SKYBLOCK_ROOM);
-        }
-        if (Content.PUNCHING_BAG.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.PUNCHING_BAG);
-        }
-        if (Content.TAYLOR_HATS.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.TAYLOR_HATS);
-        }
-        if (Content.AUCTION_HOUSE.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.AUCTION_HOUSE);
-        }
-        if (Content.RHYLIE_COMMAND_BUNKER.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.RHYLIE_COMMAND_BUNKER, ChatColor.DARK_GRAY + "Secret Discovered");
-        }
-        if (Content.MYSTIC_CAR.getBox().isInBox(loc)) {
-            discoverContent(redactedPlayer, Content.MYSTIC_CAR, ChatColor.RED + "Random Crap Discovered");
-        }
     }
 
     // Specifically for placement of the Sun Stone
@@ -290,12 +231,23 @@ public class ContentListeners implements Listener {
     public static void discoverContent(RedactedPlayer redplayer, Content content) {
         if (redplayer == null) return;
         if (redplayer.hasContent(content)) return;
+        if (contentCooldown.contains(redplayer)) return;
+        // All checks have passed, so put them on cooldown now
+        contentCooldown.add(redplayer);
         Player player = redplayer.getPlayer();
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, ChatColor.BLUE + "Content Discovered", content.getId(), 5, 60, 5);
         player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
         player.sendMessage(content.getDescription());
+        // Bukkitrunnable to eventually remove them from cooldown
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                contentCooldown.remove(redplayer);
+            }
+        }.runTaskLater(Main.getInstance(), 80);
     }
 
     /**
