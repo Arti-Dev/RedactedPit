@@ -22,11 +22,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class Main extends JavaPlugin {
+	private static Main instance;
 	private File playerDataFile;
 	private FileConfiguration playerConfig;
 
 	@Override
 	public void onEnable() {
+		instance = this;
 		saveDefaultConfig(); //Saves default config that is found in src/main/resources
 		createPlayerData();
 		getServer().getPluginManager().registerEvents(new Listeners(this), this);
@@ -102,6 +104,10 @@ public class Main extends JavaPlugin {
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static Main getInstance() {
+		return instance;
 	}
 
 
