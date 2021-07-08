@@ -281,6 +281,7 @@ public class Listeners implements Listener {
 			if (itemmeta.getDisplayName().equals(RedactedGive.TimeWarpPearl(1).getItemMeta().getDisplayName())) { //If it's a time warp pearl
 					pearllocations.put(player, player.getLocation());
 					new BukkitRunnable() {
+						int i = 0;
 						@Override
 						public void run() {
 							if (event.getEntity().getLocation().getY() < 0) {
@@ -292,7 +293,13 @@ public class Listeners implements Listener {
 								this.cancel();
 								return;
 							}
+							if (i > 120) {
+								player.sendMessage(ChatColor.RED + "Something went wrong, but you can throw Time Warp Pearls again!");
+								Bukkit.getLogger().severe(ChatColor.RED + "The Time Warp Pearl fail-safe was activated for " + player.getName());
+								this.cancel();
+							}
 							pearllocations.put(player, player.getLocation()); //if it still exists and isn't in the void
+							i++;
 						}
 					}.runTaskTimer(plugin, 0, 5); //doesn't have to run that often
 			}
