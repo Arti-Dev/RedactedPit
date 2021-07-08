@@ -550,6 +550,7 @@ public class Listeners implements Listener {
 	public static UtilBoundingBox daxFallenBox = new UtilBoundingBox(9, 52, -106, 13, 49, -106);
 	// Init whether stone is placed or not
 	public static boolean stoneplaced = false;
+	// The dax sun stone is not used right now
 	public static boolean daxPlaced = false;
 	@EventHandler
 	public void onPlaceSunStone(BlockPlaceEvent event) {
