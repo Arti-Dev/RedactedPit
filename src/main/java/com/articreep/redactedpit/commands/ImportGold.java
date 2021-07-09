@@ -1,7 +1,6 @@
 package com.articreep.redactedpit.commands;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
 import com.google.gson.JsonObject;
 import net.hypixel.api.HypixelAPI;

@@ -18,7 +18,6 @@ public class SendUp implements CommandExecutor {
                 ((Player) sender).setVelocity(new Vector(0, 5, 0));
                 sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Up you go!");
                 ((Player) sender).getWorld().strikeLightning(((Player) sender).getLocation());
-                return true;
             } else {
                 for (String arg : args) {
                     Player player = Bukkit.getPlayer(arg);
@@ -31,8 +30,8 @@ public class SendUp implements CommandExecutor {
                     player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Up you go!");
 
                 }
-                return true;
             }
+            return true;
         }
         Bukkit.getLogger().severe("Only players can run this command!");
         return true;

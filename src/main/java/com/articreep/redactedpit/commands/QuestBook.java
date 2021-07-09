@@ -15,12 +15,12 @@ import org.bukkit.inventory.Inventory;
 import java.util.*;
 
 public class QuestBook implements CommandExecutor {
-    private static List<Content> contentList;
+    private static final List<Content> contentList;
     static {
         contentList = Arrays.asList(Content.values());
         Collections.shuffle(contentList);
     }
-    private static HashMap<Integer, Integer> numberToSlot = new HashMap<Integer, Integer>() {{
+    private static final HashMap<Integer, Integer> numberToSlot = new HashMap<Integer, Integer>() {{
         put(1, 12);
         put(2, 13);
         put(3, 14);

@@ -1,13 +1,12 @@
 package com.articreep.redactedpit.content;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.content.ContentListeners;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ContentExpansion extends PlaceholderExpansion {
-    private Main plugin;
+    private final Main plugin;
     public ContentExpansion(Main plugin) {
         this.plugin = plugin;
     }
@@ -63,7 +62,7 @@ public class ContentExpansion extends PlaceholderExpansion {
      * @return possibly-null String of the requested identifier.
      */
     @Override
-    public String onPlaceholderRequest(Player player, String identifier){
+    public String onPlaceholderRequest(Player player, @NotNull String identifier){
 
         if(player == null){
             return "ERROR";

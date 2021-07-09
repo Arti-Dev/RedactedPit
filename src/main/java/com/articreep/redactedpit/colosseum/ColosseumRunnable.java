@@ -32,7 +32,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		this.plugin = plugin;
 	}
 	
-	public static HashMap<Player, ColosseumPlayer> ColosseumMap = new HashMap<Player, ColosseumPlayer>();
+	public static HashMap<Player, ColosseumPlayer> ColosseumMap = new HashMap<>();
 	private int selectionCooldown = 10;
 
 	@Override
@@ -42,6 +42,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
 			
 			ColosseumPlayer coloplayer = getColosseumPlayer(onlineplayer, true);
+			if (coloplayer == null) continue;
 			
 			if (Utils.isInColosseum(coloplayer.getPlayer().getLocation())) {
 				if (Debug.debug) Bukkit.getLogger().info("[DEBUG] " + coloplayer.getPlayer().getName() + " is in the colo!");
@@ -73,14 +74,15 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		// Every player should be updated by now in terms of time
 		// This number is going to be influenced by the players
 		int audienceChance = 0;
-		HashMap<ColosseumPlayer, AudienceReason> audienceReasons = new HashMap<ColosseumPlayer, AudienceReason>();
-		ArrayList<ColosseumPlayer> audiencePlayers = new ArrayList<ColosseumPlayer>();
+		HashMap<ColosseumPlayer, AudienceReason> audienceReasons = new HashMap<>();
+		ArrayList<ColosseumPlayer> audiencePlayers = new ArrayList<>();
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			ColosseumPlayer coloplayer = getColosseumPlayer(player, true);
+			if (coloplayer == null) continue;
 			if (Utils.isInColosseum(coloplayer.getPlayer().getLocation())) {
 				// Make an ArrayList of possible criteria the player meets
-				ArrayList<AudienceReason> personalReasons = new ArrayList<AudienceReason>();
+				ArrayList<AudienceReason> personalReasons = new ArrayList<>();
 				// Run a bunch of checks on the players
 				boolean lowHealth = false;
 				AudienceOpinion personalOpinion = coloplayer.getOpinion();
@@ -98,7 +100,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 				
 				if (coloplayer.secondsInside >= 60) {
 					// Weight of 2, is overrided by LOW_HEALTH
-					if (lowHealth == false) {
+					if (!lowHealth) {
 						audienceChance += 8;
 						for (int i = 0; i < 2; i++) {
 							personalReasons.add(AudienceReason.VETERAN);
@@ -170,9 +172,9 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 	}
 	
 	public static ColosseumPlayer getColosseumPlayer(Player player, boolean createnew) {
-		ColosseumPlayer coloplayer = null;
-		if (ColosseumMap.containsKey(player) == false) {
-			if (createnew == false) return null;
+		ColosseumPlayer coloplayer;
+		if (!ColosseumMap.containsKey(player)) {
+			if (!createnew) return null;
 			coloplayer = new ColosseumPlayer(player);
 			ColosseumMap.put(player, coloplayer);
 			if (Debug.debug) Bukkit.getLogger().info("[DEBUG] Added " + coloplayer.getPlayer().getName() + " to the ColoHashMap!");
@@ -185,9 +187,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 	@EventHandler
 	public void handleOfflineColosseumPlayer(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		if (ColosseumMap.containsKey(player)) {
-			ColosseumMap.remove(player);
-		}
+		ColosseumMap.remove(player);
 	}
 
 	/**
@@ -199,6 +199,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 	 */
 	public void sendPlayerAudienceEffect(Location startingLoc, Player player, AudienceReason reason, AudienceOpinion opinion, double speed) {
 		ColosseumPlayer coloplayer = getColosseumPlayer(player, true);
+		if (coloplayer == null) return;
 		String audienceMessage = null;
 		// Determine a effect to give the player based on the reason
 		// The audience's opinion will formulate for the first time if it is currently neutral
@@ -206,7 +207,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 			// The opinion will form now, so might as well give them a random time
 			coloplayer.setOpinionLength(ThreadLocalRandom.current().nextInt(15,40));
 		}
-		ArrayList<AudienceEffect> possibleEffects = new ArrayList<AudienceEffect>();
+		ArrayList<AudienceEffect> possibleEffects = new ArrayList<>();
 		if (reason == AudienceReason.LOW_HEALTH) {
 			possibleEffects.add(AudienceEffect.ABSORPTION);
 			possibleEffects.add(AudienceEffect.INSTANT_HEAL);
@@ -228,7 +229,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 				possibleEffects.add(AudienceEffect.BLOCKBUFF);
 				coloplayer.setCrowdOpinion(AudienceOpinion.POSITIVE);
 				audienceMessage = ChatColor.GRAY + "" + ChatColor.ITALIC + "The audience wants " + player.getName() + " to continue fighting!";
-			} else if (opinion == AudienceOpinion.NEGATIVE || opinion == AudienceOpinion.NEUTRAL) {
+			} else if (opinion == AudienceOpinion.NEGATIVE) {
 				possibleEffects.add(AudienceEffect.FIRE);
 				possibleEffects.add(AudienceEffect.EXPLOSION);
 				possibleEffects.add(AudienceEffect.SMITE);
@@ -270,6 +271,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		
 		for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
 			ColosseumPlayer colooplayer = getColosseumPlayer(onlineplayer, true);
+			if (colooplayer == null) continue;
 			if (Utils.isInColosseum(colooplayer.getPlayer().getLocation())) {
 				onlineplayer.sendMessage(audienceMessage);
 			}
@@ -279,7 +281,7 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 			Location currentLoc = startingLoc;
 			@Override
 			public void run() {
-				EnumParticle particle = null;
+				EnumParticle particle;
 				if (!player.isOnline()) this.cancel();
 				if (effect.getOpinion() == AudienceOpinion.POSITIVE) {
 					particle = EnumParticle.VILLAGER_HAPPY;
@@ -290,10 +292,9 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 				} else {
 					particle = EnumParticle.BARRIER;
 				}
-				double inbetween = speed;
 				Vector vec1 = currentLoc.toVector();
 				Vector vec2 = player.getPlayer().getLocation().add(0, 1, 0).toVector();
-				Vector vector = vec2.clone().subtract(vec1).normalize().multiply(inbetween);
+				Vector vector = vec2.clone().subtract(vec1).normalize().multiply(speed);
 				vec1.add(vector);
 				Utils.sendGenericParticle(plugin, vec1.getX(), vec1.getY(), vec1.getZ(), particle);
 				currentLoc = vec1.toLocation(player.getPlayer().getWorld());
@@ -369,24 +370,22 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 						new BukkitRunnable() {
 							@Override
 							public void run() {
-								if (coloplayer != null) {
-									coloplayer.setBlockBuff(false);
-								}
+								coloplayer.setBlockBuff(false);
 							}
 						}.runTaskLater(plugin, 200);
 					} else if (effect == AudienceEffect.BLASTED_AWAY) {
 						player.sendMessage(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_BLUE +
 								"The audience blasted anyone in a 4 block radius away from you!");
 						List<Entity> list = Utils.filterPlayersFromList(player.getNearbyEntities(4, 4, 4));
-						for (int i = 0; i < list.size(); i++) {
-				    		Player victim = (Player) list.get(i);
-				    		Vector vec3 = player.getLocation().toVector();
-				    		Vector vec4 = victim.getLocation().toVector();
-				    		Vector finalVector = vec3.clone().subtract(vec4).normalize().multiply(-2).setY(0.5);
-				    		victim.setVelocity(finalVector);
-				    		victim.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_GRAY + 
-								"You were blasted away by " + player.getName() + "!");
-				    	}
+						for (Entity entity : list) {
+							Player victim = (Player) entity;
+							Vector vec3 = player.getLocation().toVector();
+							Vector vec4 = victim.getLocation().toVector();
+							Vector finalVector = vec3.clone().subtract(vec4).normalize().multiply(-2).setY(0.5);
+							victim.setVelocity(finalVector);
+							victim.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "AUDIENCE! " + ChatColor.DARK_GRAY +
+									"You were blasted away by " + player.getName() + "!");
+						}
 						Utils.sendbeegExplosion(player.getLocation());
 						player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
 					} else if (effect == AudienceEffect.HOT_POTATO) {

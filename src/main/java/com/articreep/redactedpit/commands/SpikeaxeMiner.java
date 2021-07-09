@@ -44,7 +44,7 @@ public class SpikeaxeMiner implements CommandExecutor {
                         } else if (i == 3) {
                             player.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Here, take this pickaxe!");
                         } else if (i == 4) {
-                            player.getInventory().addItem(addPickaxe(Material.WOOD_PICKAXE));
+                            player.getInventory().addItem(addWoodPickaxe());
                             player.sendMessage(ChatColor.YELLOW + "[NPC] Miner: " + ChatColor.WHITE + "Since you'll only see me standing here, " +
                                     "I'm always happy to upgrade your pickaxe if you bring the materials for it! Who knows, maybe I can grant you an ability..");
                         } else if (i == 5) {
@@ -95,8 +95,8 @@ public class SpikeaxeMiner implements CommandExecutor {
         return inv;
     }
 
-    private static ItemStack addPickaxe(Material material) {
-        ItemStack item = new ItemStack(material);
+    private static ItemStack addWoodPickaxe() {
+        ItemStack item = new ItemStack(Material.WOOD_PICKAXE);
         ItemMeta meta = item.getItemMeta();
         meta.spigot().setUnbreakable(true);
         item.setItemMeta(meta);

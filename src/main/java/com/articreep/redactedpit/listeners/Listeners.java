@@ -94,8 +94,11 @@ public class Listeners implements Listener {
 		Location location = new Location(Bukkit.getWorld("redacted2"), x, y, z, yaw, pitch);
 		if (player.getWorld().getName().equals("redacted2")) {
 			if (Utils.isInColosseum(player.getLocation())) {
-				ColosseumRunnable.getColosseumPlayer(player, true).clearStreakCount();
-				ColosseumRunnable.getColosseumPlayer(player, true).increaseDeathStreakCount(1);
+				ColosseumPlayer coloplayer = ColosseumRunnable.getColosseumPlayer(player, true);
+				if (coloplayer != null) {
+					coloplayer.clearStreakCount();
+					coloplayer.increaseDeathStreakCount(1);
+				}
 			}
 			new BukkitRunnable() {
 				@Override
@@ -107,7 +110,7 @@ public class Listeners implements Listener {
 		}
 	}
 	// Map victims to damagers and victims to cooldowns
-	public static HashMap<Player, Player> taggedMap = new HashMap<Player, Player>();
+	public static HashMap<Player, Player> taggedMap = new HashMap<>();
 	public static HashMap<Player, BukkitTask> cooldownMap = new HashMap<>();
 	@EventHandler //TODO Clean up
 	public void onPlayerKillPlayer(EntityDamageByEntityEvent event) { //Grants players golden apples on killing other players

@@ -1,12 +1,8 @@
 package com.articreep.redactedpit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import com.articreep.redactedpit.colosseum.AudienceOpinion;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
@@ -21,7 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 	/**
@@ -94,7 +93,7 @@ public class Utils {
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(titlepacket);
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
 	}
-	
+
 	/**
      * Sends a particle packet at specified location (3 particles per packet)
      *
@@ -137,7 +136,7 @@ public class Utils {
 			}
 		}.runTaskTimer(plugin, 0, 5);
 	}
-	
+
 	public static void sendGenericParticleOnHead(Main plugin, Player player, EnumParticle particle) {
 		new BukkitRunnable() {
 			int i = 0;
@@ -309,13 +308,15 @@ public class Utils {
     	int index = (int) (Math.random() * list.size());
     	return list.get(index);
     }
-    
+
+	/**
+	 * Pass a list of entities to this method, and it will return the list but only player objects or smth
+	 * @param list List of entities
+	 * @param <T> ???
+	 * @return List of only players
+	 */
     public static <T> List<T> filterPlayersFromList(List<T> list) {
-    	for (int i = 0; i < list.size(); i++) {
-    		if (!(list.get(i) instanceof Player)) {
-    			list.remove(i);
-    		}
-    	}
+		list.removeIf(obj -> !(obj instanceof Player));
     	return list;
     }
 
@@ -343,7 +344,7 @@ public class Utils {
 	 * @return List containing all of the blocks around the center
 	 */
 	public static ArrayList<Block> getBlocksAround(Location center, int radius) {
-    	ArrayList<Block> list = new ArrayList<Block>();
+    	ArrayList<Block> list = new ArrayList<>();
 		for (double x = center.getX() - radius; x <= center.getX() + radius; x++) {
 			for (double z = center.getZ() - radius; z <= center.getZ() + radius; z++) {
 				Location loc = new Location(center.getWorld(), x, center.getY(), z);

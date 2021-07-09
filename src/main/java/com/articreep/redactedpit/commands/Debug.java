@@ -18,22 +18,19 @@ public class Debug implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender.hasPermission("redactedpit.debug")) {
-			if (debug == false) {
+			if (!debug) {
 				debug = true;
 				sender.sendMessage(ChatColor.YELLOW + "Debug messages are now being dumped to console!");
 				plugin.getConfig().set("debug", true);
-				return true;
-			} else if (debug == true) {
+			} else {
 				debug = false;
 				sender.sendMessage(ChatColor.YELLOW + "Debug messages are now off!");
 				plugin.getConfig().set("debug", false);
-				return true;
 			}
 		} else {
 			sender.sendMessage(ChatColor.RED + "Even if you had access to this, it wouldn't really matter..");
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 }

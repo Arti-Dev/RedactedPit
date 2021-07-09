@@ -1,11 +1,8 @@
 package com.articreep.redactedpit.commands;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
-
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,17 +12,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.md_5.bungee.api.ChatColor;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TradingGUIs implements CommandExecutor {
 	Main plugin;
 	public TradingGUIs(Main plugin) {
 		this.plugin = plugin;
 	}
-	public static HashMap<UUID, Integer> masterinteract = new HashMap<UUID, Integer>();
+	public static HashMap<UUID, Integer> masterinteract = new HashMap<>();
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -44,11 +41,10 @@ public class TradingGUIs implements CommandExecutor {
 						player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1, 1);
 					}
 				}.runTaskLater(plugin, 40);
-				return true;
 			} else {
 				player.openInventory(createInventoryTradingGUI());
-				return true;
 			}
+			return true;
 		}
 		return false;
 	}

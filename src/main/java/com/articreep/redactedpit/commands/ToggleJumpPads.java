@@ -10,13 +10,13 @@ public class ToggleJumpPads implements CommandExecutor {
 	public static boolean toggled = true;
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (toggled == true) {
+		if (toggled) {
 			toggled = false;
-			sender.sendMessage("Launchpads Toggle: " + ChatColor.RED + toggled);
+			sender.sendMessage("Launchpads Toggle: " + ChatColor.RED + false);
 		}
 		else {
 			toggled = true;
-			sender.sendMessage("Launchpads Toggle: " + ChatColor.GREEN + toggled);
+			sender.sendMessage("Launchpads Toggle: " + ChatColor.GREEN + true);
 		}
 		
 		return true;

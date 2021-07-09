@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 public class PlayerTouchVoidEvent extends Event implements Cancellable {
 	
 	private static final HandlerList HANDLERS = new HandlerList();
-	private Player player;
+	private final Player player;
 	private boolean isCancelled;
 	
 	public PlayerTouchVoidEvent(Player player) {

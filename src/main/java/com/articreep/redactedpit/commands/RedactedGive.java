@@ -1,14 +1,7 @@
 package com.articreep.redactedpit.commands;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.articreep.redactedpit.Main;
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -21,9 +14,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.util.StringUtil;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class RedactedGive implements CommandExecutor, TabCompleter {
 	Main plugin;
@@ -139,7 +137,7 @@ public class RedactedGive implements CommandExecutor, TabCompleter {
 	}
 
 	public static ItemStack ArcheologistShovel(int quantity) {
-		final ItemStack item = new ItemStack(Material.GOLD_SPADE);
+		final ItemStack item = new ItemStack(Material.GOLD_SPADE, quantity);
 		final ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.YELLOW + "Archeologist Shovel");

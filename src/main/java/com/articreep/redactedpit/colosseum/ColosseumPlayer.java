@@ -15,7 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 public class ColosseumPlayer {
 	// The Player Object will contain your health.
 	// There SHOULD NOT be ANY Citizens NPC instances of this class!!
-	private Player player;
+	private final Player player;
 	public UUID playerUUID;
 	public int kills;
 	public int killstreak;

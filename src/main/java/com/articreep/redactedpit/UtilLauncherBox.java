@@ -1,15 +1,12 @@
 package com.articreep.redactedpit;
 
 import com.articreep.redactedpit.listeners.LauncherListeners;
-import com.articreep.redactedpit.listeners.Listeners;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -41,7 +38,7 @@ public class UtilLauncherBox extends UtilBoundingBox {
         Player player = event.getPlayer();
         // Choose a random launch angle
         Set<Vector> set = velocityMap.keySet();
-        List<Vector> list = new ArrayList<Vector>(set);
+        List<Vector> list = new ArrayList<>(set);
         Vector angle = Utils.getRandomElement(list);
         int y = velocityMap.get(angle);
         // Make the armor stand

@@ -117,7 +117,7 @@ public class TreasureChest {
         // Reset location to where it was originally
         // Cancel the other runnable
         // Move location back
-        BukkitTask sinkingRunnable = new BukkitRunnable() {
+        new BukkitRunnable() {
             int i = 0;
 
             @Override

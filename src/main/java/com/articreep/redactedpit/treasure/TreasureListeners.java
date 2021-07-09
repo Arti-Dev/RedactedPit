@@ -5,7 +5,6 @@ import com.articreep.redactedpit.UtilBoundingBox;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.content.ContentListeners;
-import com.articreep.redactedpit.content.RedactedPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -282,20 +281,6 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                 break;
             }
         }
-    }
-
-    /**
-     * This method is used for the chest system - if the chest is part of the TreasureChest system modification is allowed
-     * @param event PlayerInteractEVent
-     * @return If the chest clicked is a TreasureChest
-     */
-    public static boolean isTreasureChest(PlayerInteractEvent event) {
-        for (TreasureChest treasureChest : dugTreasureList) {
-            if (treasureChest.getLocation().getBlock().equals(event.getClickedBlock())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @EventHandler

@@ -29,6 +29,10 @@ public class ColoInfo implements CommandExecutor {
 				}
 			}
 			ColosseumPlayer coloplayer = ColosseumRunnable.getColosseumPlayer(lookup, true);
+			if (coloplayer == null) {
+				player.sendMessage(ChatColor.RED + "I have no idea how you pulled this off, but your ColosseumPlayer object does not exist!");
+				return true;
+			}
 			coloplayer.sendAllValues(player);
 			return true;
 		}

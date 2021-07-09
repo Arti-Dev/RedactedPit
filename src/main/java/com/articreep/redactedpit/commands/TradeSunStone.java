@@ -23,7 +23,7 @@ public class TradeSunStone implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
-			ItemStack item = new ItemStack(player.getItemInHand());
+			ItemStack item = player.getItemInHand();
 			ItemMeta itemmeta = item.getItemMeta();
 			Inventory inventory = player.getInventory();
 			if (item == null || item.getType() != Material.DOUBLE_PLANT || !itemmeta.hasDisplayName()) { //if it's just some dumb flower
