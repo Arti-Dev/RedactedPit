@@ -28,6 +28,7 @@ public class RedactedPlayer {
     private double percentContent;
     private HashSet<Content> contentDiscovered;
     private boolean hundredAchieved;
+    private boolean questbookOpened;
 
     public RedactedPlayer(Player player, Main plugin) {
         this.player = player;
@@ -39,6 +40,7 @@ public class RedactedPlayer {
         this.percentContent = 0.00;
         this.contentDiscovered = new HashSet<>();
         this.hundredAchieved = false;
+        this.questbookOpened = false;
     }
     public Player getPlayer() {
         return player;
@@ -52,6 +54,7 @@ public class RedactedPlayer {
             importedGold = config.getBoolean("players." + uuidstring + ".importedgold");
             percentContent = config.getDouble("players." + uuidstring + ".percentcontent");
             hundredAchieved = config.getBoolean("players." + uuidstring + ".hundredachieved");
+            questbookOpened = config.getBoolean("players." + uuidstring + ".questbook");
             // Get list of strings
             List<String> tempList = (List<String>) config.getList("players." + uuidstring + ".content");
             // Clear hashset and load in everything
@@ -77,6 +80,7 @@ public class RedactedPlayer {
         plugin.getPlayerConfig().set("players." + uuidstring + ".importedgold", importedGold);
         plugin.getPlayerConfig().set("players." + uuidstring + ".percentcontent", percentContent);
         plugin.getPlayerConfig().set("players." + uuidstring + ".hundredachieved", hundredAchieved);
+        plugin.getPlayerConfig().set("players." + uuidstring + ".questbook", questbookOpened);
         // Convert HashSet to List<String>
         HashSet<Content> tempSet = (HashSet<Content>) contentDiscovered.clone();
         List<String> tempList = new ArrayList<>();
@@ -94,6 +98,7 @@ public class RedactedPlayer {
         importedGold = false;
         fracContent = "0/" + Content.values().length;
         hundredAchieved = false;
+        questbookOpened = false;
         saveData();
     }
 
@@ -180,5 +185,13 @@ public class RedactedPlayer {
 
     public boolean hasImportedBefore() {
         return importedGold;
+    }
+
+    public boolean hasQuestbookOpened() {
+        return questbookOpened;
+    }
+
+    public void setQuestbookOpened(boolean questbookOpened) {
+        this.questbookOpened = questbookOpened;
     }
 }

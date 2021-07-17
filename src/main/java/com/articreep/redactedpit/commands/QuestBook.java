@@ -3,6 +3,7 @@ package com.articreep.redactedpit.commands;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
+import com.articreep.redactedpit.content.RedactedPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,7 +36,11 @@ public class QuestBook implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (ContentListeners.getRedactedPlayer(player).hasImportedBefore()) {
+            RedactedPlayer redplayer = ContentListeners.getRedactedPlayer(player);
+            if (!redplayer.hasQuestbookOpened()) {
+                redplayer.setQuestbookOpened(true);
+            }
+            if (redplayer.hasImportedBefore()) {
                 player.openInventory(createInventory(player));
             } else {
                 player.openInventory(createTutorial());
