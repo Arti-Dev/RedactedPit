@@ -139,11 +139,13 @@ public class Listeners implements Listener {
 			return;
 		}
 		// Has the damager ever used the Quest Book before?
-		if (!ContentListeners.getRedactedPlayer(damager).hasQuestbookOpened()) {
-			event.setCancelled(true);
-			damager.sendMessage(ChatColor.RED + "You probably don't know what you're doing. Check out the holograms in spawn, and use /questbook!");
-			damager.playSound(damager.getLocation(), Sound.BAT_HURT, 1, 1);
-			return;
+		if (ContentListeners.getRedactedPlayer(damager) != null) {
+			if (!ContentListeners.getRedactedPlayer(damager).hasQuestbookOpened()) {
+				event.setCancelled(true);
+				damager.sendMessage(ChatColor.RED + "You probably don't know what you're doing. Check out the holograms in spawn, and use /questbook!");
+				damager.playSound(damager.getLocation(), Sound.BAT_HURT, 1, 1);
+				return;
+			}
 		}
 		// Map damager to victim
 		loc = damager.getLocation();
