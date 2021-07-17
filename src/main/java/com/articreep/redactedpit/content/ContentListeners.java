@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class ContentListeners implements Listener {
         // dew it again
         Utils.sendTitle(player, ChatColor.DARK_AQUA + "Welcome!", ChatColor.DARK_PURPLE + "Check /questbook for info!", 5, 40, 20);
         player.playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 1);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 100000000, 1));
         newRedactedPlayer(event.getPlayer());
     }
 
