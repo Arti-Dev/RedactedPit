@@ -112,7 +112,7 @@ public class Listeners implements Listener {
 	// Map victims to damagers and victims to cooldowns
 	public static HashMap<Player, Player> taggedMap = new HashMap<>();
 	public static HashMap<Player, BukkitTask> cooldownMap = new HashMap<>();
-	@EventHandler //TODO Clean up
+	@EventHandler (priority = EventPriority.HIGHEST)//TODO Clean up
 	public void onPlayerKillPlayer(EntityDamageByEntityEvent event) { //Grants players golden apples on killing other players
 		if (event.isCancelled()) return;
 		if (!(event.getEntity() instanceof Player)) return;
@@ -141,9 +141,9 @@ public class Listeners implements Listener {
 		// Has the damager ever used the Quest Book before?
 		if (ContentListeners.getRedactedPlayer(damager) != null) {
 			if (!ContentListeners.getRedactedPlayer(damager).hasQuestbookOpened()) {
-				event.setCancelled(true);
 				damager.sendMessage(ChatColor.RED + "You probably don't know what you're doing. Check out the holograms in spawn, and use /questbook!");
 				damager.playSound(damager.getLocation(), Sound.BAT_HURT, 1, 1);
+				event.setCancelled(true);
 				return;
 			}
 		}
