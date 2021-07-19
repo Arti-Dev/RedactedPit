@@ -1,7 +1,9 @@
 package com.articreep.redactedpit;
 
+import com.articreep.redactedpit.commands.ToggleLaunchers;
 import com.articreep.redactedpit.listeners.LauncherListeners;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
@@ -36,6 +38,10 @@ public class UtilLauncherBox extends UtilBoundingBox {
 
     public void launch(PlayerMoveEvent event, Main plugin) {
         Player player = event.getPlayer();
+        if (!ToggleLaunchers.toggled) {
+            player.sendMessage(ChatColor.RED + "Launchers are disabled.");
+            return;
+        }
         // Choose a random launch angle
         Set<Vector> set = velocityMap.keySet();
         List<Vector> list = new ArrayList<>(set);

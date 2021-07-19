@@ -7,7 +7,7 @@ commands:
   togglejumppads:
     description: Toggles jumppads
     usage: /togglejumppads
-    permission: redactedpit.togglejumppads
+    permission: redactedpit.toggle
   cancelrace:
     description: Cancels the race if you're doing it.
     usage: /cancelrace
@@ -69,3 +69,7 @@ commands:
     description: Add or remove content from players
     usage: /content [add/remove] [player] [content]
     permission: redactedpit.modifycontent
+  togglelaunchers:
+    description: Toggle launchers
+    usage: /togglelaunchers
+    permission: redactedpit.toggle

@@ -47,8 +47,9 @@ public class Main extends JavaPlugin {
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
 			new ContentExpansion(this).register();
 		}
-
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
+
+		getCommand("togglelaunchers").setExecutor(new ToggleLaunchers());
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
 		getCommand("content").setExecutor(new ContentCommand());
 		getCommand("spawn").setExecutor(new Spawn(this));
