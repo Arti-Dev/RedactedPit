@@ -68,7 +68,7 @@ public class GUIListeners implements Listener {
     		e.setCancelled(true);
 			if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 			if (e.getSlot() == 12) {
-				if (!ContentListeners.getRedactedPlayer(p).subtractGold(1000)) {
+				if (!ContentListeners.getRedactedPlayer(p).addGold(-1000)) {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
@@ -106,7 +106,7 @@ public class GUIListeners implements Listener {
     		e.setCancelled(true);
 			if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 			if (e.getSlot() == 12) {
-				if (!ContentListeners.getRedactedPlayer(p).subtractGold(1000)) {
+				if (!ContentListeners.getRedactedPlayer(p).addGold(1000)) {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
@@ -144,7 +144,7 @@ public class GUIListeners implements Listener {
     		e.setCancelled(true);
 			if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 			if (e.getSlot() == 12) {
-				if (!ContentListeners.getRedactedPlayer(p).subtractGold(500)) {
+				if (!ContentListeners.getRedactedPlayer(p).addGold(500)) {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 					p.closeInventory();
 				} else {
@@ -182,7 +182,7 @@ public class GUIListeners implements Listener {
     	if (e.getView().getTitle().equals("Miner")) {
     		e.setCancelled(true);
 			if (e.getSlot() == 9) {
-				if (!ContentListeners.getRedactedPlayer(p).subtractGold(500)) {
+				if (!ContentListeners.getRedactedPlayer(p).addGold(500)) {
 					p.sendMessage(ChatColor.RED + "You don't have enough gold!");
 				} else {
 					inventory.addItem(addPickaxe(Material.WOOD_PICKAXE));

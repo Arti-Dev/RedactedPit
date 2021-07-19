@@ -44,8 +44,11 @@ public class GoldCommand implements CommandExecutor, TabCompleter {
             }
             // Valid operation?
             if (args[0].equals("add")) {
-                redactedPlayer.addGold(amount);
-                sender.sendMessage(ChatColor.GREEN + "Sucessfully added " + amount + " gold to " + player.getName());
+                if (redactedPlayer.addGold(amount)) {
+                    sender.sendMessage(ChatColor.GREEN + "Sucessfully added " + amount + " gold to " + player.getName());
+                } else {
+                    sender.sendMessage(ChatColor.RED + "That would end up with a negative amount of gold!");
+                }
             } else if (args[0].equals("set")) {
                 if (amount < 0) {
                     sender.sendMessage(ChatColor.RED + "You may not set gold to a negative number!");

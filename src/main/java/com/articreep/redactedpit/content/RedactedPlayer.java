@@ -169,17 +169,14 @@ public class RedactedPlayer {
         this.gold = bd.doubleValue();
     }
 
-    public boolean subtractGold(double amount) {
-        if (this.gold - amount < 0) {
+    public boolean addGold(double amount) {
+        if (this.gold + amount < 0) {
             return false;
         }
-        setGold(this.gold - amount);
+        setGold(this.gold + amount);
         return true;
     }
 
-    public void addGold(double amount) {
-        setGold(this.gold + amount);
-    }
 
     public void importedSuccessfully() {
         this.importedGold = true;
