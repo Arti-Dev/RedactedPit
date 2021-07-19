@@ -146,6 +146,8 @@ public class RedactedPlayer {
 
     public void addContent(Content content) {
         this.contentDiscovered.add(content);
+        // Add some gold why not
+        addGold(250);
         // Immediately calculate percentage
         calculatePercentContent();
     }
