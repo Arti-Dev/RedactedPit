@@ -4,6 +4,7 @@ import com.articreep.redactedpit.commands.ToggleLaunchers;
 import com.articreep.redactedpit.listeners.LauncherListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
@@ -38,8 +39,9 @@ public class UtilLauncherBox extends UtilBoundingBox {
 
     public void launch(PlayerMoveEvent event, Main plugin) {
         Player player = event.getPlayer();
+        Location loc = player.getLocation();
         if (!ToggleLaunchers.toggled) {
-            player.sendMessage(ChatColor.RED + "Launchers are disabled.");
+            Utils.sendRedstoneParticle(plugin, loc.getX(), loc.getY(), loc.getZ());
             return;
         }
         // Choose a random launch angle
