@@ -50,6 +50,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 
 		getCommand("togglelaunchers").setExecutor(new ToggleLaunchers());
+		getCommand("gold").setExecutor(new GoldCommand());
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
 		getCommand("content").setExecutor(new ContentCommand());
 		getCommand("spawn").setExecutor(new Spawn(this));

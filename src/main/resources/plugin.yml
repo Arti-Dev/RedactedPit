@@ -73,3 +73,7 @@ commands:
     description: Toggle launchers
     usage: /togglelaunchers
     permission: redactedpit.toggle
+  gold:
+    description: Add or set gold, allows negative numbers.
+    usage: /gold [add/set] [player] [amount]
+    permission: redactedpit.modifygold
