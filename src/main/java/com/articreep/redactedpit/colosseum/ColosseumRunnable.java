@@ -11,6 +11,7 @@ import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.Utils;
 import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -78,6 +79,11 @@ public class ColosseumRunnable extends BukkitRunnable implements Listener {
 		ArrayList<ColosseumPlayer> audiencePlayers = new ArrayList<>();
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
+			// If this player is in Creative or Spectator skip them
+			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
+				// Skip
+				continue;
+			}
 			ColosseumPlayer coloplayer = getColosseumPlayer(player, true);
 			if (coloplayer == null) continue;
 			if (Utils.isInColosseum(coloplayer.getPlayer().getLocation())) {
