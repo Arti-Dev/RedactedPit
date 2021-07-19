@@ -8,7 +8,7 @@ public enum Content {
     JUMP_IN_PIT(new UtilBoundingBox(13, 42, 12, -14, 55, -15), "The Redacted Pit",
             "Unfortunately, the middle is asymmetrical -\nbut the middle features corridors that serve as pathways to the outskirts.",
             "Jump in the Pit!"),
-    SHITASS_CHEST(new UtilBoundingBox(10, 42, -6, 13, 47, -10), "Funny Shitass Chest",
+    SHITASS_CHEST(new UtilBoundingBox(10, 42, -5, 13, 47, -10), "Funny Shitass Chest",
             "This chest houses the items used to make the \"Hey Shitass, wanna godfight?\" meme.\nWatch it here: https://youtu.be/DVvJhYdWuVs",
             "There's a special chest inside the middle of Pit.."),
     EGYPT(new UtilBoundingBox(-15, 43, -28, 53, 97, -119), "Egypt Area",
