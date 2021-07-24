@@ -116,7 +116,7 @@ public class GUIListeners implements Listener {
 						return;
 					}
 					inventory.addItem(RedactedGive.DivineGlass(32));
-					p.sendMessage(ChatColor.YELLOW + "[NPC] Rem" + ChatColor.WHITE + ": Enjoy!");
+					p.sendMessage(ChatColor.YELLOW + "[NPC] 甘雨" + ChatColor.WHITE + ": Enjoy!");
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY! " + ChatColor.GRAY + "You obtained " + ChatColor.AQUA + "Divine Glass" + ChatColor.GRAY + " x32!");
 					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
 				}
@@ -131,7 +131,7 @@ public class GUIListeners implements Listener {
 					}
 					inventory.removeItem(RedactedGive.AncientArtifact(1));
 					inventory.addItem(RedactedGive.DivineGlass(64));
-					p.sendMessage(ChatColor.YELLOW + "[NPC] Rem" + ChatColor.WHITE + ": Enjoy!");
+					p.sendMessage(ChatColor.YELLOW + "[NPC] 甘雨" + ChatColor.WHITE + ": Enjoy!");
 					p.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "SHINY! " + ChatColor.GRAY + "You obtained " + ChatColor.AQUA + "Divine Glass" + ChatColor.GRAY + " x64!");
 					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
 				} else {
