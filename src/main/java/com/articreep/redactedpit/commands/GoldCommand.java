@@ -1,6 +1,5 @@
 package com.articreep.redactedpit.commands;
 
-import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.content.RedactedPlayer;
 import org.bukkit.Bukkit;
@@ -35,7 +34,7 @@ public class GoldCommand implements CommandExecutor, TabCompleter {
             }
             RedactedPlayer redactedPlayer = ContentListeners.getRedactedPlayer(player);
             // Make sure the player supplied a number
-            double amount = 0;
+            double amount;
             try {
                 amount = Double.parseDouble(args[2]);
             } catch (NumberFormatException e) {
