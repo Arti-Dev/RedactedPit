@@ -142,7 +142,9 @@ public enum Content {
             "If they hit the ground hard enough, they'll bounce back up!\n"+
             "Or you can send them straight into the void!", "Upgrade your pickaxe to diamond through the Miner in Jurassic"),
     MYSTIC_CAR(new UtilBoundingBox(73, 46, 56, 86, 52, 65), "Mystic Car", "MYSTIC CAR MYSTIC CAR",
-            "There's a car near the Future Race");
+            "There's a car near the Future Race"),
+    ICE_BAR(new UtilBoundingBox(-16, 59, -109, 6, 64, -125), "Ice Cold Night Club",
+            "Hilarious little bar designed by SleeepyDuck and SoulCrushing because they were bored", "Enter the iceberg at -19 78 -116");
 
     private final UtilBoundingBox box;
     private final String id;

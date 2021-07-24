@@ -75,7 +75,7 @@ public class ContentListeners implements Listener {
             if (content.getBox() == null) continue;
             if (content.getBox().isInBox(loc)) {
                 if (content == Content.SHITASS_CHEST || content == Content.LAVA_PIT || content == Content.BOBCATG || content == Content.ARTI_CAKE ||
-                content == Content.MYSTIC_CAR || content == Content.NINJAFREEZE) {
+                content == Content.MYSTIC_CAR || content == Content.NINJAFREEZE || content == Content.ICE_BAR) {
                     discoverContent(redactedPlayer, content, ChatColor.RED + "Random Crap Discovered");
                 } else if (content == Content.BOB_DESERT) {
                     discoverContent(redactedPlayer, content, ChatColor.AQUA + "Bob");
@@ -241,6 +241,9 @@ public class ContentListeners implements Listener {
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, ChatColor.BLUE + "Content Discovered", content.getId(), 5, 60, 5);
+        // Add some gold why not
+        redplayer.addGold(250);
+        player.sendMessage(ChatColor.GOLD + "+250g");
         player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
         player.sendMessage(content.getDescription());
         // Bukkitrunnable to eventually remove them from cooldown
