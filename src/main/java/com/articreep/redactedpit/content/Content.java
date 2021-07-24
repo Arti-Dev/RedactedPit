@@ -6,11 +6,11 @@ import org.bukkit.ChatColor;
 public enum Content {
     // Some of these enums have boundingboxes that must be entered to discover
     JUMP_IN_PIT(new UtilBoundingBox(13, 42, 12, -14, 55, -15), "The Redacted Pit",
-            "Unfortunately, the middle is asymmetrical -\nbut the middle features corridors that serve as pathways to the outskirts.",
+            "The middle used to feature corridors that lead to the outskirts,\nhowever we decided to remove those to give middle a more.. open feel!",
             "Jump in the Pit!"),
-    SHITASS_CHEST(new UtilBoundingBox(10, 42, -5, 13, 47, -10), "Funny Shitass Chest",
+    SHITASS_CHEST(new UtilBoundingBox(17, 42, -4, 14, 46, 2), "Funny Shitass Chest",
             "This chest houses the items used to make the \"Hey Shitass, wanna godfight?\" meme.\nWatch it here: https://youtu.be/DVvJhYdWuVs",
-            "There's a special chest inside the middle of Pit.."),
+            "There's a special chest behind a pillar in the center Pit.."),
     EGYPT(new UtilBoundingBox(-15, 43, -28, 53, 97, -119), "Egypt Area",
             "Egypt is home to a very dry desert. \nThis was the very first quadrant the [redacted] team worked on.",
             "Enter the Egypt area"),
@@ -22,8 +22,8 @@ public enum Content {
                     "Here are some things you can do:\n" +
                     "Sell your artifacts to the villagers for gold\n" +
                     "Sell your artifacts for special items", "The town is located on the right side of Egypt."),
-    LAVA_PIT(new UtilBoundingBox(-5, 43, -68, -20, 51, -87), "Pit of Things that are dead to me",
-            ChatColor.RED + "" + ChatColor.BOLD + "jump in, you're dead to us.", "-12, 45, -78"),
+    LAVA_PIT(new UtilBoundingBox(-36, 50, -76, -26, 56, -88), "Pit of Things that are dead to me",
+            ChatColor.RED + "" + ChatColor.BOLD + "jump in, you're dead to us.", "-36, 50, -76"),
     HIDDEN_ARCHAEOLOGIST(new UtilBoundingBox(6, 38, -27, 0, 41, -34), "Hidden Archaeologist",
             "This NPC has been living under de watah for ages. \nClick the guy next to her for a special shovel!",
             "Click the button at 10, 43, -27"),
@@ -44,7 +44,7 @@ public enum Content {
                     "Our intentions were to create a block that would be used temporarily to block players off, not long-term.\n" +
                     "Plus, it's kept on death!",
             "Buy it from an NPC in Egypt"),
-    FUTURE(new UtilBoundingBox(10, 96, 6, 124, 25, 141,26, 43, 24, 10, 96, 6), "Future Area",
+    FUTURE(new UtilBoundingBox(22, 96, 24, 124, 25, 141,26, 43, 24, 10, 96, 6), "Future Area",
             "A glimpse of the future, all localized into one quarter. \nThis was featured by LogicSoba several times - try putting shaders on!\nThis was the second area that the [redacted] team worked on",
             "Enter the Future area"),
     JUMPPADS(null, "Future Jumppads", "A cool mechanic that provides for some interesting gameplay!\n" +
