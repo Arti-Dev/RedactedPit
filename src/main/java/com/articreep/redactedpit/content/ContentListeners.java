@@ -272,6 +272,9 @@ public class ContentListeners implements Listener {
         redplayer.addContent(content);
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         Utils.sendTitle(player, title, content.getId(), 5, 60, 5);
+        // Add some gold why not
+        redplayer.addGold(250);
+        player.sendMessage(ChatColor.GOLD + "+250g");
         player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + content.getId());
         player.sendMessage(content.getDescription());
         // Bukkitrunnable to eventually remove them from cooldown
