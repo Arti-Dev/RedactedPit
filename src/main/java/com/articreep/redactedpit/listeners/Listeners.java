@@ -749,7 +749,9 @@ public class Listeners implements Listener {
 		// Is it a chest?
 		if (event.getClickedBlock() == null) return;
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
+			if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.TRAPPED_CHEST
+					|| event.getClickedBlock().getType() == Material.HOPPER || event.getClickedBlock().getType() == Material.FURNACE
+					|| event.getClickedBlock().getType() == Material.BURNING_FURNACE) {
 				if (!player.hasPermission("redactedpit.modifychests")) {
 					chestSet.add(player);
 				}
