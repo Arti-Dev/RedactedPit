@@ -2,6 +2,7 @@ package com.articreep.redactedpit.content;
 
 import com.articreep.redactedpit.*;
 import com.articreep.redactedpit.colosseum.AudienceEffect;
+import com.articreep.redactedpit.utils.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

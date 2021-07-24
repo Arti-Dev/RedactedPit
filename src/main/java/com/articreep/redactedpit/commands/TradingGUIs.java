@@ -1,7 +1,7 @@
 package com.articreep.redactedpit.commands;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

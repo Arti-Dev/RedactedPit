@@ -1,8 +1,8 @@
 package com.articreep.redactedpit.treasure;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.UtilBoundingBox;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.UtilBoundingBox;
+import com.articreep.redactedpit.utils.Utils;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.*;

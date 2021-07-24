@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.articreep.redactedpit.commands.Debug;
 import com.articreep.redactedpit.commands.RedactedGive;
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.Utils;
 import com.articreep.redactedpit.content.ContentListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

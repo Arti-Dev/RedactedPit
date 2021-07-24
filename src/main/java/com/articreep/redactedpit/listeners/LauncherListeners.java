@@ -1,7 +1,7 @@
 package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.UtilLauncherBox;
+import com.articreep.redactedpit.utils.UtilLauncherBox;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

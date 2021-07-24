@@ -1,6 +1,6 @@
 package com.articreep.redactedpit.content;
 
-import com.articreep.redactedpit.UtilBoundingBox;
+import com.articreep.redactedpit.utils.UtilBoundingBox;
 import org.bukkit.ChatColor;
 
 public enum Content {

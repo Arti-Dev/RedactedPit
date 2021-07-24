@@ -1,7 +1,7 @@
 package com.articreep.redactedpit.treasure;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,7 +1,7 @@
 package com.articreep.redactedpit.commands;
 
 import com.articreep.redactedpit.Main;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.Utils;
 import com.articreep.redactedpit.content.Content;
 import com.articreep.redactedpit.content.ContentListeners;
 import com.articreep.redactedpit.content.RedactedPlayer;

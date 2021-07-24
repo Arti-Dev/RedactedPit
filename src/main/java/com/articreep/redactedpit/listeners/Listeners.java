@@ -2,8 +2,8 @@ package com.articreep.redactedpit.listeners;
 
 import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.PlayerTouchVoidEvent;
-import com.articreep.redactedpit.UtilBoundingBox;
-import com.articreep.redactedpit.Utils;
+import com.articreep.redactedpit.utils.UtilBoundingBox;
+import com.articreep.redactedpit.utils.Utils;
 import com.articreep.redactedpit.colosseum.ColosseumPlayer;
 import com.articreep.redactedpit.colosseum.ColosseumRunnable;
 import com.articreep.redactedpit.commands.RedactedGive;

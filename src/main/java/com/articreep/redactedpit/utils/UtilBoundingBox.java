@@ -1,4 +1,4 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

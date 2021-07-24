@@ -1,9 +1,9 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.utils;
 
+import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.commands.ToggleLaunchers;
 import com.articreep.redactedpit.listeners.LauncherListeners;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;

@@ -1,5 +1,6 @@
-package com.articreep.redactedpit;
+package com.articreep.redactedpit.utils;
 
+import com.articreep.redactedpit.Main;
 import com.articreep.redactedpit.colosseum.AudienceOpinion;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
