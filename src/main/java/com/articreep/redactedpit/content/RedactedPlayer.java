@@ -148,6 +148,7 @@ public class RedactedPlayer {
         this.contentDiscovered.add(content);
         // Add some gold why not
         addGold(250);
+        player.sendMessage(ChatColor.GOLD + "+250g");
         // Immediately calculate percentage
         calculatePercentContent();
     }
