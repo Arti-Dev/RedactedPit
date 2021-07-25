@@ -145,7 +145,10 @@ public enum Content {
             "There's a car near the Future Race"),
     ICE_BAR(new UtilBoundingBox(-6, 59, -122, -30, 64, -106), "Ice Cold Night Club",
             "This is where the Colosseum Audience hangs out when they're done watching for the night.\n" +
-                    "Hilarious little bar designed by SleeepyDuck and SoulCrushing because they were bored", "Enter the iceberg at -19 78 -116");
+                    "Hilarious little bar designed by SleeepyDuck and SoulCrushing because they were bored", "Enter the iceberg at -19 78 -116"),
+    WOOOL_FISHING(new UtilBoundingBox(-76, 43, -1, -81, 48, -6), "Woool's Fisherman Quest", "Woool coded up a unique fishing quest.\n" +
+            "This quest is not required to reach 100% Content Discovered, but it's very cool nonetheless.\n" +
+            "(Feel free to fish anywhere, you don't HAVE to fish in the designated areas!)", "Head to the far-left side of the river in Jurassic");
 
     private final UtilBoundingBox box;
     private final String id;
