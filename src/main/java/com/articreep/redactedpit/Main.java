@@ -50,9 +50,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(coloRunnable, this);
 
 		getCommand("togglelaunchers").setExecutor(new ToggleLaunchers());
-		getCommand("gold").setExecutor(new GoldCommand());
+		getCommand("gold").setExecutor(new GoldCommand(this));
 		getCommand("spikeaxeminer").setExecutor(new SpikeaxeMiner(this));
-		getCommand("content").setExecutor(new ContentCommand());
+		getCommand("content").setExecutor(new ContentCommand(this));
 		getCommand("spawn").setExecutor(new Spawn(this));
 		getCommand("questbook").setExecutor(new QuestBook());
 		getCommand("forcerespawn").setExecutor(new ForceRespawn());

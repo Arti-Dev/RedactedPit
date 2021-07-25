@@ -191,4 +191,8 @@ public class RedactedPlayer {
     public void setQuestbookOpened(boolean questbookOpened) {
         this.questbookOpened = questbookOpened;
     }
+
+    public HashSet<Content> getContentDiscovered() {
+        return contentDiscovered;
+    }
 }
