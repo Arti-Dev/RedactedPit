@@ -144,7 +144,8 @@ public enum Content {
     MYSTIC_CAR(new UtilBoundingBox(73, 46, 56, 86, 52, 65), "Mystic Car", "MYSTIC CAR MYSTIC CAR",
             "There's a car near the Future Race"),
     ICE_BAR(new UtilBoundingBox(-16, 59, -109, 6, 64, -125), "Ice Cold Night Club",
-            "Hilarious little bar designed by SleeepyDuck and SoulCrushing because they were bored", "Enter the iceberg at -19 78 -116");
+            "This is where the Colosseum Audience hangs out when they're done watching for the night.\n" +
+                    "Hilarious little bar designed by SleeepyDuck and SoulCrushing because they were bored", "Enter the iceberg at -19 78 -116");
 
     private final UtilBoundingBox box;
     private final String id;
