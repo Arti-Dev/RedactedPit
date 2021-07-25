@@ -270,7 +270,15 @@ public class Listeners implements Listener {
 		return (taggedMap.containsKey(player) || taggedMap.containsValue(player));
 	}
 
-	
+	// Prevent players from using /god in combat
+	@EventHandler
+	public void onGodMode(PlayerCommandPreprocessEvent event) {
+		Player player = event.getPlayer();
+		if (event.getMessage().startsWith("/god") && isInCombat(player)) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "You may not /god in combat!");
+		}
+	}
 	
 	
 	// Time Warp Pearls
