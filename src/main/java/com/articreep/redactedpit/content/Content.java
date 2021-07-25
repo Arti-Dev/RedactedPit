@@ -100,7 +100,7 @@ public enum Content {
             "These are some quick shortcuts you can use if you wanna quickly appear on the other side!\nBut seriously, why would you?",
             "Look for holes in the Colosseum"),
     AUDIENCE(null, "Colosseum Audience", "Ah, the audience. They love to cheer on people they like, and hate on people they don't like.\n" +
-            "Their opinion on your will change over time based on what you do. For example, if you don't fight for a while, you'll get hated on, and will receive debuffs.\n" +
+            "Their opinion on you will change over time based on what you do. For example, if you don't fight for a while, you'll get hated on, and will receive debuffs.\n" +
             "However, if for example you're low on health, the audience might try and save you!", "Fight in the Colosseum with other players"),
     HOT_POTATO(null, "Hot Potato", "This item's functionality was removed due to it being really annoying :)",
             "Audience Colosseum effect"),
