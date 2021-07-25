@@ -105,6 +105,7 @@ public class Listeners implements Listener {
 				public void run() {
 					player.spigot().respawn();
 					player.teleport(location);
+					player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 100000000, 1));
 				}
 			}.runTaskLater(plugin, 1);
 		}
