@@ -90,7 +90,7 @@ public enum Content {
             "There's a warp inside the SkyBlock ripoff room."),
     JURASSIC(new UtilBoundingBox(-32, 43, -2, -119, 95, -116), "Jurassic Area",
             "This area is home to a lush jungle, in addition to many Dinos.\nThis area was the third area the [redacted] team worked on.", null),
-    COLOSSEUM(new UtilBoundingBox(-4, 98, 10, -100, 30, 98, -4, 98, 10, -23, 30, 23), "Roman Colosseum",
+    COLOSSEUM(new UtilBoundingBox(-4, 98, 10, -100, 38, 98, -4, 98, 10, -23, 30, 23), "Roman Colosseum",
             "The Colosseum is a nice and flat area for (hopefully) fair fights!\nThis is the last section the [redacted] team worked on.\n" +
                     "An audience cheers on the sidelines, powering up or striking down certain fighters.\n", "Enter the Colosseum"),
     ARTI_CAKE(new UtilBoundingBox(-88, 48, 64, -91, 53, 68), "Arti's Cake",
