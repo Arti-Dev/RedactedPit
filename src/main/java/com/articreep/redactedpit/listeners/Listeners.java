@@ -34,10 +34,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -218,31 +215,34 @@ public class Listeners implements Listener {
 		}
 		// Was it actually a kill?
 		if (victim.getHealth() <= event.getFinalDamage()) {
-			if (ContentListeners.isRedactedPlayer(damager)) {
-				damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
-				ContentListeners.getRedactedPlayer(damager).addGold(50);
-				damager.sendMessage(ChatColor.GOLD + "+50g");
-			}
-			taggedMap.remove(victim);
-
-			if (cooldownMap.containsKey(victim)) {
-				cooldownMap.get(victim).cancel();
-				cooldownMap.remove(victim);
-			}
-			if (onKOTH) {
-				damager.sendMessage(ChatColor.GOLD + "+50g (KOTH Bonus)");
-				ContentListeners.getRedactedPlayer(damager).addGold(50);
-			} else if (inColo) {
-				// Increase kill and death counts
-				if (!(victimcolo == null)) victimcolo.increaseDeathCount(1);
-				if (!(damagercolo == null)) { 
-					damagercolo.increaseKillCount(1);
-					damagercolo.increaseKillStreakCount(1);
+			// Sometimes the victim is the same as the damager in cases where they fall into the void or use time warp pearls.
+			if (victim != damager) {
+				if (ContentListeners.isRedactedPlayer(damager)) {
+					damager.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+					ContentListeners.getRedactedPlayer(damager).addGold(50);
+					damager.sendMessage(ChatColor.GOLD + "+50g");
 				}
-			} else if (inJurassic) {
-				if (Math.random() * 10 > 9) {
-					damager.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "TOOTH! " + ChatColor.YELLOW + "You found a T-Rex Tooth!");
-					damager.getInventory().addItem(RedactedGive.TRexTooth(1));
+				taggedMap.remove(victim);
+
+				if (cooldownMap.containsKey(victim)) {
+					cooldownMap.get(victim).cancel();
+					cooldownMap.remove(victim);
+				}
+				if (onKOTH) {
+					damager.sendMessage(ChatColor.GOLD + "+50g (KOTH Bonus)");
+					ContentListeners.getRedactedPlayer(damager).addGold(50);
+				} else if (inColo) {
+					// Increase kill and death counts
+					if (!(victimcolo == null)) victimcolo.increaseDeathCount(1);
+					if (!(damagercolo == null)) {
+						damagercolo.increaseKillCount(1);
+						damagercolo.increaseKillStreakCount(1);
+					}
+				} else if (inJurassic) {
+					if (Math.random() * 10 > 9) {
+						damager.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "TOOTH! " + ChatColor.YELLOW + "You found a T-Rex Tooth!");
+						damager.getInventory().addItem(RedactedGive.TRexTooth(1));
+					}
 				}
 			}
 		} else {
@@ -269,6 +269,7 @@ public class Listeners implements Listener {
 	public static boolean isInCombat(Player player) {
 		return (taggedMap.containsKey(player) || taggedMap.containsValue(player));
 	}
+
 	
 	
 	
