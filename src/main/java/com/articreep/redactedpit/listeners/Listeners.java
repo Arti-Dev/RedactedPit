@@ -274,9 +274,11 @@ public class Listeners implements Listener {
 	@EventHandler
 	public void onGodMode(PlayerCommandPreprocessEvent event) {
 		Player player = event.getPlayer();
-		if (event.getMessage().startsWith("/god") && isInCombat(player)) {
-			event.setCancelled(true);
-			player.sendMessage(ChatColor.RED + "You may not /god in combat!");
+		if (event.getMessage().startsWith("/god") || event.getMessage().startsWith("/essentials:god") || event.getMessage().startsWith("/egod")) {
+			if (isInCombat(player)) {
+				event.setCancelled(true);
+				player.sendMessage(ChatColor.RED + "You may not /god in combat!");
+			}
 		}
 	}
 	
