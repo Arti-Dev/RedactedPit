@@ -201,8 +201,10 @@ public class RaceListeners implements Listener {
 		taskarray.add(task9);
 		BukkitTask task10 = sendParticle(player, 41.288, 62.918, 53.234);
 		taskarray.add(task10);
-		BukkitTask task11 = sendParticle(player, 58.011, 58.067, 61.333);
+		BukkitTask task11 = sendParticle(player, 49.387, 62.127, 56.623);
 		taskarray.add(task11);
+		BukkitTask task12 = sendParticle(player, 58.011, 58.067, 61.333);
+		taskarray.add(task12);
 		return taskarray;
 		
 	}
