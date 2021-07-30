@@ -15,6 +15,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -758,6 +759,7 @@ public class Listeners implements Listener {
 	@EventHandler (priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onOpenChest(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
+		Block block = event.getClickedBlock();
 		// Is it a chest?
 		if (event.getClickedBlock() == null) return;
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -766,6 +768,14 @@ public class Listeners implements Listener {
 					|| event.getClickedBlock().getType() == Material.BURNING_FURNACE) {
 				if (!player.hasPermission("redactedpit.modifychests")) {
 					chestSet.add(player);
+					if (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
+						event.setCancelled(true);
+						Chest chest = (Chest) block.getState();
+						Inventory inv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getName());
+						player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+						inv.setContents(chest.getInventory().getContents());
+						player.openInventory(inv);
+					}
 				}
 			}
 		}
@@ -793,7 +803,10 @@ public class Listeners implements Listener {
 	@EventHandler
 	public void onCloseChest(InventoryCloseEvent event) {
 		Player player = (Player) event.getPlayer();
-		chestSet.remove(player);
+		if (chestSet.contains(player)) {
+			player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1, 1);
+			chestSet.remove(player);
+		}
 	}
 
 	// Prevent players from breaking blocks
