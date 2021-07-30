@@ -60,7 +60,7 @@ public enum Content {
                     "https://docs.google.com/document/d/1Jljhf_jPTV8QNoN-fMGsQwldX8saaF-yLW5i7iE0uMM/edit", "Located on the far right side of Future"),
     POG_TOWER(new UtilBoundingBox(100, 103, 25, 121, 108, 47), "Pog Tower",
             "The tower is pogging :pog:",
-            "Click the POG tower in Future"),
+            "Click the \"POG\" on the left-most background tower in Future"),
     FUTURE_RACE_DISCOVERY(new UtilBoundingBox(58, 47, 65, 68, 61, 75), "Future Race",
             "A race that's based around launchpads!", "Located in the back of Future"),
     FUTURE_RACE_COMPLETE(null, "Future Race Complete", "There's a secret reward that probably isn't obtainable with commands.",
