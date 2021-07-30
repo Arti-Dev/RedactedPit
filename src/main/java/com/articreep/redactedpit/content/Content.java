@@ -43,7 +43,7 @@ public enum Content {
             "Divine Glass is essentially your everyday Pit obsidian - \nexcept it breaks much more quickly, and it's glass!\n" +
                     "Our intentions were to create a block that would be used temporarily to block players off, not long-term.\n" +
                     "Plus, it's kept on death!",
-            "Buy it from an NPC in Egypt"),
+            "Buy it from an NPC in Egypt, and place it"),
     FUTURE(new UtilBoundingBox(22, 96, 24, 124, 25, 141,26, 43, 24, 10, 96, 6), "Future Area",
             "A glimpse of the future, all localized into one quarter. \nThis was featured by LogicSoba several times - try putting shaders on!\nThis was the second area that the [redacted] team worked on",
             "Enter the Future area"),
