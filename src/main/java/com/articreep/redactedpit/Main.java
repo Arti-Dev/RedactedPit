@@ -60,7 +60,6 @@ public class Main extends JavaPlugin {
 		getCommand("resetcontent").setExecutor(new ResetContent());
 		getCommand("redacteddebug").setExecutor(new Debug(this));
 		getCommand("togglejumppads").setExecutor(new ToggleJumpPads());
-		getCommand("importgold").setExecutor(new ImportGold(this));
 		getCommand("tradetimewarp").setExecutor(new TradeTimeWarp(this));
 		getCommand("redactedgive").setExecutor(new RedactedGive(this));
 		getCommand("cancelrace").setExecutor(new CancelRace());

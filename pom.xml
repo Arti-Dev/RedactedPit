@@ -74,10 +74,5 @@
         <version>2.10.9</version>
         <scope>provided</scope>
     </dependency>
-    <dependency>
-        <groupId>net.hypixel</groupId>
-        <artifactId>HypixelAPI</artifactId>
-        <version>3.0.0</version>
-    </dependency>
 </dependencies>
 </project>
