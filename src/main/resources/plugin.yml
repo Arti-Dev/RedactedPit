@@ -1,6 +1,6 @@
 name: RedactedPit
 main: com.articreep.redactedpit.Main
-version: 1.5
+version: 1.5.1
 author: Arti_Creep
 api-version: 1.13
 commands:
