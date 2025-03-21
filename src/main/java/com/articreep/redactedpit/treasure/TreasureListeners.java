@@ -232,6 +232,9 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         // Only give this 250 tries
         while (i < 250) {
             loc = treasureBox.randomLocation();
+            if (loc == null) {
+                break;
+            }
             // airLoc is the original location but one block higher
             airLoc = loc.clone().add(0, 1, 0);
             if (loc.getBlock().getType() == Material.SAND) {
@@ -318,6 +321,9 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
     }
 
 
+    // hotfix to prevent spam
+    boolean isWorking = true;
+
     @Override
     public void run() {
         while (treasureList.size() < 2) {
@@ -328,8 +334,10 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
                         treasureList.remove(1);
                     }
                 }
+                isWorking = true;
             } catch (BlockNotFoundException e) {
-                e.printStackTrace();
+                if (isWorking) e.printStackTrace();
+                isWorking = false;
             }
         }
         // ConcurrentModificationException was happening, so clone into an array ig
