@@ -232,7 +232,7 @@ public class TreasureListeners extends BukkitRunnable implements Listener {
         // Only give this 250 tries
         while (i < 250) {
             loc = treasureBox.randomLocation();
-            if (loc == null) {
+            if (loc == null || loc.getWorld() == null) {
                 break;
             }
             // airLoc is the original location but one block higher
