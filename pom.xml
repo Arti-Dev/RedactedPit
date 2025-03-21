@@ -40,7 +40,7 @@
   <repositories>
       <repository>
           <id>placeholderapi</id>
-          <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+          <url>https://repo.extendedclip.com/releases//</url>
       </repository>
       <!-- This adds the Spigot Maven repository to the build -->
       <repository>
