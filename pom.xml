@@ -14,27 +14,6 @@
                   <target>1.8</target>
               </configuration>
           </plugin>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-shade-plugin</artifactId>
-              <version>3.2.4</version>
-              <executions>
-                  <execution>
-                      <phase>package</phase>
-                      <goals>
-                          <goal>shade</goal>
-                      </goals>
-                      <configuration>
-                          <artifactSet>
-                              <includes>
-                                  <include>net.hypixel:HypixelAPI</include>
-                                  <include>net.hypixel.HypixelAPI:Java</include>
-                              </includes>
-                          </artifactSet>
-                      </configuration>
-                  </execution>
-              </executions>
-          </plugin>
       </plugins>
    </build>
   <repositories>
@@ -46,10 +25,6 @@
       <repository>
           <id>spigot-repo</id>
           <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-      </repository>
-      <repository>
-          <id>Hypixel</id>
-          <url>https://repo.hypixel.net/repository/Hypixel/</url>
       </repository>
 
 </repositories>
